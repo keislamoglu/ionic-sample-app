@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Dosya {{ id ? 'Düzenle' : 'Oluştur' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="save()" #form="ngForm" *ngIf="caseFile">
+        <!--FILE NO-->
+        <ion-item>
+            <ion-label>Dosya numarası</ion-label>
+            <ion-input placeholder="Dosya numarası" name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
+        </ion-item>
+        <!--SELECT PERSONS-->
+        <ion-list>
+            <ion-list-header>Taraflar</ion-list-header>
+            <!--SELECT CLAIMENT-->
+            <ion-item>
+                <ion-label>Davacı</ion-label>
+                <ion-select required name="claiment" [(ngModel)]="caseFile.claimentId" placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let claiment of claiments"
+                                       [value]="claiment.id"
+                    >{{claiment.fullName}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <!--SELECT DEFENDANT-->
+            <ion-item>
+                <ion-label>Davalı</ion-label>
+                <ion-select required name="defendant" [(ngModel)]="caseFile.defendantId" placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let defendant of defendants"
+                                       [value]="defendant.id"
+                    >{{defendant.fullName}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+        </ion-list>
+        <!--ACTIONS-->
+        <ion-buttons>
+            <ion-button fill="solid" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+            <ion-button fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+        </ion-buttons>
+    </form>
+</ion-content>

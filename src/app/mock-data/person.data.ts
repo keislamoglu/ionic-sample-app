@@ -25,5 +25,6 @@ function createPerson(name: string, lastname: string): Person {
     person.nId = '12345678901';
     person.phone = '05001234567';
     person.address = lorem(Math.floor(Math.random() * 25) + 25);
+
     return person;
 }

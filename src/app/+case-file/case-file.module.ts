@@ -3,13 +3,13 @@ import {CaseFileComponent} from './case-file.component';
 import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../services';
 import {IonicModule} from '@ionic/angular';
-import {CaseFileCreateModalComponent} from './create/case-file-create-modal.component';
+import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
         CaseFileComponent,
-        CaseFileCreateModalComponent,
+        CaseFileEditModalComponent,
     ],
     imports: [
         IonicModule.forRoot(),
@@ -18,7 +18,7 @@ import {FormsModule} from '@angular/forms';
         FormsModule,
     ],
     exports: [CaseFileComponent],
-    entryComponents: [CaseFileCreateModalComponent]
+    entryComponents: [CaseFileEditModalComponent]
 })
 export class CaseFileModule {
 }

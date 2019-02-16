@@ -8,8 +8,20 @@
 
 
 <ion-content>
-    <ion-button color="primary" (click)="create()">Dosya Oluştur</ion-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="primary" (click)="create()">
+                <ion-icon slot="icon-only" name="add-circle"></ion-icon> Yeni
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
     <ion-list>
-        <ion-item *ngFor="let caseFile of caseFiles">Dosya Nu: {{caseFile.fileNo}}</ion-item>
+        <ion-item *ngFor="let caseFile of caseFiles">Dosya Nu: {{caseFile.fileNo}}
+            <ion-buttons slot="end">
+                <ion-button color="primary" (click)="edit(caseFile.id)">
+                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
     </ion-list>
 </ion-content>

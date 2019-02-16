@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {CaseFile} from '../entity/case-file';
 import {CaseFileService} from '../services';
 import {ModalController} from '@ionic/angular';
-import {CaseFileCreateModalComponent} from './create/case-file-create-modal.component';
+import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
+import {ModalOptions} from '@ionic/core';
 
 @Component({
     selector: 'case-file',
@@ -16,17 +17,23 @@ export class CaseFileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._caseFileService.getFiles().subscribe(caseFiles => this.caseFiles = caseFiles);
+        this._caseFileService.getAll().subscribe(caseFiles => this.caseFiles = caseFiles);
     }
 
     create() {
         this.presentModal();
     }
 
-    async presentModal() {
-        const modal = await this._modalController.create({
-            component: CaseFileCreateModalComponent,
-        });
+    edit(id: string) {
+        this.presentModal(id);
+    }
+
+    private async presentModal(id?: string) {
+        const opts: ModalOptions = {
+            component: CaseFileEditModalComponent,
+            componentProps: id ? { id } : void 0,
+        };
+        const modal = await this._modalController.create(opts);
         return await modal.present();
     }
 }

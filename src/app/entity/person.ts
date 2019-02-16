@@ -12,4 +12,12 @@ export class Person {
     claimentCaseFiles: CaseFile[] = [];
     defendantCaseFiles: CaseFile[] = [];
     petitions: Petition[] = [];
+
+    get fullName() {
+        if (this.middlename) {
+            return [this.name, this.middlename, this.lastname].join(' ');
+        }
+
+        return [this.name, this.lastname].join(' ');
+    }
 }
