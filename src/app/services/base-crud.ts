@@ -1,5 +1,5 @@
 import {Observable, of, throwError} from 'rxjs';
-import {clone, guid} from '../helpers';
+import {guid} from '../helpers';
 
 export abstract class BaseCrud<T extends { id: string }> {
     protected abstract dataSet: T[];
@@ -23,7 +23,7 @@ export abstract class BaseCrud<T extends { id: string }> {
         if (index === -1) {
             return throwError('Not found');
         }
-        this.dataSet[index] = clone(data);
+        this.dataSet[index] = data;
         return of(void 0);
     }
 

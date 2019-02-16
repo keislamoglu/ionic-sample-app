@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Kişi {{ id ? 'Düzenle' : 'Oluştur' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="save()" #form="ngForm" *ngIf="person">
+        <!--NAME-->
+        <ion-item>
+            <ion-label>Ad</ion-label>
+            <ion-input placeholder="Ad giriniz" name="name" [(ngModel)]="person.givenName" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Soyad</ion-label>
+            <ion-input placeholder="Soyad giriniz" name="lastname" [(ngModel)]="person.lastname" required></ion-input>
+        </ion-item>
+        <!--NATIONAL ID-->
+        <ion-item>
+            <ion-label>T.C. Kimlik No</ion-label>
+            <ion-input placeholder="T.C. Kimlik No" name="nId" [(ngModel)]="person.nId" required></ion-input>
+        </ion-item>
+        <!--PHONE-->
+        <ion-item>
+            <ion-label>Tel. No</ion-label>
+            <ion-input type="tel" placeholder="Tel. No" name="phone" [(ngModel)]="person.phone" required></ion-input>
+        </ion-item>
+        <!--ADDRESS-->
+        <ion-item>
+            <ion-label>Adres</ion-label>
+            <ion-textarea placeholder="Adres giriniz" name="address" [(ngModel)]="person.address" required></ion-textarea>
+        </ion-item>
+        <!--ACTIONS-->
+        <ion-buttons>
+            <ion-button fill="solid" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+            <ion-button fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+        </ion-buttons>
+    </form>
+</ion-content>

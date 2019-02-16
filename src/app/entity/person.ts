@@ -13,11 +13,18 @@ export class Person {
     defendantCaseFiles: CaseFile[] = [];
     petitions: Petition[] = [];
 
-    get fullName() {
+    get givenName() {
         if (this.middlename) {
-            return [this.name, this.middlename, this.lastname].join(' ');
+            return [this.name, this.middlename].join(' ');
         }
+        return this.name;
+    }
 
-        return [this.name, this.lastname].join(' ');
+    set givenName(name: string) {
+        [this.name, this.middlename] = name.split(' ');
+    }
+
+    get fullName() {
+        return [this.givenName, this.lastname].join(' ');
     }
 }

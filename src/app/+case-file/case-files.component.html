@@ -6,13 +6,15 @@
     </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-button color="primary" (click)="create()">
                 <ion-icon slot="icon-only" name="add-circle"></ion-icon> Yeni
             </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="navPersons()">Kişiler</ion-button>
         </ion-buttons>
     </ion-toolbar>
     <ion-list>

@@ -1,19 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {CaseFile} from '../entity/case-file';
 import {CaseFileService} from '../services';
-import {ModalController} from '@ionic/angular';
-import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
+import {ModalController, NavController} from '@ionic/angular';
+import {CaseFileModalComponent} from './case-file/case-file-modal.component';
 import {ModalOptions} from '@ionic/core';
 
 @Component({
     selector: 'case-file',
-    templateUrl: './case-file.component.html',
-    styleUrls: ['./case-file.component.scss']
+    templateUrl: './case-files.component.html',
+    styleUrls: ['./case-files.component.scss']
 })
-export class CaseFileComponent implements OnInit {
+export class CaseFilesComponent implements OnInit {
     caseFiles: CaseFile[] = [];
 
-    constructor(private _caseFileService: CaseFileService, private _modalController: ModalController) {
+    constructor(private _caseFileService: CaseFileService,
+                private _modalController: ModalController,
+                private _navController: NavController) {
     }
 
     ngOnInit(): void {
@@ -28,10 +30,14 @@ export class CaseFileComponent implements OnInit {
         this.presentModal(id);
     }
 
+    navPersons() {
+        this._navController.navigateForward('/persons');
+    }
+
     private async presentModal(id?: string) {
         const opts: ModalOptions = {
-            component: CaseFileEditModalComponent,
-            componentProps: id ? { id } : void 0,
+            component: CaseFileModalComponent,
+            componentProps: id ? {id} : void 0,
         };
         const modal = await this._modalController.create(opts);
         return await modal.present();

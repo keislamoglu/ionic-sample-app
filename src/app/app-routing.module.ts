@@ -1,9 +1,11 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {CaseFileComponent} from './+case-file/case-file.component';
+import {CaseFilesComponent} from './+case-file/case-files.component';
+import {PersonsComponent} from './+persons/persons.component';
 
 const routes: Routes = [
-    {path: '', component: CaseFileComponent}
+    {path: '', component: CaseFilesComponent},
+    {path: 'persons', component: PersonsComponent}
 ];
 
 @NgModule({

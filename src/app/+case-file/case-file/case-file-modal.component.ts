@@ -6,10 +6,10 @@ import {Person} from '../../entity/person';
 import {switchMap} from 'rxjs/operators';
 
 @Component({
-    templateUrl: './case-file-edit-modal.component.html',
-    styleUrls: ['./case-file-edit-modal.component.scss']
+    templateUrl: './case-file-modal.component.html',
+    styleUrls: ['./case-file-modal.component.scss']
 })
-export class CaseFileEditModalComponent implements OnInit {
+export class CaseFileModalComponent implements OnInit {
     @Input() id: string;
     caseFile: CaseFile | null = null;
     claiments: Person[] = [];

@@ -13,13 +13,8 @@ export const PERSONS = [
 ];
 
 function createPerson(name: string, lastname: string): Person {
-    let middlename;
-    [name, middlename] = name.split(' ', 1);
     const person = new Person();
-    if (middlename) {
-        person.middlename = middlename;
-    }
-    person.name = name;
+    person.givenName = name;
     person.lastname = lastname;
     person.id = guid();
     person.nId = '12345678901';

@@ -8,12 +8,19 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {CaseFileModule} from './+case-file/case-file.module';
+import {CaseFilesModule} from './+case-file/case-files.module';
+import {PersonsModule} from './+persons/persons.module';
 
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, CaseFileModule],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        CaseFilesModule,
+        PersonsModule,
+    ],
     providers: [
         StatusBar,
         SplashScreen,
