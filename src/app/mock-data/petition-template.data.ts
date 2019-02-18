@@ -13,6 +13,7 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
 function createPetitionTemplate(content: string) {
     const template = new PetitionTemplate();
     template.id = guid();
+    template.name = `Template-${template.id}`;
     template.content = content;
     return template;
 }

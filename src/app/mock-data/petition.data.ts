@@ -16,6 +16,7 @@ export const PETITIONS: Petition[] = [
 function createPetition(person: Person, template: PetitionTemplate) {
     const petition = new Petition();
     petition.id = guid();
+    petition.name = template.name;
     petition.petitionTemplate = template;
     petition.petitionTemplateId = template.id;
     petition.person = person;

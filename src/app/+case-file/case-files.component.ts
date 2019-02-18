@@ -34,6 +34,10 @@ export class CaseFilesComponent implements OnInit {
         this._navController.navigateForward('/persons');
     }
 
+    navPetitions() {
+        this._navController.navigateForward('/petitions');
+    }
+
     private async presentModal(id?: string) {
         const opts: ModalOptions = {
             component: CaseFileModalComponent,

@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Dilekçe {{ id ? 'Düzenle' : 'Oluştur' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    Lorem ipsum <app-info-tag tagName="claiment"
+                              tagLabel="davacı"
+                              valueProp="id"
+                              labelProp="fullName"
+                              [dataSet]="persons"></app-info-tag> sit amet, consectetur adipisicing elit.
+    A aspernatur consequuntur deserunt dolorem dolorum eligendi
+    iusto magni placeat sint vel? Deleniti ea et, ex ipsam itaque
+    <app-info-tag tagName="defendant"
+                  tagLabel="davalı"
+                  valueProp="id"
+                  labelProp="fullName"
+                  [dataSet]="persons"></app-info-tag>
+    neque quam vero voluptates?
+</ion-content>
