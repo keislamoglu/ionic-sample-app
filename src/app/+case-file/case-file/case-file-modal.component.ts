@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {AlertService, CaseFileService, PersonService} from '../../services';
-import {CaseFile} from '../../entity/case-file';
-import {Person} from '../../entity/person';
 import {switchMap} from 'rxjs/operators';
+import {AlertService, CaseFileService, PersonService} from '../../shared/services';
+import {CaseFile, Person} from '../../shared/entity';
 
 @Component({
     templateUrl: './case-file-modal.component.html',
@@ -74,5 +73,9 @@ export class CaseFileModalComponent implements OnInit {
 
     private _reset() {
         this.caseFile = null;
+    }
+
+    private _personFullName(person: Person) {
+        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

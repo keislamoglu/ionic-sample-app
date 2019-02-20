@@ -1,5 +1,5 @@
-import {ProsecutionOffice} from '../entity/prosecution-office';
-import {guid, lorem} from '../helpers';
+import {ProsecutionOffice} from '../shared/entity';
+import {guid, lorem} from '../shared/helpers';
 
 export const PROSECUTION_OFFICES: ProsecutionOffice[] = [
     prosecutionOffice(lorem(10), 'Foo'),
@@ -8,10 +8,10 @@ export const PROSECUTION_OFFICES: ProsecutionOffice[] = [
     prosecutionOffice(lorem(12), 'Qux'),
 ];
 
-function prosecutionOffice(address, name) {
-    const office = new ProsecutionOffice();
-    office.id = guid();
-    office.address = address;
-    office.name = name;
-    return office;
+function prosecutionOffice(address, name): ProsecutionOffice {
+    return {
+        id: guid(),
+        address,
+        name
+    };
 }

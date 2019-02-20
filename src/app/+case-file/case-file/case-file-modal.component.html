@@ -14,33 +14,31 @@
             <ion-input placeholder="Dosya numarası" name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
         </ion-item>
         <!--SELECT PERSONS-->
-        <ion-list>
-            <ion-list-header>Taraflar</ion-list-header>
-            <!--SELECT CLAIMENT-->
-            <ion-item>
-                <ion-label>Davacı</ion-label>
-                <ion-select required name="claiment" [(ngModel)]="caseFile.claimentId" placeholder="-- Seçiniz --">
-                    <ion-select-option *ngFor="let claiment of claiments"
-                                       [value]="claiment.id"
-                    >{{claiment.fullName}}</ion-select-option>
-                </ion-select>
-            </ion-item>
-
-            <!--SELECT DEFENDANT-->
-            <ion-item>
-                <ion-label>Davalı</ion-label>
-                <ion-select required name="defendant" [(ngModel)]="caseFile.defendantId" placeholder="-- Seçiniz --">
-                    <ion-select-option *ngFor="let defendant of defendants"
-                                       [value]="defendant.id"
-                    >{{defendant.fullName}}</ion-select-option>
-                </ion-select>
-            </ion-item>
-
-        </ion-list>
+        <ion-item>
+            <ion-label>Taraflar</ion-label>
+        </ion-item>
+        <!--SELECT CLAIMENT-->
+        <ion-item>
+            <ion-label>Davacı</ion-label>
+            <ion-select required name="claiment" [(ngModel)]="caseFile.claimentId" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let claiment of claiments"
+                                   [value]="claiment.id"
+                >{{_personFullName(claiment)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--SELECT DEFENDANT-->
+        <ion-item>
+            <ion-label>Davalı</ion-label>
+            <ion-select required name="defendant" [(ngModel)]="caseFile.defendantId" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let defendant of defendants"
+                                   [value]="defendant.id"
+                >{{_personFullName(defendant)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
         <!--ACTIONS-->
-        <ion-buttons>
-            <ion-button fill="solid" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
-            <ion-button fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
-        </ion-buttons>
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+            <ion-button slot="end" fill="clear" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+        </ion-item>
     </form>
 </ion-content>

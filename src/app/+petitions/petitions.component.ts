@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {ModalOptions} from '@ionic/core';
-import {Petition} from '../entity/petition';
-import {PetitionService} from '../services';
 import {PetitionModalComponent} from './petition/petition-modal.component';
+import {Petition} from '../shared/entity';
+import {PetitionService} from '../shared/services';
 
 @Component({
     templateUrl: './petitions.component.html',

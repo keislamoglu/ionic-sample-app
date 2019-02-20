@@ -1,5 +1,5 @@
-import {Person} from '../entity/person';
-import {guid, lorem} from '../helpers';
+import {Person} from '../shared/entity';
+import {guid, lorem} from '../shared/helpers';
 
 export const PERSONS = [
     createPerson('Kadir Emin', 'İslamoğlu'),
@@ -7,19 +7,24 @@ export const PERSONS = [
     createPerson('Gökhan', 'Keçeci'),
     createPerson('Recep', 'Altunsu'),
     createPerson('Ahmet', 'Taş'),
-    createPerson('Burak', 'Mollaibrahim'),
+    createPerson('Burak', 'Mollaibrahimoğlu'),
     createPerson('Gökhan', 'Tınkır'),
     createPerson('Serkan', 'Elçiçek'),
 ];
 
 function createPerson(name: string, lastname: string): Person {
-    const person = new Person();
-    person.givenName = name;
-    person.lastname = lastname;
-    person.id = guid();
-    person.nId = '12345678901';
-    person.phone = '05001234567';
-    person.address = lorem(Math.floor(Math.random() * 25) + 25);
-
-    return person;
+    let middlename;
+    [name, middlename] = name.split(' ');
+    return {
+        name,
+        middlename,
+        lastname,
+        id: guid(),
+        nId: '12345678901',
+        phone: '05001234567',
+        address: lorem(Math.floor(Math.random() * 25) + 25),
+        claimentCaseFiles: [],
+        defendantCaseFiles: [],
+        petitions: [],
+    };
 }

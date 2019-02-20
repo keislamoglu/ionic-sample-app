@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Person} from '../../entity/person';
 import {ModalController} from '@ionic/angular';
-import {AlertService, PersonService} from '../../services';
+import {AlertService, PersonService} from '../../shared/services';
+import {Person} from '../../shared/entity';
 
 @Component({
     templateUrl: './person-modal.component.html',
@@ -51,7 +51,7 @@ export class PersonModalComponent implements OnInit {
     removeWithConfirm() {
         this._alertService.confirm({
             title: 'Kişi sil',
-            message: `<strong>${this.person.fullName} (${this.person.nId})</strong> kişisini silme istediğinize emin misiniz?`,
+            message: `<strong>${this._fullName(this.person)} (${this.person.nId})</strong> kişisini silme istediğinize emin misiniz?`,
             cancel: {text: 'Vazgeç'},
             ok: {text: 'Sil', handler: () => this._remove()}
         });
@@ -64,5 +64,9 @@ export class PersonModalComponent implements OnInit {
 
     private _reset() {
         this.person = null;
+    }
+
+    private _fullName(person: Person) {
+        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

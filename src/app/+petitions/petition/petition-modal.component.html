@@ -8,17 +8,50 @@
 </ion-header>
 
 <ion-content>
-    Lorem ipsum <app-info-tag tagName="claiment"
-                              tagLabel="davacı"
-                              valueProp="id"
-                              labelProp="fullName"
-                              [dataSet]="persons"></app-info-tag> sit amet, consectetur adipisicing elit.
-    A aspernatur consequuntur deserunt dolorem dolorum eligendi
-    iusto magni placeat sint vel? Deleniti ea et, ex ipsam itaque
-    <app-info-tag tagName="defendant"
-                  tagLabel="davalı"
-                  valueProp="id"
-                  labelProp="fullName"
-                  [dataSet]="persons"></app-info-tag>
-    neque quam vero voluptates?
+    <!--TEMPLATE-->
+    <ion-item *ngIf="petition">
+        <ion-label>Şablon</ion-label>
+        <ion-select required name="template"
+                    (ngModelChange)="onTemplateChange($event)"
+                    [(ngModel)]="petition.petitionTemplateId" placeholder="-- Seçiniz --">
+            <ion-select-option *ngFor="let _template of templates"
+                               [value]="_template.id">{{_template.name}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <!--FORM-->
+    <form (ngSubmit)="save()" #form="ngForm" *ngIf="template && petition">
+        <ion-item-divider>
+            <ion-label color="primary">Gerekli Alanlar</ion-label>
+        </ion-item-divider>
+        <!--NAME-->
+        <ion-item>
+            <ion-label>Dilekçe Adı</ion-label>
+            <ion-input placeholder="Dilekçe adı giriniz" name="name" [(ngModel)]="petition.name"></ion-input>
+        </ion-item>
+        <!--CLAIMENT-->
+        <ion-item *ngIf="isRequiredField('claiment')">
+            <ion-label>Davacı</ion-label>
+            <ion-select required name="claiment"
+                        [(ngModel)]="petition.claimentId"
+                        placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let person of persons"
+                                   [value]="person.id">{{_personFullName(person)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--DEFENDANT-->
+        <ion-item *ngIf="isRequiredField('defendant')">
+            <ion-label>Davacı</ion-label>
+            <ion-select required name="defendant"
+                        [(ngModel)]="petition.defendantId"
+                        placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let person of persons"
+                                   [value]="person.id">{{_personFullName(person)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--ACTIONS-->
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+            <ion-button slot="end" fill="clear" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+        </ion-item>
+    </form>
 </ion-content>

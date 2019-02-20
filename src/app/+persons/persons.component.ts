@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {ModalOptions} from '@ionic/core';
-import {Person} from '../entity/person';
-import {PersonService} from '../services';
 import {PersonModalComponent} from './person/person-modal.component';
+import {Person} from '../shared/entity';
+import {PersonService} from '../shared/services';
 
 @Component({
     templateUrl: './persons.component.html',
@@ -36,5 +36,9 @@ export class PersonsComponent implements OnInit {
         };
         const modal = await this._modalController.create(opts);
         return await modal.present();
+    }
+
+    private _fullName(person: Person) {
+        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

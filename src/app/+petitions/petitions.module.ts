@@ -4,8 +4,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {PetitionsComponent} from './petitions.component';
 import {PetitionModalComponent} from './petition/petition-modal.component';
-import {ServicesModule} from '../services';
-import {InfoTagModule} from '../info-tag';
+import {ServicesModule} from '../shared/services';
 
 @NgModule({
     imports: [
@@ -13,7 +12,6 @@ import {InfoTagModule} from '../info-tag';
         CommonModule,
         ServicesModule,
         FormsModule,
-        InfoTagModule,
     ],
     declarations: [
         PetitionsComponent,

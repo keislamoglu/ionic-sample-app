@@ -4,8 +4,11 @@ import {PetitionTemplate} from './petition-template';
 export class Petition {
     id: string;
     name: string;
-    personId: string;
+    claimentId: string;
+    defendantId: string;
     petitionTemplateId: string;
-    person: Person;
+    claiment: Person;
+    defendant: Person;
     petitionTemplate: PetitionTemplate;
+    fieldData: string; // JSON
 }

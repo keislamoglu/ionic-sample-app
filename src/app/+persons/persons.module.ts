@@ -3,7 +3,7 @@ import {PersonsComponent} from './persons.component';
 import {PersonModalComponent} from './person/person-modal.component';
 import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
-import {ServicesModule} from '../services';
+import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({

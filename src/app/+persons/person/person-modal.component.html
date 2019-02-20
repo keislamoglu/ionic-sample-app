@@ -12,7 +12,11 @@
         <!--NAME-->
         <ion-item>
             <ion-label>Ad</ion-label>
-            <ion-input placeholder="Ad giriniz" name="name" [(ngModel)]="person.givenName" required></ion-input>
+            <ion-input placeholder="Ad giriniz" name="name" [(ngModel)]="person.name" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>İkinci ad</ion-label>
+            <ion-input placeholder="(Zorunlu değil)" name="middlename" [(ngModel)]="person.middlename"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Soyad</ion-label>
@@ -34,9 +38,9 @@
             <ion-textarea placeholder="Adres giriniz" name="address" [(ngModel)]="person.address" required></ion-textarea>
         </ion-item>
         <!--ACTIONS-->
-        <ion-buttons>
-            <ion-button fill="solid" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
-            <ion-button fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
-        </ion-buttons>
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+            <ion-button slot="end" fill="clear" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+        </ion-item>
     </form>
 </ion-content>

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {CaseFilesComponent} from './case-files.component';
-import {CommonModule} from '@angular/common';
-import {ServicesModule} from '../services';
-import {IonicModule} from '@ionic/angular';
-import {CaseFileModalComponent} from './case-file/case-file-modal.component';
 import {FormsModule} from '@angular/forms';
+import {IonicModule} from '@ionic/angular';
+import {CommonModule} from '@angular/common';
+import {CaseFilesComponent} from './case-files.component';
+import {ServicesModule} from '../shared/services';
+import {CaseFileModalComponent} from './case-file/case-file-modal.component';
 
 @NgModule({
     declarations: [

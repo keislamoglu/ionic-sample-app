@@ -18,7 +18,7 @@
         </ion-buttons>
     </ion-toolbar>
     <ion-list>
-        <ion-item *ngFor="let person of persons">{{person.fullName}} - {{person.nId}}
+        <ion-item *ngFor="let person of persons">{{_fullName(person)}} - {{person.nId}}
             <ion-buttons slot="end">
                 <ion-button color="primary" (click)="edit(person.id)">
                     <ion-icon slot="icon-only" name="create"></ion-icon>
