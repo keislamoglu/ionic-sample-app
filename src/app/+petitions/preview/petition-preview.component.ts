@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PetitionService, PetitionTemplateService} from '../../shared/services';
+import {PetitionService, PetitionTemplateService, UserInfoService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 import {ModalController} from '@ionic/angular';
 import {Person, Petition, UserInfo} from '../../shared/entity';
-import {UserInfoService} from '../../shared/services/user-info.service';
 
 @Component({
     selector: 'app-petition-preview',
