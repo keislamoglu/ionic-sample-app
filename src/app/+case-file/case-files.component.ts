@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CaseFile} from '../shared/entity/case-file';
+import {CaseFile} from '../shared/entity';
 import {CaseFileService} from '../shared/services';
 import {ModalController, NavController} from '@ionic/angular';
 import {CaseFileModalComponent} from './case-file/case-file-modal.component';

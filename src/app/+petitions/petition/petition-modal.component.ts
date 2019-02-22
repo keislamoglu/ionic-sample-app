@@ -8,8 +8,8 @@ import {
     ProsecutionOfficeService
 } from '../../shared/services';
 import {Person, Petition, PetitionTemplate, ProsecutionOffice} from '../../shared/entity';
-import {map, switchMap} from "rxjs/operators";
-import {Observable, zip} from "rxjs";
+import {map, switchMap} from 'rxjs/operators';
+import {Observable, zip} from 'rxjs';
 
 @Component({
     templateUrl: './petition-modal.component.html',
@@ -49,7 +49,7 @@ export class PetitionModalComponent implements OnInit {
         this._getDataSets().subscribe(val => {
             [this.templates, this.persons, this.prosecutions] = val;
             this.petition = new Petition();
-        })
+        });
     }
 
     edit(id: string) {
@@ -66,6 +66,13 @@ export class PetitionModalComponent implements OnInit {
     }
 
     save(): void {
+        const fieldData = {
+            claiment: this.persons.find(x => x.id === this.petition.claimentId),
+            defendant: this.persons.find(x => x.id === this.petition.defendantId),
+        };
+
+        this.petition.fieldData = JSON.stringify(fieldData);
+
         if (this.petition.id) {
             this._petitionService.update(this.petition.id, this.petition)
                 .subscribe(() => this.dismiss());
@@ -80,7 +87,7 @@ export class PetitionModalComponent implements OnInit {
             message: `<strong>${this.petition.name}</strong> dilekçesini silmek istediğinize emin misiniz?`,
             cancel: {text: 'Vazgeç'},
             ok: {text: 'Sil', handler: () => this._remove()}
-        })
+        });
     }
 
     export() {
@@ -100,15 +107,18 @@ export class PetitionModalComponent implements OnInit {
     }
 
     get requiredFields() {
-        if (this.template)
+        if (this.template) {
             return this._requiredFields;
+        }
     }
 
     private _loadTemplate(id: string): Observable<void> {
         return this._petitionTemplateService.get(id).pipe(
             map(template => {
                 this.template = template;
-                if (!this.petition.name) this.petition.name = template.name;
+                if (!this.petition.name) {
+                    this.petition.name = template.name;
+                }
 
                 this.requiredFields = JSON.parse(this.template.requiredFields);
             })

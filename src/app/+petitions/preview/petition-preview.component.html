@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{petition.name}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <app-runtime-content [context]="context" [template]="template"></app-runtime-content>
+</ion-content>

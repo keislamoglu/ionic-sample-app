@@ -4,6 +4,7 @@ import {ModalOptions} from '@ionic/core';
 import {PetitionModalComponent} from './petition/petition-modal.component';
 import {Petition} from '../shared/entity';
 import {PetitionService} from '../shared/services';
+import {PetitionPreviewComponent} from "./preview/petition-preview.component";
 
 @Component({
     templateUrl: './petitions.component.html',
@@ -22,17 +23,21 @@ export class PetitionsComponent implements OnInit {
     }
 
     create() {
-        this.presentModal();
+        this.presentModal(PetitionModalComponent);
     }
 
     edit(id: string) {
-        this.presentModal(id);
+        this.presentModal(PetitionModalComponent, {id});
     }
 
-    private async presentModal(id?: string) {
+    preview(id: string) {
+        this.presentModal(PetitionPreviewComponent, {id});
+    }
+
+    private async presentModal(component: any, props?: any) {
         const opts: ModalOptions = {
-            component: PetitionModalComponent,
-            componentProps: id ? {id} : void 0,
+            component,
+            componentProps: props,
         };
         const modal = await this._modalController.create(opts);
         return await modal.present();
