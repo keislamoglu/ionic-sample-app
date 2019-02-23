@@ -28,6 +28,16 @@
             <ion-label>Dilekçe Adı</ion-label>
             <ion-input placeholder="Dilekçe adı giriniz" name="name" [(ngModel)]="petition.name"></ion-input>
         </ion-item>
+        <!--CASE FILE-->
+        <ion-item>
+            <ion-label>Dosya</ion-label>
+            <ion-select required name="caseFile"
+                        [(ngModel)]="petition.caseFileId"
+                        placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let caseFile of caseFiles"
+                                   [value]="caseFile.id">{{caseFile.fileNo}}</ion-select-option>
+            </ion-select>
+        </ion-item>
         <!--CLAIMENT-->
         <ion-item *ngIf="isRequiredField('claiment')">
             <ion-label>Davacı</ion-label>
@@ -46,6 +56,16 @@
                         placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let person of persons"
                                    [value]="person.id">{{_personFullName(person)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--PROSECUTION OFFICE-->
+        <ion-item *ngIf="isRequiredField('prosecution')">
+            <ion-label>Savcılık</ion-label>
+            <ion-select required name="prosecution"
+                        [(ngModel)]="petition.prosecutionOfficeId"
+                        placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let pOffice of prosecutionOffices"
+                                   [value]="pOffice.id">{{pOffice.name}}</ion-select-option>
             </ion-select>
         </ion-item>
         <!--ACTIONS-->

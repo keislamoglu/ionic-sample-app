@@ -8,21 +8,21 @@
     <br>
 </p>
 
-<p><strong>Uzlaştırma No :</strong>&nbsp;</p>
+<p><strong>Uzlaştırma No :</strong>&nbsp;{{caseFile.fileNo}}</p>
 
 <p style="text-align: center;"><strong>Sayın</strong>&nbsp;<strong>{{fullName(claiment)}}</strong></p>
 
 <p style="text-align: center;"><em>(Adres: {{claiment.address}})</em></p>
 
-<p>&hellip;&hellip;&hellip;&hellip;&hellip;. Cumhuriyet Başsavcılığı tarafından y&uuml;r&uuml;t&uuml;len yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız. Soruşturma/kovuşturmaya konu su&ccedil;un, 5271 sayılı CMK&rsquo;nın 253 ve 254&rsquo;&uuml;nc&uuml; maddeleri gereğince uzlaşma kapsamındaki su&ccedil;lardan olması nedeniyle, uzlaşma işlemlerinin y&uuml;r&uuml;t&uuml;lebilmesi i&ccedil;in Cumhuriyet Başsavcılığı Uzlaştırma B&uuml;rosu tarafından uzlaştırmacı olarak g&ouml;revlendirilmiş bulunmaktayım.</p>
+<p>{{prosecutionOffice.name}} Cumhuriyet Başsavcılığı tarafından y&uuml;r&uuml;t&uuml;len yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız. Soruşturma/kovuşturmaya konu su&ccedil;un, 5271 sayılı CMK&rsquo;nın 253 ve 254&rsquo;&uuml;nc&uuml; maddeleri gereğince uzlaşma kapsamındaki su&ccedil;lardan olması nedeniyle, uzlaşma işlemlerinin y&uuml;r&uuml;t&uuml;lebilmesi i&ccedil;in Cumhuriyet Başsavcılığı Uzlaştırma B&uuml;rosu tarafından uzlaştırmacı olarak g&ouml;revlendirilmiş bulunmaktayım.</p>
 
 <p>Bu mektubu, uzlaşma g&ouml;r&uuml;şmelerini başlatmak i&ccedil;in yazmaktayım. Mektubun ekinde uzlaşmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuk&icirc; sonu&ccedil;larının bulunduğu <em>Uzlaşma Teklif Formu</em> bulunmaktadır. Bu formu dikkatlice okumanızı tavsiye ederim. A&ccedil;ıklamamı istediğiniz bir husus var ise 3 g&uuml;nl&uuml;k s&uuml;re i&ccedil;erisinde&nbsp;mesai saatleri i&ccedil;erisinde&nbsp;aşağıda belirtilen telefon numarası &uuml;zerinden bana ulaşabilirsiniz.</p>
 
 <p>Ceza Muhakemesinde Uzlaştırma Y&ouml;netmeliği&rsquo;nin 30 ve 34/2&rsquo;nci maddeleri gereğince; bu mektubun elinize ge&ccedil;mesinden itibaren&nbsp;<strong>en ge&ccedil; 3 g&uuml;n i&ccedil;inde</strong> tarafımla irtibata ge&ccedil;meniz ve kararınızı bildirmeniz gerekmektedir. Bu s&uuml;re i&ccedil;inde benimle irtibata ge&ccedil;mediğiniz takdirde uzlaşma teklifini reddetmiş sayılacağınızı hatırlatırım. Bu durumda soruşturma / kovuşturma işlemlerine kaldığı yerden devam edilecek ve bir daha uzlaşma usul&uuml; uygulanamayacaktır.</p>
 
-<p>Saygı ile bilgilerinize sunarım. &hellip;./&hellip;../&hellip;..</p>
+<p>Saygı ile bilgilerinize sunarım. {{date | date: 'dd/MM/yyyy'}}</p>
 
-<p style="text-align: right;">{{fullName(userInfo)}}.
+<p style="text-align: right;">{{fullName(userInfo)}}
     <br>Uzlaştırmacı</p>
 
 <p>

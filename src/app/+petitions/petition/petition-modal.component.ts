@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {
-    AlertService,
+    AlertService, CaseFileService,
     PersonService,
     PetitionService,
     PetitionTemplateService,
-    ProsecutionOfficeService
+    ProsecutionOfficeService, UserInfoService
 } from '../../shared/services';
-import {Person, Petition, PetitionTemplate, ProsecutionOffice} from '../../shared/entity';
+import {CaseFile, Person, Petition, PetitionTemplate, ProsecutionOffice, UserInfo} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable, zip} from 'rxjs';
 
@@ -21,14 +21,18 @@ export class PetitionModalComponent implements OnInit {
     template: PetitionTemplate;
     templates: PetitionTemplate[];
     persons: Person[] = [];
-    prosecutions: ProsecutionOffice[] = [];
+    prosecutionOffices: ProsecutionOffice[] = [];
+    caseFiles: CaseFile[];
+    userInfo: UserInfo;
     private _requiredFields: string[] = [];
 
     constructor(private _modalController: ModalController,
                 private _petitionService: PetitionService,
+                private _caseFileService: CaseFileService,
                 private _petitionTemplateService: PetitionTemplateService,
                 private _personService: PersonService,
                 private _prosecutionOfficeService: ProsecutionOfficeService,
+                private _userInfoService: UserInfoService,
                 private _alertService: AlertService) {
     }
 
@@ -38,6 +42,7 @@ export class PetitionModalComponent implements OnInit {
             return;
         }
         this.new();
+        this._userInfoService.getAll().subscribe(userInfos => this.userInfo = userInfos[0]);
     }
 
     dismiss() {
@@ -47,7 +52,7 @@ export class PetitionModalComponent implements OnInit {
 
     new() {
         this._getDataSets().subscribe(val => {
-            [this.templates, this.persons, this.prosecutions] = val;
+            [this.templates, this.persons, this.prosecutionOffices, this.caseFiles] = val;
             this.petition = new Petition();
         });
     }
@@ -55,7 +60,7 @@ export class PetitionModalComponent implements OnInit {
     edit(id: string) {
         this._getDataSets().pipe(
             switchMap(val => {
-                [this.templates, this.persons, this.prosecutions] = val;
+                [this.templates, this.persons, this.prosecutionOffices, this.caseFiles] = val;
                 return this._petitionService.get(id);
             }),
             switchMap(petition => {
@@ -66,9 +71,15 @@ export class PetitionModalComponent implements OnInit {
     }
 
     save(): void {
+        this.petition.date = new Date();
+
         const fieldData = {
             claiment: this.persons.find(x => x.id === this.petition.claimentId),
             defendant: this.persons.find(x => x.id === this.petition.defendantId),
+            caseFile: this.caseFiles.find(x => x.id === this.petition.caseFileId),
+            prosecutionOffice: this.prosecutionOffices.find(x => x.id === this.petition.prosecutionOfficeId),
+            userInfo: this.userInfo,
+            date: this.petition.date,
         };
 
         this.petition.fieldData = JSON.stringify(fieldData);
@@ -78,6 +89,7 @@ export class PetitionModalComponent implements OnInit {
                 .subscribe(() => this.dismiss());
             return;
         }
+
         this._petitionService.add(this.petition).subscribe(() => this.dismiss());
     }
 
@@ -125,11 +137,12 @@ export class PetitionModalComponent implements OnInit {
         );
     }
 
-    private _getDataSets(): Observable<[PetitionTemplate[], Person[], ProsecutionOffice[]]> {
+    private _getDataSets(): Observable<[PetitionTemplate[], Person[], ProsecutionOffice[], CaseFile[]]> {
         return zip(
             this._petitionTemplateService.getAll(),
             this._personService.getAll(),
-            this._prosecutionOfficeService.getAll()
+            this._prosecutionOfficeService.getAll(),
+            this._caseFileService.getAll(),
         );
     }
 

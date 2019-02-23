@@ -39,11 +39,11 @@ export class RuntimeContentComponent implements OnInit {
     }
 
     compileTemplate() {
-        let metadata = {
+        const metadata = {
             selector: `generated-component`,
             template: this.template
         };
-        let factory = this.createComponentFactorySync(this.compiler, metadata);
+        const factory = this.createComponentFactorySync(this.compiler, metadata);
 
         if (this.componentRef) {
             this.componentRef.destroy();
@@ -60,8 +60,12 @@ export class RuntimeContentComponent implements OnInit {
         const decoratedComponent = componentDecorator(component);
 
         let moduleMetadata = this.moduleMetadata;
-        if (!moduleMetadata) moduleMetadata = {declarations: []};
-        if (!moduleMetadata.declarations) moduleMetadata.declarations = [];
+        if (!moduleMetadata) {
+            moduleMetadata = {declarations: []};
+        }
+        if (!moduleMetadata.declarations) {
+            moduleMetadata.declarations = [];
+        }
         moduleMetadata.declarations.push(decoratedComponent);
 
         const moduleDecorator = NgModule(moduleMetadata);

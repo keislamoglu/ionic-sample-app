@@ -4,8 +4,8 @@ import {guid, lorem} from '../shared/helpers';
 export const PETITION_TEMPLATES: PetitionTemplate[] = [
     {
         id: guid(),
-        name: 'Sample Template',
-        requiredFields: JSON.stringify(['claiment']),
+        name: 'Görüşmeye Davet',
+        requiredFields: JSON.stringify(['claiment', 'prosecution']),
         petitions: [],
         content: require('../../templates/template_1.html')
     },

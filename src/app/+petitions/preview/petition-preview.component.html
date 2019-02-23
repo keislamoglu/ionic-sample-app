@@ -6,7 +6,9 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
-    <app-runtime-content [context]="context" [template]="template"></app-runtime-content>
+    <app-runtime-content [context]="context" [template]="template" [moduleMetadata]="moduleMetadata"></app-runtime-content>
 </ion-content>
+<ion-button (click)="createPdf()">PDF</ion-button>
+
+
