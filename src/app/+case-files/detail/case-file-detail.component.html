@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
+        </ion-buttons>
+        <ion-title>Dosya: {{caseFile.fileNo}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+        <ion-button fill="clear" (click)="navPersonDetail(claiment)">Davacı: {{_personFullName(claiment)}}</ion-button>
+    </ion-item>
+    <ion-item>
+        <ion-button fill="clear" (click)="navPersonDetail(defendant)">Davalı: {{_personFullName(defendant)}}</ion-button>
+    </ion-item>
+</ion-content>

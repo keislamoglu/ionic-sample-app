@@ -4,10 +4,9 @@ import {AlertService, PersonService} from '../../shared/services';
 import {Person} from '../../shared/entity';
 
 @Component({
-    templateUrl: './person-modal.component.html',
-    styleUrls: ['./person-modal.component.scss'],
+    templateUrl: './person-edit-modal.component.html',
 })
-export class PersonModalComponent implements OnInit {
+export class PersonEditModalComponent implements OnInit {
     @Input() id: string;
     person: Person | null = null;
 

@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
+        </ion-buttons>
+        <ion-title>{{_fullName(person)}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item>T.C. No: {{person.nId}}</ion-item>
+    <ion-item>Ad: {{person.name}}</ion-item>
+    <ion-item>İkinci Ad: {{person.middlename || '-'}}</ion-item>
+    <ion-item>Soyad: {{person.lastname}}</ion-item>
+    <ion-item>Telefon: {{person.phone}}</ion-item>
+    <ion-item>Adres: {{person.address}}</ion-item>
+    <ion-button expand="block" (click)="navToPetitions(person.id)">Dilekçeler</ion-button>
+    <ion-button expand="block" (click)="newPetition()">Yeni Dilekçe</ion-button>
+</ion-content>

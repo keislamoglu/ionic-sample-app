@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ petition.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!--PROSECUTION OFFICE-->
+    <ion-label>Savcılık:</ion-label> {{prosecutionOffice.name}}
+    <!--ACTION BUTTONS-->
+    <button (click)="exportToDocx()"></button>
+</ion-content>

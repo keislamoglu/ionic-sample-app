@@ -16,6 +16,8 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
     createPetitionTemplate(lorem(25), ['claiment']),
 ];
 
+let i = 1;
+
 function createPetitionTemplate(content: string, requiredFieldList?: string[]): PetitionTemplate {
     if (!requiredFieldList) {
         requiredFieldList = ['claiment', 'defendant'];
@@ -24,7 +26,7 @@ function createPetitionTemplate(content: string, requiredFieldList?: string[]): 
     const id = guid();
     return {
         id,
-        name: `Template-${id}`,
+        name: `Şablon-${i++}`,
         content: content,
         petitions: [],
         requiredFields

@@ -8,7 +8,7 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {CaseFilesModule} from './+case-file/case-files.module';
+import {CaseFilesModule} from './+case-files/case-files.module';
 import {PersonsModule} from './+persons/persons.module';
 import {PetitionsModule} from './+petitions/petitions.module';
 

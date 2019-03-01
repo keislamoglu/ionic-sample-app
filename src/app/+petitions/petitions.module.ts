@@ -3,12 +3,12 @@ import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {PetitionsComponent} from './petitions.component';
-import {PetitionModalComponent} from './petition/petition-modal.component';
+import {PetitionEditModalComponent} from './edit/petition-edit-modal.component';
 import {ServicesModule} from '../shared/services';
 import {RuntimeContentModule} from '../shared/runtime-content';
-import {PetitionPreviewComponent} from './preview/petition-preview.component';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
+import {PetitionDetailComponent} from './detail/petition-detail.component';
 
 @NgModule({
     imports: [
@@ -20,15 +20,14 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
     ],
     declarations: [
         PetitionsComponent,
-        PetitionModalComponent,
-        PetitionPreviewComponent,
+        PetitionEditModalComponent,
+        PetitionDetailComponent,
     ],
     exports: [
-        PetitionsComponent
+        PetitionsComponent,
     ],
     entryComponents: [
-        PetitionModalComponent,
-        PetitionPreviewComponent,
+        PetitionEditModalComponent,
     ],
     providers: [
         File,

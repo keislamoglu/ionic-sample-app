@@ -1,5 +1,5 @@
 import {Person} from '../shared/entity';
-import {guid, lorem} from '../shared/helpers';
+import {guid} from '../shared/helpers';
 
 export const PERSONS = [
     createPerson('Kadir Emin', 'İslamoğlu'),

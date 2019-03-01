@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="create()">Yeni dosya</ion-button>
+        </ion-buttons>
+        <ion-title>
+            Dava Dosyaları
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let caseFile of caseFiles">
+            <ion-button fill="clear" (click)="navToDetail(caseFile.id)">Dosya Nu: {{caseFile.fileNo}}</ion-button>
+        </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="newPerson()">Yeni kişi</ion-button>
+    <ion-button expand="block" (click)="navToAllPersons()">Tüm kişiler</ion-button>
+</ion-content>

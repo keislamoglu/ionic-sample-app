@@ -5,10 +5,9 @@ import {AlertService, CaseFileService, PersonService} from '../../shared/service
 import {CaseFile, Person} from '../../shared/entity';
 
 @Component({
-    templateUrl: './case-file-modal.component.html',
-    styleUrls: ['./case-file-modal.component.scss']
+    templateUrl: './case-file-edit-modal.component.html'
 })
-export class CaseFileModalComponent implements OnInit {
+export class CaseFileEditModalComponent implements OnInit {
     @Input() id: string;
     caseFile: CaseFile | null = null;
     claiments: Person[] = [];

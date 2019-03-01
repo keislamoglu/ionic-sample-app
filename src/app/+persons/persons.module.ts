@@ -1,15 +1,17 @@
 import {NgModule} from '@angular/core';
 import {PersonsComponent} from './persons.component';
-import {PersonModalComponent} from './person/person-modal.component';
+import {PersonEditModalComponent} from './edit/person-edit-modal.component';
 import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
+import {PersonDetailComponent} from './detail/person-detail.component';
 
 @NgModule({
     declarations: [
         PersonsComponent,
-        PersonModalComponent
+        PersonDetailComponent,
+        PersonEditModalComponent,
     ],
     imports: [
         IonicModule.forRoot(),
@@ -18,7 +20,7 @@ import {FormsModule} from '@angular/forms';
         FormsModule,
     ],
     exports: [PersonsComponent],
-    entryComponents: [PersonModalComponent]
+    entryComponents: [PersonEditModalComponent]
 })
 export class PersonsModule {
 }

@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="create()">Yeni kişi</ion-button>
         </ion-buttons>
         <ion-title>
             Kişiler
@@ -10,20 +13,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-button color="primary" (click)="create()">
-                <ion-icon slot="icon-only" name="add-circle"></ion-icon> Yeni
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
     <ion-list>
-        <ion-item *ngFor="let person of persons">{{_fullName(person)}} - {{person.nId}}
-            <ion-buttons slot="end">
-                <ion-button color="primary" (click)="edit(person.id)">
-                    <ion-icon slot="icon-only" name="create"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-        </ion-item>
+        <ion-button fill="clear" *ngFor="let person of persons" (click)="navToDetail(person.id)">{{_fullName(person)}} - {{person.nId}}</ion-button>
     </ion-list>
 </ion-content>

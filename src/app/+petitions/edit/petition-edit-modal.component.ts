@@ -12,11 +12,11 @@ import {map, switchMap} from 'rxjs/operators';
 import {Observable, zip} from 'rxjs';
 
 @Component({
-    templateUrl: './petition-modal.component.html',
-    styleUrls: ['./petition-modal.component.scss'],
+    templateUrl: './petition-edit-modal.component.html',
 })
-export class PetitionModalComponent implements OnInit {
+export class PetitionEditModalComponent implements OnInit {
     @Input() id: string;
+    @Input() claimentId: string;
     petition: Petition;
     template: PetitionTemplate;
     templates: PetitionTemplate[];
@@ -54,6 +54,9 @@ export class PetitionModalComponent implements OnInit {
         this._getDataSets().subscribe(val => {
             [this.templates, this.persons, this.prosecutionOffices, this.caseFiles] = val;
             this.petition = new Petition();
+            if (this.claimentId) {
+                this.petition.claimentId = this.claimentId;
+            }
         });
     }
 

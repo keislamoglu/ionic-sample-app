@@ -23,7 +23,7 @@ function createPetition(claiment: Person,
     const fieldDataJSON = JSON.stringify(fieldData);
     return {
         id: guid(),
-        name: template.name,
+        name: `Dilekçe-${i + 1}`,
         petitionTemplate: template,
         petitionTemplateId: template.id,
         claimentId: claiment.id,
