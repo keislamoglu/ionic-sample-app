@@ -1,6 +1,7 @@
 import {PetitionTemplate} from '../shared/entity';
 import {guid, lorem} from '../shared/helpers';
 
+let i = 1;
 export const PETITION_TEMPLATES: PetitionTemplate[] = [
     {
         id: guid(),
@@ -15,8 +16,6 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
     createPetitionTemplate(lorem(75)),
     createPetitionTemplate(lorem(25), ['claiment']),
 ];
-
-let i = 1;
 
 function createPetitionTemplate(content: string, requiredFieldList?: string[]): PetitionTemplate {
     if (!requiredFieldList) {
