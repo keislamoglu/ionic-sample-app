@@ -23,7 +23,7 @@ export class PetitionsComponent implements OnInit {
     }
 
     async create() {
-        const modal = await this._modalService.present(PetitionEditModalComponent);
+        const modal = await this._modalService.present(PetitionEditModalComponent, {claimentId: this.personId});
         await modal.onWillDismiss();
         this._loadData();
     }
