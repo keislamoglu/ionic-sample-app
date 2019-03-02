@@ -92,18 +92,17 @@ export class PetitionEditModalComponent implements OnInit {
         };
 
         this.petition.fieldData = JSON.stringify(fieldData);
-
-        this.exportDocx(fieldData);
-
         if (this.petition.id) {
             this._petitionService.update(this.petition.id, this.petition)
                 .subscribe(() => {
+                    this.exportDocx(fieldData);
                     this.dismiss();
                 });
             return;
         }
 
         this._petitionService.add(this.petition).subscribe(() => {
+            this.exportDocx(fieldData);
             this.dismiss();
         });
     }
