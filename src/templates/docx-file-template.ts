@@ -2,7 +2,7 @@ import {Document, Paragraph} from 'docx';
 
 
 export enum TextAlign {
-    Left, Right, Center
+    Left, Right, Center, Justified
 }
 
 export abstract class DocxFileTemplate<T> {
@@ -37,10 +37,17 @@ export abstract class DocxFileTemplate<T> {
             case TextAlign.Center:
                 p.center();
                 break;
+            case TextAlign.Justified:
+                p.justified();
+                break;
             default:
                 p.left();
         }
         return p.createTextRun(text).font('Arial');
+    }
+
+    protected newLine() {
+        this.doc.createParagraph().createTextRun('').font('Arial').break();
     }
 
     getDocument() {

@@ -13,7 +13,8 @@ import {
 import {CaseFile, Person, Petition, PetitionTemplate, ProsecutionOffice, TemplateDocument, UserInfo} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable, zip} from 'rxjs';
-import {UzlasmayaDavet, UzlasmayaDavetProps} from '../../../templates';
+import {GorusmeyeDavet, GorusmeyeDavetProps} from '../../../templates';
+import {guid} from '../../shared/helpers';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',
@@ -80,7 +81,7 @@ export class PetitionEditModalComponent implements OnInit {
 
     save(): void {
         this.petition.date = new Date();
-        this.petition.fileName = new Date().getMilliseconds().toString() + '.docx';
+        this.petition.fileName = `${guid()}.docx`;
         const fieldData = {
             fileName: this.petition.fileName,
             claiment: this.persons.find(x => x.id === this.petition.claimentId),
@@ -121,7 +122,7 @@ export class PetitionEditModalComponent implements OnInit {
             case TemplateDocument.UzlasmaGorusmesineDavet:
                 this._docxFileService.export({
                     fileName: this.petition.fileName,
-                    docxTemplate: UzlasmayaDavet,
+                    docxTemplate: GorusmeyeDavet,
                     props: {
                         caseFile: data.caseFile,
                         claiment: data.claiment,
@@ -129,7 +130,7 @@ export class PetitionEditModalComponent implements OnInit {
                         date: data.date,
                         userInfo: data.userInfo,
                         prosecutionOffice: data.prosecutionOffice
-                    } as UzlasmayaDavetProps
+                    } as GorusmeyeDavetProps
                 });
                 break;
         }
