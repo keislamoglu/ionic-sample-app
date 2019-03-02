@@ -123,6 +123,7 @@ export class PetitionEditModalComponent implements OnInit {
                     fileName: this.petition.fileName,
                     docxTemplate: UzlasmayaDavet,
                     props: {
+                        caseFile: data.caseFile,
                         claiment: data.claiment,
                         defendant: data.defendant,
                         date: data.date,
