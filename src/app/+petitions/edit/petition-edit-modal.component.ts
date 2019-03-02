@@ -80,7 +80,7 @@ export class PetitionEditModalComponent implements OnInit {
 
     save(): void {
         this.petition.date = new Date();
-        this.petition.fileName = 'uzlasma-gorusmesine-davet.docx'; // TODO: auto generate
+        this.petition.fileName = new Date().getMilliseconds().toString() + '.docx';
         const fieldData = {
             fileName: this.petition.fileName,
             claiment: this.persons.find(x => x.id === this.petition.claimentId),
