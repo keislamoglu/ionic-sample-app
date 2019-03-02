@@ -7,7 +7,7 @@ import {DocxFileTemplate} from '../../../templates';
 
 export interface DocxFileExportOptions {
     fileName: string;
-    docxTemplate: DocxFileTemplate;
+    docxTemplate: (new (...args: any[]) => any);
     props?: {};
 }
 
@@ -42,9 +42,9 @@ export class DocxFileService {
         return this._file.documentsDirectory + DIR_NAME;
     }
 
-    private _createBlob(templateDocument: DocxFileTemplate, props?: {}) {
+    private _createBlob(templateDocument: (new (...args: any[]) => any), props?: {}) {
         // @ts-ignore
-        const instance = Object.create(templateDocument.prototype);
+        const instance: DocxFileTemplate = Object.create(templateDocument.prototype);
         instance.constructor.apply(instance, [props]);
         const docx = instance.getDocument();
         const packer = new Packer();

@@ -121,7 +121,7 @@ export class PetitionEditModalComponent implements OnInit {
             case TemplateDocument.UzlasmaGorusmesineDavet:
                 this._docxFileService.export({
                     fileName: this.petition.fileName,
-                    docxTemplate: UzlasmayaDavet as any,
+                    docxTemplate: UzlasmayaDavet,
                     props: {
                         claiment: data.claiment,
                         defendant: data.defendant,
