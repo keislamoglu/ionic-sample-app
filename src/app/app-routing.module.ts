@@ -12,8 +12,10 @@ const routes: Routes = [
     {path: 'case-files', component: CaseFilesComponent},
     {path: 'case-files/:id', component: CaseFileDetailComponent},
     {path: 'persons', component: PersonsComponent},
-    {path: 'persons/:id', component: PersonDetailComponent},
-    {path: 'persons/:id/petitions', component: PetitionsComponent},
+    {path: 'persons/:id', component: PersonDetailComponent, pathMatch: 'full'},
+    {path: 'case-files/:caseFileId/persons/:id', component: PersonDetailComponent},
+    {path: 'persons/:id/petitions', component: PetitionsComponent, pathMatch: 'full'},
+    {path: 'case-files/:caseFileId/persons/:id/petitions', component: PetitionsComponent},
     {path: 'petitions/:id', component: PetitionDetailComponent},
 ];
 

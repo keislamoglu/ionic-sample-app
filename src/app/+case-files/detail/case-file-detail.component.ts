@@ -26,7 +26,7 @@ export class CaseFileDetailComponent implements OnInit {
     }
 
     navPersonDetail(person: Person): void {
-        this._navController.navigateForward(`/persons/${person.id}`);
+        this._navController.navigateForward(`/case-files/${this.id}/persons/${person.id}`);
     }
 
     ngOnInit(): void {

@@ -12,6 +12,7 @@ import {PetitionEditModalComponent} from '../../+petitions/edit/petition-edit-mo
 })
 export class PersonDetailComponent implements OnInit {
     id: string;
+    caseFileId: string;
     person: Person;
 
     constructor(private _route: ActivatedRoute,
@@ -22,15 +23,22 @@ export class PersonDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
+        this.caseFileId = this._route.snapshot.paramMap.get('caseFileId');
         this._loadData();
     }
 
     navToPetitions() {
-        this._navController.navigateForward(`/persons/${this.person.id}/petitions`);
+        let url = this.caseFileId ? `/case-files/${this.caseFileId}` : '';
+        url += `/persons/${this.person.id}/petitions`;
+
+        this._navController.navigateForward(url);
     }
 
     newPetition() {
-        this._modalService.present(PetitionEditModalComponent, {claimentId: this.person.id});
+        this._modalService.present(PetitionEditModalComponent, {
+            claimentId: this.id,
+            caseFileId: this.caseFileId,
+        });
     }
 
     async edit() {

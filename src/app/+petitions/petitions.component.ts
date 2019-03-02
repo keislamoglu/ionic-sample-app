@@ -11,6 +11,7 @@ import {NavController} from '@ionic/angular';
 })
 export class PetitionsComponent implements OnInit {
     personId: string;
+    caseFileId: string;
     petitions: Petition[] = [];
 
     constructor(private _route: ActivatedRoute,
@@ -21,15 +22,19 @@ export class PetitionsComponent implements OnInit {
 
     ngOnInit(): void {
         this.personId = this._route.snapshot.paramMap.get('id');
+        this.caseFileId = this._route.snapshot.paramMap.get('caseFileId');
         this._loadData();
     }
 
     navToDetail(id: string) {
-        this._navController.navigateForward(`petitions/${id}`);
+        this._navController.navigateForward(`/petitions/${id}`);
     }
 
     async create() {
-        const modal = await this._modalService.present(PetitionEditModalComponent, {claimentId: this.personId});
+        const modal = await this._modalService.present(PetitionEditModalComponent, {
+            caseFileId: this.caseFileId,
+            claimentId: this.personId
+        });
         await modal.onWillDismiss();
         this._loadData();
     }

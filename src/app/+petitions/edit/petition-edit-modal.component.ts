@@ -22,6 +22,7 @@ import {guid} from '../../shared/helpers';
 export class PetitionEditModalComponent implements OnInit {
     @Input() id: string;
     @Input() claimentId: string;
+    @Input() caseFileId: string;
     petition: Petition;
     template: PetitionTemplate;
     templates: PetitionTemplate[];
@@ -62,6 +63,9 @@ export class PetitionEditModalComponent implements OnInit {
             this.petition = new Petition();
             if (this.claimentId) {
                 this.petition.claimentId = this.claimentId;
+            }
+            if (this.caseFileId) {
+                this.petition.caseFileId = this.caseFileId;
             }
         });
     }
