@@ -70,7 +70,7 @@ export class UzlasmayaDavet extends DocxFileTemplate<UzlasmayaDavetProps> {
         this.addText(this.props.userInfo.address, addressP);
         const phoneP = this.createP();
         this.addText('Telefon\t\t: ', phoneP).bold();
-        this.addText(this.props.userInfo.phone, addressP);
+        this.addText(this.props.userInfo.phone, phoneP);
     }
 
     private addHeadingCenter(text: string) {
