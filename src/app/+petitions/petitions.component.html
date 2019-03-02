@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="create()">Yeni dilekçe</ion-button>
@@ -14,13 +14,6 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let petition of petitions">{{petition.name}}
-            <ion-button fill="clear" slot="end" color="primary" (click)="edit(petition.id)">
-                <ion-icon slot="icon-only" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="clear" slot="end" color="primary" (click)="preview(petition.id)">
-                <ion-icon slot="icon-only" name="eye"></ion-icon>
-            </ion-button>
-        </ion-item>
+        <ion-button fill="clear" *ngFor="let petition of petitions" (click)="navToDetail(petition.id)">{{petition.name}}</ion-button>
     </ion-list>
 </ion-content>

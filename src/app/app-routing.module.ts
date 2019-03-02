@@ -5,6 +5,7 @@ import {CaseFilesComponent} from './+case-files/case-files.component';
 import {CaseFileDetailComponent} from './+case-files/detail/case-file-detail.component';
 import {PersonsComponent} from './+persons/persons.component';
 import {PersonDetailComponent} from './+persons/detail/person-detail.component';
+import {PetitionDetailComponent} from './+petitions/detail/petition-detail.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'case-files', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
     {path: 'persons', component: PersonsComponent},
     {path: 'persons/:id', component: PersonDetailComponent},
     {path: 'persons/:id/petitions', component: PetitionsComponent},
+    {path: 'petitions/:id', component: PetitionDetailComponent},
 ];
 
 @NgModule({

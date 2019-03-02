@@ -1,15 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {
-    AlertService, CaseFileService,
+    AlertService,
+    CaseFileService,
+    DocxFileService,
     PersonService,
     PetitionService,
     PetitionTemplateService,
-    ProsecutionOfficeService, UserInfoService
+    ProsecutionOfficeService,
+    UserInfoService
 } from '../../shared/services';
-import {CaseFile, Person, Petition, PetitionTemplate, ProsecutionOffice, UserInfo} from '../../shared/entity';
+import {CaseFile, Person, Petition, PetitionTemplate, ProsecutionOffice, TemplateDocument, UserInfo} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable, zip} from 'rxjs';
+import {UzlasmayaDavet, UzlasmayaDavetProps} from '../../../templates';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',
@@ -33,7 +37,8 @@ export class PetitionEditModalComponent implements OnInit {
                 private _personService: PersonService,
                 private _prosecutionOfficeService: ProsecutionOfficeService,
                 private _userInfoService: UserInfoService,
-                private _alertService: AlertService) {
+                private _alertService: AlertService,
+                private _docxFileService: DocxFileService) {
     }
 
     ngOnInit() {
@@ -75,8 +80,9 @@ export class PetitionEditModalComponent implements OnInit {
 
     save(): void {
         this.petition.date = new Date();
-
+        this.petition.fileName = 'uzlasma-gorusmesine-davet.docx'; // TODO: auto generate
         const fieldData = {
+            fileName: this.petition.fileName,
             claiment: this.persons.find(x => x.id === this.petition.claimentId),
             defendant: this.persons.find(x => x.id === this.petition.defendantId),
             caseFile: this.caseFiles.find(x => x.id === this.petition.caseFileId),
@@ -87,13 +93,19 @@ export class PetitionEditModalComponent implements OnInit {
 
         this.petition.fieldData = JSON.stringify(fieldData);
 
+        this.exportDocx(fieldData);
+
         if (this.petition.id) {
             this._petitionService.update(this.petition.id, this.petition)
-                .subscribe(() => this.dismiss());
+                .subscribe(() => {
+                    this.dismiss();
+                });
             return;
         }
 
-        this._petitionService.add(this.petition).subscribe(() => this.dismiss());
+        this._petitionService.add(this.petition).subscribe(() => {
+            this.dismiss();
+        });
     }
 
     removeWithConfirm() {
@@ -105,8 +117,22 @@ export class PetitionEditModalComponent implements OnInit {
         });
     }
 
-    export() {
-        // TODO: implement to export petition as pdf file
+    exportDocx(data: any) {
+        switch (this.template.slugName) {
+            case TemplateDocument.UzlasmaGorusmesineDavet:
+                this._docxFileService.export({
+                    fileName: this.petition.fileName,
+                    docxTemplate: UzlasmayaDavet as any,
+                    props: {
+                        claiment: data.claiment,
+                        defendant: data.defendant,
+                        date: data.date,
+                        userInfo: data.userInfo,
+                        prosecutionOffice: data.prosecutionOffice
+                    } as UzlasmayaDavetProps
+                });
+                break;
+        }
     }
 
     onTemplateChange(id: string) {

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
 import {Petition, ProsecutionOffice} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {PetitionService, ProsecutionOfficeService} from '../../shared/services';
+import {DocxFileService, PetitionService, ProsecutionOfficeService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 import {ModalService} from '../../shared/services/modal.service';
 
@@ -17,7 +17,8 @@ export class PetitionDetailComponent implements OnInit {
     constructor(private _petitionService: PetitionService,
                 private _prosecutionOfficeService: ProsecutionOfficeService,
                 private _modalService: ModalService,
-                private _route: ActivatedRoute) {
+                private _route: ActivatedRoute,
+                private _docxFileService: DocxFileService) {
     }
 
     ngOnInit(): void {
@@ -25,8 +26,8 @@ export class PetitionDetailComponent implements OnInit {
         this._loadData();
     }
 
-    exportToDocx() {
-        // TODO: Export to docx statements
+    openDocx() {
+        this._docxFileService.open(this.petition.fileName);
     }
 
     async edit() {

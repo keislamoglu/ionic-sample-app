@@ -6,6 +6,7 @@ import {ProsecutionOffice} from './prosecution-office';
 export class Petition {
     id: string;
     name: string;
+    fileName?: string;
     claimentId: string;
     defendantId: string;
     caseFileId: string;

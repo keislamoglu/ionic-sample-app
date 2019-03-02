@@ -4,6 +4,7 @@ import {Petition} from '../shared/entity';
 import {PetitionService} from '../shared/services';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../shared/services/modal.service';
+import {NavController} from '@ionic/angular';
 
 @Component({
     templateUrl: './petitions.component.html',
@@ -14,12 +15,17 @@ export class PetitionsComponent implements OnInit {
 
     constructor(private _route: ActivatedRoute,
                 private _petitionService: PetitionService,
-                private _modalService: ModalService) {
+                private _modalService: ModalService,
+                private _navController: NavController) {
     }
 
     ngOnInit(): void {
         this.personId = this._route.snapshot.paramMap.get('id');
         this._loadData();
+    }
+
+    navToDetail(id: string) {
+        this._navController.navigateForward(`petitions/${id}`);
     }
 
     async create() {

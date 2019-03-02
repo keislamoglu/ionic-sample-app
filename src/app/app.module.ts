@@ -11,6 +11,8 @@ import {AppComponent} from './app.component';
 import {CaseFilesModule} from './+case-files/case-files.module';
 import {PersonsModule} from './+persons/persons.module';
 import {PetitionsModule} from './+petitions/petitions.module';
+import {File} from '@ionic-native/file/ngx';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,6 +26,8 @@ import {PetitionsModule} from './+petitions/petitions.module';
         PetitionsModule
     ],
     providers: [
+        File,
+        FileOpener,
         StatusBar,
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

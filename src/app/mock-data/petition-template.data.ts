@@ -1,23 +1,23 @@
-import {PetitionTemplate} from '../shared/entity';
-import {guid, lorem} from '../shared/helpers';
+import {PetitionTemplate, TemplateDocument} from '../shared/entity';
+import {guid} from '../shared/helpers';
 
 let i = 1;
 export const PETITION_TEMPLATES: PetitionTemplate[] = [
     {
         id: guid(),
         name: 'Görüşmeye Davet',
+        slugName: TemplateDocument.UzlasmaGorusmesineDavet,
         requiredFields: JSON.stringify(['claiment', 'prosecution']),
-        petitions: [],
-        content: require('../../templates/template_1.html')
+        petitions: []
     },
-    createPetitionTemplate(lorem(45)),
-    createPetitionTemplate(lorem(35)),
-    createPetitionTemplate(lorem(60)),
-    createPetitionTemplate(lorem(75)),
-    createPetitionTemplate(lorem(25), ['claiment']),
+    createPetitionTemplate(),
+    createPetitionTemplate(),
+    createPetitionTemplate(),
+    createPetitionTemplate(),
+    createPetitionTemplate(['claiment']),
 ];
 
-function createPetitionTemplate(content: string, requiredFieldList?: string[]): PetitionTemplate {
+function createPetitionTemplate(requiredFieldList?: string[]): PetitionTemplate {
     if (!requiredFieldList) {
         requiredFieldList = ['claiment', 'defendant'];
     }
@@ -26,7 +26,7 @@ function createPetitionTemplate(content: string, requiredFieldList?: string[]): 
     return {
         id,
         name: `Şablon-${i++}`,
-        content: content,
+        slugName: TemplateDocument.Ornek,
         petitions: [],
         requiredFields
     };
