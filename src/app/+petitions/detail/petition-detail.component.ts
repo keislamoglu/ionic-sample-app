@@ -32,7 +32,7 @@ export class PetitionDetailComponent implements OnInit {
 
     async edit() {
         const modal = await this._modalService.present(PetitionEditModalComponent, {id: this.id});
-        modal.onWillDismiss();
+        await modal.onWillDismiss();
         this._loadData();
     }
 
