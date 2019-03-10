@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalService} from '../shared/services/modal.service';
+import {ModalService, PartyService} from '../shared/services';
 import {Party} from '../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {PartyService} from '../shared/services';
 import {NavController} from '@ionic/angular';
 import {PartyEditModalComponent} from './edit/party-edit-modal.component';
 

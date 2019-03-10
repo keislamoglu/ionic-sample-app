@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CaseFileService, ExtensionTimeService} from '../shared/services';
-import {ModalService} from '../shared/services/modal.service';
+import {CaseFileService, ExtensionTimeService, ModalService} from '../shared/services';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {ExtensionTimeEditModalComponent} from './edit/extension-time-edit-modal.component';

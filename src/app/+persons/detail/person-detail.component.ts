@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {PersonService} from '../../shared/services';
+import {ModalService, PersonService} from '../../shared/services';
 import {Person} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {PersonEditModalComponent} from '../edit/person-edit-modal.component';
-import {ModalService} from '../../shared/services/modal.service';
 import {PetitionEditModalComponent} from '../../+petitions/edit/petition-edit-modal.component';
 
 @Component({

@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
 import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {DocxFileService, PetitionService, PetitionTemplateService} from '../../shared/services';
-import {ModalService} from '../../shared/services/modal.service';
+import {DocxFileService, ModalService, PetitionService, PetitionTemplateService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 
 @Component({

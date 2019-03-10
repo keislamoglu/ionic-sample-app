@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CaseFile} from '../shared/entity';
-import {CaseFileService} from '../shared/services';
+import {CaseFileService, ModalService} from '../shared/services';
 import {NavController} from '@ionic/angular';
 import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 import {PersonEditModalComponent} from '../+persons/edit/person-edit-modal.component';
-import {ModalService} from '../shared/services/modal.service';
 
 @Component({
     selector: 'case-file',

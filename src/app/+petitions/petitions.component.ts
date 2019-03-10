@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from './edit/petition-edit-modal.component';
 import {Petition} from '../shared/entity';
-import {PetitionService} from '../shared/services';
+import {ModalService, PetitionService} from '../shared/services';
 import {ActivatedRoute} from '@angular/router';
-import {ModalService} from '../shared/services/modal.service';
 import {NavController} from '@ionic/angular';
 
 @Component({

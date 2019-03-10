@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PartyService, PersonService} from '../../shared/services';
-import {ModalService} from '../../shared/services/modal.service';
+import {ModalService, PartyService, PersonService} from '../../shared/services';
 import {NavController} from '@ionic/angular';
 import {Party, Person} from '../../shared/entity';
 import {switchMap} from 'rxjs/operators';

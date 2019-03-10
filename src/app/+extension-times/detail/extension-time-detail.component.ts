@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ExtensionTimeService} from '../../shared/services';
-import {ModalService} from '../../shared/services/modal.service';
+import {ExtensionTimeService, ModalService} from '../../shared/services';
 import {ExtensionTime} from '../../shared/entity';
 import {ExtensionTimeEditModalComponent} from '../edit/extension-time-edit-modal.component';
 import {getDateDiff} from '../../shared/helpers';

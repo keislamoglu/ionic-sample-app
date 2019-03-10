@@ -10,3 +10,4 @@ export * from './docx-file.service';
 export * from './extension-time.service';
 export * from './party.service';
 export * from './petition-exporter.service';
+export * from './modal.service';
