@@ -31,7 +31,7 @@
     </ion-item>
     <ion-item>
         <ion-label>Kalan süre: </ion-label>{{remainingTime}} gün
-        <ion-button (click)="navToExtensionTimes()">Ek süre</ion-button>
+        <ion-button slot="end" color="secondary" size="small" fill="outline" (click)="navToExtensionTimes()">Ek süre</ion-button>
     </ion-item>
     <ion-button expand="block" (click)="navToParties()">Taraflar</ion-button>
 </ion-content>
