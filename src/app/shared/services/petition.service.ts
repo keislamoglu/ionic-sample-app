@@ -9,9 +9,7 @@ import {Observable, of} from 'rxjs';
 export class PetitionService extends BaseCrud<Petition> {
     protected dataSet: Petition[] = PETITIONS;
 
-    getByPerson(personId: string): Observable<Petition[]> {
-        return of(this.dataSet.filter(
-            t => [t.claimentId, t.defendantId].some(x => x === personId)
-        ));
+    getByParty(partyId: string): Observable<Petition[]> {
+        return of(this.dataSet.filter(t => t.partyId === partyId ));
     }
 }

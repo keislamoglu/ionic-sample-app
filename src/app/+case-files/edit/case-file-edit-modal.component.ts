@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
+import {AlertService, CaseFileService, CompetentAuthorityService, PersonService} from '../../shared/services';
+import {CaseFile, CaseFileType, CompetentAuthority, CompetentAuthorityType} from '../../shared/entity';
+import {EnumList, enumList} from '../../shared/helpers';
 import {switchMap} from 'rxjs/operators';
-import {AlertService, CaseFileService, PersonService} from '../../shared/services';
-import {CaseFile, Person} from '../../shared/entity';
 
 @Component({
     templateUrl: './case-file-edit-modal.component.html'
@@ -10,12 +11,34 @@ import {CaseFile, Person} from '../../shared/entity';
 export class CaseFileEditModalComponent implements OnInit {
     @Input() id: string;
     caseFile: CaseFile | null = null;
-    claiments: Person[] = [];
-    defendants: Person[] = [];
+    // Data sets
+    caseFileTypeDataset: EnumList<typeof CaseFileType> = enumList(CaseFileType);
+    competentAuthorities: CompetentAuthority[] = [];
 
-    constructor(private modalController: ModalController,
+    get conciliationStartDate(): string {
+        return this.caseFile.conciliationStartDate
+            ? this.caseFile.conciliationStartDate.toISOString()
+            : void 0;
+    }
+
+    set conciliationStartDate(value: string) {
+        this.caseFile.conciliationStartDate = new Date(value);
+    }
+
+    get chargeDate(): string {
+        return this.caseFile.chargeDate
+            ? this.caseFile.chargeDate.toISOString()
+            : void 0;
+    }
+
+    set chargeDate(value: string) {
+        this.caseFile.chargeDate = new Date(value);
+    }
+
+    constructor(private _modalController: ModalController,
                 private _caseFileService: CaseFileService,
                 private _personService: PersonService,
+                private _competentAuthorityService: CompetentAuthorityService,
                 private _alertService: AlertService) {
     }
 
@@ -28,35 +51,34 @@ export class CaseFileEditModalComponent implements OnInit {
     }
 
     dismiss() {
-        this._reset();
-        this.modalController.dismiss();
+        this._modalController.dismiss();
     }
 
     new() {
-        this._personService.getAll().subscribe(persons => {
-            this.defendants = this.claiments = persons;
-            this.caseFile = new CaseFile();
-        });
+        this.caseFile = new CaseFile();
     }
 
     edit(id: string) {
-        this._personService.getAll().pipe(
-            switchMap(persons => {
-                this.defendants = this.claiments = persons;
-                return this._caseFileService.get(id);
+        this._caseFileService.get(id).pipe(
+            switchMap(caseFile => {
+                this.caseFile = caseFile;
+                return this._loadCompetentAuthorities(caseFile.type);
             })
-        ).subscribe(caseFile => this.caseFile = caseFile);
+        ).subscribe(competentAuthorities => {
+            this.competentAuthorities = competentAuthorities;
+        });
     }
 
     save() {
-        if (this.caseFile.id) {
-            this._caseFileService.update(this.caseFile.id, this.caseFile).subscribe(() => this.dismiss());
+        if (this.id) {
+            this._caseFileService.update(this.id, this.caseFile).subscribe(() => this.dismiss());
             return;
         }
         this._caseFileService.add(this.caseFile).subscribe(() => this.dismiss());
     }
 
     removeWithConfirm() {
+        // TODO: remove related parties too
         this._alertService.confirm({
             title: 'Dava dosyası sil',
             message: `<strong>${this.caseFile.fileNo}</strong> dosyasını silmek istediğinize emin misiniz?`,
@@ -70,11 +92,16 @@ export class CaseFileEditModalComponent implements OnInit {
             .subscribe(() => this.dismiss());
     }
 
-    private _reset() {
-        this.caseFile = null;
+    private _loadCompetentAuthorities(caseFileType: CaseFileType) {
+        const cType = caseFileType === CaseFileType.Investigation
+            ? CompetentAuthorityType.CourtHouse
+            : CompetentAuthorityType.ProsecutionOffice;
+        return this._competentAuthorityService.getByType(cType);
     }
 
-    private _personFullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
+    onTypeChange(type: CaseFileType) {
+        this.caseFile.competentAuthorityId = void 0;
+        this._loadCompetentAuthorities(type)
+            .subscribe(competentAuthorities => this.competentAuthorities = competentAuthorities);
     }
 }

@@ -13,6 +13,8 @@ import {PersonsModule} from './+persons/persons.module';
 import {PetitionsModule} from './+petitions/petitions.module';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
+import {PartiesModule} from './+parties/parties.module';
+import {ExtensionTimesModule} from './+extension-times/extension-times.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -23,7 +25,9 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
         AppRoutingModule,
         CaseFilesModule,
         PersonsModule,
-        PetitionsModule
+        PetitionsModule,
+        PartiesModule,
+        ExtensionTimesModule,
     ],
     providers: [
         File,

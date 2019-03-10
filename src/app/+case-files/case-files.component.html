@@ -4,7 +4,7 @@
             <ion-button fill="clear" (click)="create()">Yeni dosya</ion-button>
         </ion-buttons>
         <ion-title>
-            Dava Dosyaları
+            Dosyalar
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -12,7 +12,7 @@
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let caseFile of caseFiles">
-            <ion-button fill="clear" (click)="navToDetail(caseFile.id)">Dosya Nu: {{caseFile.fileNo}}</ion-button>
+            <ion-button fill="clear" (click)="navToDetail(caseFile.id)">{{caseFile.type}} - {{caseFile.fileNo}}</ion-button>
         </ion-item>
     </ion-list>
     <ion-button expand="block" (click)="newPerson()">Yeni kişi</ion-button>

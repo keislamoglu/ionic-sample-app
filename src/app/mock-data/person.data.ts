@@ -22,10 +22,12 @@ function createPerson(name: string, lastname: string): Person {
         id: guid(),
         nId: '12345678901',
         phone: '05001234567',
-        // address: lorem(Math.floor(Math.random() * 25) + 25),
         address: 'Namık Kemal Mah. Topçu Sok. No:4/7',
-        claimentCaseFiles: [],
-        defendantCaseFiles: [],
-        petitions: [],
+        birthDate: new Date(),
+        birthPlace: 'Lorem',
+        fatherName: 'Foo',
+        motherName: 'Bar',
+        mernisAddress: 'Kemal Namık Mah.',
+        parties: []
     };
 }

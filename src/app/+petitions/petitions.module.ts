@@ -5,8 +5,8 @@ import {FormsModule} from '@angular/forms';
 import {PetitionsComponent} from './petitions.component';
 import {PetitionEditModalComponent} from './edit/petition-edit-modal.component';
 import {ServicesModule} from '../shared/services';
-import {RuntimeContentModule} from '../shared/runtime-content';
 import {PetitionDetailComponent} from './detail/petition-detail.component';
+import {PetitionsRoutingModule} from './petitions-routing.module';
 
 @NgModule({
     imports: [
@@ -14,7 +14,7 @@ import {PetitionDetailComponent} from './detail/petition-detail.component';
         CommonModule,
         ServicesModule,
         FormsModule,
-        RuntimeContentModule,
+        PetitionsRoutingModule,
     ],
     declarations: [
         PetitionsComponent,
@@ -23,6 +23,7 @@ import {PetitionDetailComponent} from './detail/petition-detail.component';
     ],
     exports: [
         PetitionsComponent,
+        PetitionsRoutingModule,
     ],
     entryComponents: [
         PetitionEditModalComponent,

@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
+        </ion-buttons>
+        <ion-title>{{party.type}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label>Kişi: </ion-label>
+        <ion-button fill="clear" (click)="navToPersonDetail(party.personId)">{{personFullName(person)}}</ion-button>
+    </ion-item>
+    <ion-button expand="block" (click)="navToPetitions()">Dilekçeler</ion-button>
+</ion-content>

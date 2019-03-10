@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
+        </ion-buttons>
+        <ion-title>Ek süre</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label>Tarih: </ion-label>
+        <ion-datetime readonly
+                      displayFormat="DD/MM/YYYY"
+                      [value]="extensionTime.date.toISOString()"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Süre (gün): </ion-label> {{extensionTime.duration}}
+    </ion-item>
+    <ion-item>
+        <ion-label>Kalan gün: </ion-label> {{remainingTime}}
+    </ion-item>
+</ion-content>

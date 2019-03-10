@@ -11,9 +11,27 @@
 </ion-header>
 <ion-content>
     <ion-item>
-        <ion-button fill="clear" (click)="navPersonDetail(claiment)">Davacı: {{_personFullName(claiment)}}</ion-button>
+        <ion-label>Dosya türü: </ion-label>{{caseFile.type}}
     </ion-item>
     <ion-item>
-        <ion-button fill="clear" (click)="navPersonDetail(defendant)">Davalı: {{_personFullName(defendant)}}</ion-button>
+        <ion-label>Uzlaştırma nu.: </ion-label>{{caseFile.conciliationNo}}
     </ion-item>
+    <ion-item>
+        <ion-label>Uzlaştırma baş. tar.: </ion-label>
+        <ion-datetime readonly
+                      [value]="caseFile.conciliationStartDate.toISOString()" displayFormat="DD/MM/YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Görevlendirme tar.: </ion-label>
+        <ion-datetime readonly
+                      [value]="caseFile.chargeDate.toISOString()" displayFormat="DD/MM/YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Merci: </ion-label>{{competentAuthority.name}}
+    </ion-item>
+    <ion-item>
+        <ion-label>Kalan süre: </ion-label>{{remainingTime}} gün
+        <ion-button (click)="navToExtensionTimes()">Ek süre</ion-button>
+    </ion-item>
+    <ion-button expand="block" (click)="navToParties()">Taraflar</ion-button>
 </ion-content>

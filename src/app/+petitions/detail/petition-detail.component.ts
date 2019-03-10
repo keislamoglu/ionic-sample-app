@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
-import {Petition, ProsecutionOffice} from '../../shared/entity';
+import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {DocxFileService, PetitionService, ProsecutionOfficeService} from '../../shared/services';
-import {switchMap} from 'rxjs/operators';
+import {DocxFileService, PetitionService, PetitionTemplateService} from '../../shared/services';
 import {ModalService} from '../../shared/services/modal.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
     templateUrl: './petition-detail.component.html'
@@ -12,10 +12,10 @@ import {ModalService} from '../../shared/services/modal.service';
 export class PetitionDetailComponent implements OnInit {
     id: string;
     petition: Petition;
-    prosecutionOffice: ProsecutionOffice;
+    template: PetitionTemplate;
 
     constructor(private _petitionService: PetitionService,
-                private _prosecutionOfficeService: ProsecutionOfficeService,
+                private _petitionTemplateService: PetitionTemplateService,
                 private _modalService: ModalService,
                 private _route: ActivatedRoute,
                 private _docxFileService: DocxFileService) {
@@ -37,13 +37,11 @@ export class PetitionDetailComponent implements OnInit {
     }
 
     private _loadData() {
-        this._petitionService.get(this.id)
-            .pipe(
-                switchMap(petition => {
-                    this.petition = petition;
-                    return this._prosecutionOfficeService.get(petition.prosecutionOfficeId);
-                })
-            )
-            .subscribe(prosecutionOffice => this.prosecutionOffice = prosecutionOffice);
+        this._petitionService.get(this.id).pipe(
+            switchMap(petition => {
+                this.petition = petition;
+                return this._petitionTemplateService.get(petition.templateId);
+            })
+        ).subscribe(template => this.template = template);
     }
 }

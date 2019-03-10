@@ -1,11 +1,10 @@
-import {CaseFile, Person, ProsecutionOffice, UserInfo} from '../app/shared/entity';
+import {CaseFile, Person, CompetentAuthority, UserInfo} from '../app/shared/entity';
 import {DocxFileTemplate, TextAlign} from './docx-file-template';
 
 export interface GorusmeyeDavetProps {
     caseFile: CaseFile;
-    claiment: Person;
-    defendant: Person;
-    prosecutionOffice: ProsecutionOffice;
+    person: Person;
+    competentAuthority: CompetentAuthority;
     date: Date;
     userInfo: UserInfo;
 }
@@ -18,10 +17,10 @@ export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
         this.addText(`Uzlaştırma No: ${this.props.caseFile.fileNo}`).bold();
 
         this.newLine();
-        this.addText(`Sayın ${this.fullName(this.props.claiment)}`, TextAlign.Center).bold();
-        this.addText(`(Adres: ${this.props.claiment.address})`, TextAlign.Center);
+        this.addText(`Sayın ${this.fullName(this.props.person)}`, TextAlign.Center).bold();
+        this.addText(`(Adres: ${this.props.person.address})`, TextAlign.Center);
 
-        this.addText(this.props.prosecutionOffice.name +
+        this.addText(this.props.competentAuthority.name +
             ' Cumhuriyet Başsavcılığı tarafından yürütülen yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız.' +
             ' Soruşturma/kovuşturmaya konu suçun, 5271 sayılı CMK\'nın 253 ve 254’üncü maddeleri gereğince uzlaşma kapsamındaki' +
             ' suçlardan olması nedeniyle, uzlaşma işlemlerinin yürütülebilmesi için Cumhuriyet Başsavcılığı Uzlaştırma Bürosu' +

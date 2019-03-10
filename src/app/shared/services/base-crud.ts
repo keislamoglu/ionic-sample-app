@@ -12,10 +12,10 @@ export abstract class BaseCrud<T extends { id: string }> {
         return of(this.dataSet.find(x => x.id === id));
     }
 
-    add(data: T): Observable<void> {
+    add(data: T): Observable<T> {
         data.id = guid();
         this.dataSet.push(data);
-        return of(void 0);
+        return of(data);
     }
 
     update(id: string, data: T): Observable<void> {

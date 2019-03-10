@@ -6,6 +6,7 @@ import {CaseFilesComponent} from './case-files.component';
 import {ServicesModule} from '../shared/services';
 import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 import {CaseFileDetailComponent} from './detail/case-file-detail.component';
+import {CaseFilesRoutingModule} from './case-files-routing.module';
 
 @NgModule({
     declarations: [
@@ -18,9 +19,11 @@ import {CaseFileDetailComponent} from './detail/case-file-detail.component';
         CommonModule,
         ServicesModule,
         FormsModule,
+        CaseFilesRoutingModule,
     ],
     exports: [
-        CaseFilesComponent
+        CaseFilesComponent,
+        CaseFilesRoutingModule,
     ],
     entryComponents: [
         CaseFileEditModalComponent,

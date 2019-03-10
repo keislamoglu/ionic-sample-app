@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
 import {PersonDetailComponent} from './detail/person-detail.component';
+import {PersonsRoutingModule} from './persons-routing.module';
 
 @NgModule({
     declarations: [
@@ -18,8 +19,12 @@ import {PersonDetailComponent} from './detail/person-detail.component';
         CommonModule,
         ServicesModule,
         FormsModule,
+        PersonsRoutingModule,
     ],
-    exports: [PersonsComponent],
+    exports: [
+        PersonsComponent,
+        PersonsRoutingModule
+    ],
     entryComponents: [PersonEditModalComponent]
 })
 export class PersonsModule {

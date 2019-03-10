@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="create()">Yeni ek süre</ion-button>
+        </ion-buttons>
+        <ion-title>{{caseFile.type}} - {{caseFile.fileNo}} ek süreleri</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let extensionTime of extensionTimes">
+            <ion-button fill="clear" (click)="navToDetail(extensionTime.id)">
+                <ion-datetime readonly
+                              displayFormat="DD/MM/YYYY"
+                              [value]="extensionTime.date.toISOString()"></ion-datetime>
+                ({{remaining(extensionTime)}} gün)
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

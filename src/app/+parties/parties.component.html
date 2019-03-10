@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="create()">Taraf ekle</ion-button>
+        </ion-buttons>
+        <ion-title>Taraflar</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let party of parties">
+            <ion-button fill="clear" (click)="navToDetail(party.id)">{{party.type}}</ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

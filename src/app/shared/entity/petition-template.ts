@@ -5,6 +5,5 @@ export class PetitionTemplate {
     id: string;
     name: string;
     slugName: TemplateDocument;
-    requiredFields: string; // JSON
     petitions: Petition[];
 }

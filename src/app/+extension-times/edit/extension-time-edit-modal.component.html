@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Ek Süre {{ id ? 'Düzenle' : 'Tanımla' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="save()" #form="ngForm" *ngIf="extensionTime">
+        <!--DATE-->
+        <ion-item>
+            <ion-label>Tarih</ion-label>
+            <ion-datetime required
+                          displayFormat="DD/MM/YYYY"
+                          name="date"
+                          [(ngModel)]="date"></ion-datetime>
+        </ion-item>
+        <!--DURATION-->
+        <ion-item>
+            <ion-label>Süre (gün)</ion-label>
+            <ion-input name="duration" type="number" [(ngModel)]="extensionTime.duration" required></ion-input>
+        </ion-item>
+        <!--ACTIONS-->
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil
+            </ion-button>
+            <ion-button slot="end" fill="clear" type="submit" color="primary" [disabled]="form.invalid">Kaydet
+            </ion-button>
+        </ion-item>
+    </form>
+</ion-content>

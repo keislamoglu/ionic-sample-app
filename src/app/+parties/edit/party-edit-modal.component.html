@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Taraf {{ id ? 'Düzenle' : 'Ekle' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">İptal</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form (ngSubmit)="save()" #form="ngForm" *ngIf="party">
+        <!--PARTY TYPE-->
+        <ion-item>
+            <ion-label>Taraf tipi</ion-label>
+            <ion-select required name="partyType"
+                        [(ngModel)]="party.type" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let partyType of partyTypeDataset"
+                                   [value]="partyType.value">{{partyType.value}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--PERSON-->
+        <ion-item>
+            <ion-label>Kişi</ion-label>
+            <ion-select required name="person"
+                        [(ngModel)]="party.personId" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let person of personDataset"
+                                   [value]="person.id">{{_personFullName(person)}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--ACTIONS-->
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
+            <ion-button slot="end" fill="clear" type="submit" color="primary" [disabled]="form.invalid">Kaydet</ion-button>
+        </ion-item>
+    </form>
+</ion-content>

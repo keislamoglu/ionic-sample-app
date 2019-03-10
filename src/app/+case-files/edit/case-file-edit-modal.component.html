@@ -8,32 +8,50 @@
 </ion-header>
 <ion-content>
     <form (ngSubmit)="save()" #form="ngForm" *ngIf="caseFile">
+        <!--FILE TYPE-->
+        <ion-item>
+            <ion-label>Dosya tipi</ion-label>
+            <ion-select required name="caseFileType"
+                        (ngModelChange)="onTypeChange($event)"
+                        [(ngModel)]="caseFile.type" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let caseFileType of caseFileTypeDataset"
+                                   [value]="caseFileType.value">{{caseFileType.value}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--COMPETENT AUTHORITY-->
+        <ion-item *ngIf="caseFile.type">
+            <ion-label>Merci:</ion-label>
+            <ion-select required name="competentAuthority"
+                        [(ngModel)]="caseFile.competentAuthorityId" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let cAuthority of competentAuthorities"
+                                   [value]="cAuthority.id">{{cAuthority.name}}</ion-select-option>
+            </ion-select>
+        </ion-item>
         <!--FILE NO-->
         <ion-item>
             <ion-label>Dosya numarası</ion-label>
-            <ion-input placeholder="Dosya numarası" name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
+            <ion-input name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
         </ion-item>
-        <!--SELECT PERSONS-->
-        <ion-item-divider>
-            <ion-label>Taraflar</ion-label>
-        </ion-item-divider>
-        <!--SELECT CLAIMENT-->
+        <!--CONCILIATION NO-->
         <ion-item>
-            <ion-label>Davacı</ion-label>
-            <ion-select required name="claiment" [(ngModel)]="caseFile.claimentId" placeholder="-- Seçiniz --">
-                <ion-select-option *ngFor="let claiment of claiments"
-                                   [value]="claiment.id"
-                >{{_personFullName(claiment)}}</ion-select-option>
-            </ion-select>
+            <ion-label>Uzlaştırma numarası</ion-label>
+            <ion-input name="conciliationNo" [(ngModel)]="caseFile.conciliationNo" required></ion-input>
         </ion-item>
-        <!--SELECT DEFENDANT-->
+        <!--CONCILIATION START DATE-->
         <ion-item>
-            <ion-label>Davalı</ion-label>
-            <ion-select required name="defendant" [(ngModel)]="caseFile.defendantId" placeholder="-- Seçiniz --">
-                <ion-select-option *ngFor="let defendant of defendants"
-                                   [value]="defendant.id"
-                >{{_personFullName(defendant)}}</ion-select-option>
-            </ion-select>
+            <ion-label>Uzlaştırma başlangıcı</ion-label>
+            <ion-datetime required
+                          displayFormat="DD/MM/YYYY"
+                          name="conciliationStartDate"
+                          [(ngModel)]="conciliationStartDate"></ion-datetime>
+        </ion-item>
+        <!--CHARGE DATE-->
+        <ion-item>
+            <ion-label>Görevlendirilme tarihi</ion-label>
+            <ion-datetime required
+                          displayFormat="DD/MM/YYYY"
+                          name="chargeDate"
+                          [(ngModel)]="chargeDate"></ion-datetime>
         </ion-item>
         <!--ACTIONS-->
         <ion-item lines="none">

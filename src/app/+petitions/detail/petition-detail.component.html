@@ -9,10 +9,10 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
-    <!--PROSECUTION OFFICE-->
-    <ion-label>Savcılık:</ion-label> {{prosecutionOffice.name}}
+    <ion-item>
+        <ion-label>Şablon: </ion-label> {{template.name}}
+    </ion-item>
     <!--ACTION BUTTONS-->
     <ion-button expand="block" (click)="openDocx()">Docx Aç</ion-button>
 </ion-content>

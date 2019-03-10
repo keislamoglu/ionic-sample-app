@@ -10,19 +10,17 @@ import {NavController} from '@ionic/angular';
     templateUrl: './petitions.component.html',
 })
 export class PetitionsComponent implements OnInit {
-    personId: string;
-    caseFileId: string;
+    partyId: string;
     petitions: Petition[] = [];
 
     constructor(private _route: ActivatedRoute,
-                private _petitionService: PetitionService,
                 private _modalService: ModalService,
+                private _petitionService: PetitionService,
                 private _navController: NavController) {
     }
 
     ngOnInit(): void {
-        this.personId = this._route.snapshot.paramMap.get('id');
-        this.caseFileId = this._route.snapshot.paramMap.get('caseFileId');
+        this.partyId = this._route.snapshot.paramMap.get('partyId');
         this._loadData();
     }
 
@@ -32,8 +30,7 @@ export class PetitionsComponent implements OnInit {
 
     async create() {
         const modal = await this._modalService.present(PetitionEditModalComponent, {
-            caseFileId: this.caseFileId,
-            claimentId: this.personId
+            partyId: this.partyId,
         });
         await modal.onWillDismiss();
         this._loadData();
@@ -46,7 +43,7 @@ export class PetitionsComponent implements OnInit {
     }
 
     private _loadData() {
-        this._petitionService.getByPerson(this.personId)
+        this._petitionService.getByParty(this.partyId)
             .subscribe(petitions => this.petitions = petitions);
     }
 }

@@ -1,22 +1,25 @@
-import {CaseFile, Person} from '../shared/entity';
-import {PERSONS} from './person.data';
+import {CaseFile, CaseFileType, CompetentAuthority} from '../shared/entity';
 import {guid} from '../shared/helpers';
+import {COMPETENT_AUTHORITIES} from './competent-authority.data';
 
 let i = 0;
 export const CASE_FILES: CaseFile[] = [
-    createCaseFile(`123/2017`, PERSONS[i], PERSONS[i++ + 1]),
-    createCaseFile(`249/2018`, PERSONS[i], PERSONS[i++ + 1]),
-    createCaseFile(`12784/2018`, PERSONS[i], PERSONS[i++ + 1]),
-    createCaseFile(`273/2017`, PERSONS[i], PERSONS[i++ + 1]),
+    createCaseFile(`123/2017`, CaseFileType.Investigation, COMPETENT_AUTHORITIES[i++]),
+    createCaseFile(`249/2018`, CaseFileType.Investigation, COMPETENT_AUTHORITIES[i++]),
+    createCaseFile(`12784/2018`, CaseFileType.Prosecution, COMPETENT_AUTHORITIES[i++]),
 ];
 
-function createCaseFile(fileNo: string, claiment: Person, defendant: Person): CaseFile {
+function createCaseFile(fileNo: string, type: CaseFileType, authority: CompetentAuthority): CaseFile {
     return {
         id: guid(),
         fileNo: fileNo,
-        claimentId: claiment.id,
-        claiment: claiment,
-        defendantId: defendant.id,
-        defendant: defendant,
+        chargeDate: new Date(),
+        conciliationStartDate: new Date(),
+        type: type,
+        conciliationNo: 'Foo',
+        competentAuthorityId: authority.id,
+        parties: [],
+        competentAuthority: void 0,
+        extensionTimes: []
     };
 }

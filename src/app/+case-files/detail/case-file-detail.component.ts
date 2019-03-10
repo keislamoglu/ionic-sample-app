@@ -1,12 +1,12 @@
 import {NavController} from '@ionic/angular';
 import {Component, OnInit} from '@angular/core';
-import {CaseFileService, PersonService} from '../../shared/services';
-import {CaseFile, Person} from '../../shared/entity';
-import {switchMap} from 'rxjs/operators';
-import {zip} from 'rxjs';
+import {CaseFileService, CompetentAuthorityService, ExtensionTimeService} from '../../shared/services';
+import {CaseFile, CompetentAuthority} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component';
 import {ModalService} from '../../shared/services/modal.service';
+import {switchMap} from 'rxjs/operators';
+import {getDateDiff} from '../../shared/helpers';
 
 @Component({
     templateUrl: './case-file-detail.component.html',
@@ -14,24 +14,29 @@ import {ModalService} from '../../shared/services/modal.service';
 export class CaseFileDetailComponent implements OnInit {
     id: string;
     caseFile: CaseFile;
-    claiment: Person;
-    defendant: Person;
+    competentAuthority: CompetentAuthority;
+    remainingTime = 0;
 
     constructor(
         private _route: ActivatedRoute,
         private _caseFileService: CaseFileService,
-        private _personService: PersonService,
+        private _competentAuthorityService: CompetentAuthorityService,
+        private _extensionTimeService: ExtensionTimeService,
         private _navController: NavController,
         private _modalService: ModalService) {
-    }
-
-    navPersonDetail(person: Person): void {
-        this._navController.navigateForward(`/case-files/${this.id}/persons/${person.id}`);
     }
 
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
         this._loadData();
+    }
+
+    navToParties(): void {
+        this._navController.navigateForward(`/case-files/${this.id}/parties`);
+    }
+
+    navToExtensionTimes() {
+        this._navController.navigateForward(`/case-files/${this.id}/extension-times`);
     }
 
     async edit() {
@@ -40,21 +45,35 @@ export class CaseFileDetailComponent implements OnInit {
         this._loadData();
     }
 
+    calculateRemainingTime() {
+        this.remainingTime = 0;
+        if (!this.caseFile) {
+            return;
+        }
+        const now = new Date();
+        const targetDate = new Date(this.caseFile.conciliationStartDate);
+        targetDate.setDate(targetDate.getDate() + 30); // Discount from 30 days;
+        const dateDiff = getDateDiff(now, targetDate);
+        if (dateDiff > 0) {
+            this.remainingTime = dateDiff;
+            return;
+        }
+
+        this._extensionTimeService.getByCaseFile(this.id).subscribe(extensionTimes => {
+            const ext = ExtensionTimeService.getNotPassedOne(extensionTimes);
+            if (ext) {
+                this.remainingTime = getDateDiff(now, ExtensionTimeService.getDateWithDuration(ext));
+            }
+        });
+    }
+
     private _loadData() {
         this._caseFileService.get(this.id).pipe(
             switchMap(caseFile => {
                 this.caseFile = caseFile;
-                return zip(
-                    this._personService.get(caseFile.claimentId),
-                    this._personService.get(caseFile.defendantId),
-                );
+                this.calculateRemainingTime();
+                return this._competentAuthorityService.get(caseFile.competentAuthorityId);
             }),
-        ).subscribe(val => {
-            [this.claiment, this.defendant] = val;
-        });
-    }
-
-    private _personFullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
+        ).subscribe(competentAuthority => this.competentAuthority = competentAuthority);
     }
 }

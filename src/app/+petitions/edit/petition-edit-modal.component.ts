@@ -1,19 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {
-    AlertService,
-    CaseFileService,
-    DocxFileService,
-    PersonService,
-    PetitionService,
-    PetitionTemplateService,
-    ProsecutionOfficeService,
-    UserInfoService
-} from '../../shared/services';
-import {CaseFile, Person, Petition, PetitionTemplate, ProsecutionOffice, TemplateDocument, UserInfo} from '../../shared/entity';
+import {AlertService, PetitionExporterService, PetitionService, PetitionTemplateService} from '../../shared/services';
+import {Petition, PetitionTemplate} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
-import {Observable, zip} from 'rxjs';
-import {GorusmeyeDavet, GorusmeyeDavetProps} from '../../../templates';
+import {Observable} from 'rxjs';
 import {guid} from '../../shared/helpers';
 
 @Component({
@@ -21,26 +11,16 @@ import {guid} from '../../shared/helpers';
 })
 export class PetitionEditModalComponent implements OnInit {
     @Input() id: string;
-    @Input() claimentId: string;
-    @Input() caseFileId: string;
+    @Input() partyId: string;
     petition: Petition;
     template: PetitionTemplate;
     templates: PetitionTemplate[];
-    persons: Person[] = [];
-    prosecutionOffices: ProsecutionOffice[] = [];
-    caseFiles: CaseFile[];
-    userInfo: UserInfo;
-    private _requiredFields: string[] = [];
 
     constructor(private _modalController: ModalController,
                 private _petitionService: PetitionService,
-                private _caseFileService: CaseFileService,
                 private _petitionTemplateService: PetitionTemplateService,
-                private _personService: PersonService,
-                private _prosecutionOfficeService: ProsecutionOfficeService,
-                private _userInfoService: UserInfoService,
                 private _alertService: AlertService,
-                private _docxFileService: DocxFileService) {
+                private _petitionExporterService: PetitionExporterService) {
     }
 
     ngOnInit() {
@@ -49,36 +29,29 @@ export class PetitionEditModalComponent implements OnInit {
             return;
         }
         this.new();
-        this._userInfoService.getAll().subscribe(userInfos => this.userInfo = userInfos[0]);
     }
 
     dismiss() {
-        this._reset();
         this._modalController.dismiss();
     }
 
     new() {
-        this._getDataSets().subscribe(val => {
-            [this.templates, this.persons, this.prosecutionOffices, this.caseFiles] = val;
+        this._getDataSets().subscribe(templates => {
+            this.templates = templates;
             this.petition = new Petition();
-            if (this.claimentId) {
-                this.petition.claimentId = this.claimentId;
-            }
-            if (this.caseFileId) {
-                this.petition.caseFileId = this.caseFileId;
-            }
+            this.petition.partyId = this.partyId;
         });
     }
 
     edit(id: string) {
         this._getDataSets().pipe(
-            switchMap(val => {
-                [this.templates, this.persons, this.prosecutionOffices, this.caseFiles] = val;
+            switchMap(templates => {
+                this.templates = templates;
                 return this._petitionService.get(id);
             }),
             switchMap(petition => {
                 this.petition = petition;
-                return this._loadTemplate(petition.petitionTemplateId);
+                return this._loadTemplate(petition.templateId);
             })
         ).subscribe();
     }
@@ -86,28 +59,17 @@ export class PetitionEditModalComponent implements OnInit {
     save(): void {
         this.petition.date = new Date();
         this.petition.fileName = `${guid()}.docx`;
-        const fieldData = {
-            fileName: this.petition.fileName,
-            claiment: this.persons.find(x => x.id === this.petition.claimentId),
-            defendant: this.persons.find(x => x.id === this.petition.defendantId),
-            caseFile: this.caseFiles.find(x => x.id === this.petition.caseFileId),
-            prosecutionOffice: this.prosecutionOffices.find(x => x.id === this.petition.prosecutionOfficeId),
-            userInfo: this.userInfo,
-            date: this.petition.date,
-        };
-
-        this.petition.fieldData = JSON.stringify(fieldData);
         if (this.petition.id) {
             this._petitionService.update(this.petition.id, this.petition)
                 .subscribe(() => {
-                    this.exportDocx(fieldData);
+                    this.exportDocx(this.petition.id);
                     this.dismiss();
                 });
             return;
         }
 
-        this._petitionService.add(this.petition).subscribe(() => {
-            this.exportDocx(fieldData);
+        this._petitionService.add(this.petition).subscribe(petition => {
+            this.exportDocx(petition.id);
             this.dismiss();
         });
     }
@@ -121,75 +83,29 @@ export class PetitionEditModalComponent implements OnInit {
         });
     }
 
-    exportDocx(data: any) {
-        switch (this.template.slugName) {
-            case TemplateDocument.UzlasmaGorusmesineDavet:
-                this._docxFileService.export({
-                    fileName: this.petition.fileName,
-                    docxTemplate: GorusmeyeDavet,
-                    props: {
-                        caseFile: data.caseFile,
-                        claiment: data.claiment,
-                        defendant: data.defendant,
-                        date: data.date,
-                        userInfo: data.userInfo,
-                        prosecutionOffice: data.prosecutionOffice
-                    } as GorusmeyeDavetProps
-                });
-                break;
-        }
+    exportDocx(id: string) {
+        this._petitionExporterService.export(id);
     }
 
-    onTemplateChange(id: string) {
-        this._loadTemplate(id).subscribe();
+    onTemplateChange(templateId: string) {
+        this._loadTemplate(templateId).subscribe();
     }
 
-    isRequiredField(name: string): boolean {
-        return this.requiredFields.some(x => x === name);
-    }
-
-    set requiredFields(fields: string[]) {
-        this._requiredFields = fields;
-    }
-
-    get requiredFields() {
-        if (this.template) {
-            return this._requiredFields;
-        }
-    }
-
-    private _loadTemplate(id: string): Observable<void> {
-        return this._petitionTemplateService.get(id).pipe(
+    private _loadTemplate(templateId: string): Observable<void> {
+        return this._petitionTemplateService.get(templateId).pipe(
             map(template => {
                 this.template = template;
-                if (!this.petition.name) {
-                    this.petition.name = template.name;
-                }
-
-                this.requiredFields = JSON.parse(this.template.requiredFields);
+                this.petition.name = template.name;
             })
         );
     }
 
-    private _getDataSets(): Observable<[PetitionTemplate[], Person[], ProsecutionOffice[], CaseFile[]]> {
-        return zip(
-            this._petitionTemplateService.getAll(),
-            this._personService.getAll(),
-            this._prosecutionOfficeService.getAll(),
-            this._caseFileService.getAll(),
-        );
-    }
-
-    private _reset() {
-        this.petition = null;
+    private _getDataSets(): Observable<PetitionTemplate[]> {
+        return this._petitionTemplateService.getAll();
     }
 
     private _remove() {
         this._petitionService.remove(this.petition.id)
             .subscribe(() => this.dismiss());
-    }
-
-    private _personFullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

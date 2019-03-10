@@ -1,5 +1,4 @@
-import {CaseFile} from './case-file';
-import {Petition} from './petition';
+import {Party} from './party';
 
 export class Person {
     id: string;
@@ -8,8 +7,11 @@ export class Person {
     lastname: string;
     nId: string;
     address: string;
+    mernisAddress: string;
     phone: string;
-    claimentCaseFiles: CaseFile[];
-    defendantCaseFiles: CaseFile[];
-    petitions: Petition[];
+    fatherName: string;
+    motherName: string;
+    birthPlace: string;
+    birthDate: Date;
+    parties: Party[];
 }
