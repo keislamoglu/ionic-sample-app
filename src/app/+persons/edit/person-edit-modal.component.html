@@ -12,30 +12,56 @@
         <!--NAME-->
         <ion-item>
             <ion-label>Ad</ion-label>
-            <ion-input placeholder="Ad giriniz" name="name" [(ngModel)]="person.name" required></ion-input>
+            <ion-input name="name" [(ngModel)]="person.name" required></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>İkinci ad</ion-label>
-            <ion-input placeholder="(Zorunlu değil)" name="middlename" [(ngModel)]="person.middlename"></ion-input>
+            <ion-input name="middlename" [(ngModel)]="person.middlename"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Soyad</ion-label>
-            <ion-input placeholder="Soyad giriniz" name="lastname" [(ngModel)]="person.lastname" required></ion-input>
+            <ion-input name="lastname" [(ngModel)]="person.lastname" required></ion-input>
+        </ion-item>
+        <!--PARENT INFO-->
+        <ion-item>
+            <ion-label>Anne Adı</ion-label>
+            <ion-input name="motherName" [(ngModel)]="person.motherName" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Baba Adı</ion-label>
+            <ion-input name="fatherName" [(ngModel)]="person.fatherName" required></ion-input>
         </ion-item>
         <!--NATIONAL ID-->
         <ion-item>
             <ion-label>T.C. Kimlik No</ion-label>
-            <ion-input placeholder="T.C. Kimlik No" name="nId" [(ngModel)]="person.nId" required></ion-input>
+            <ion-input name="nId" [(ngModel)]="person.nId" required></ion-input>
         </ion-item>
-        <!--PHONE-->
+        <!--BIRTH DATE-->
         <ion-item>
-            <ion-label>Tel. No</ion-label>
-            <ion-input type="tel" placeholder="Tel. No" name="phone" [(ngModel)]="person.phone" required></ion-input>
+            <ion-label>Doğum Tarihi</ion-label>
+            <ion-datetime required name="birthDate"
+                          displayFormat="DD/MM/YYYY"
+                          [(ngModel)]="birthDate"></ion-datetime>
+        </ion-item>
+        <!--BIRTH PLACE-->
+        <ion-item>
+            <ion-label>Doğum Yeri</ion-label>
+            <ion-input name="birthPlace" [(ngModel)]="person.birthPlace"></ion-input>
         </ion-item>
         <!--ADDRESS-->
         <ion-item>
             <ion-label>Adres</ion-label>
-            <ion-textarea placeholder="Adres giriniz" name="address" [(ngModel)]="person.address" required></ion-textarea>
+            <ion-textarea name="address" [(ngModel)]="person.address" required></ion-textarea>
+        </ion-item>
+        <!--MERNIS ADDRESS-->
+        <ion-item>
+            <ion-label>Mernis Adresi</ion-label>
+            <ion-textarea name="mernisAddress" [(ngModel)]="person.mernisAddress" required></ion-textarea>
+        </ion-item>
+        <!--PHONE-->
+        <ion-item>
+            <ion-label>Tel. No</ion-label>
+            <ion-input type="tel" name="phone" [(ngModel)]="person.phone" required></ion-input>
         </ion-item>
         <!--ACTIONS-->
         <ion-item lines="none">

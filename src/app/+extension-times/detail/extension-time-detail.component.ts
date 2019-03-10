@@ -4,6 +4,7 @@ import {ExtensionTimeService, ModalService} from '../../shared/services';
 import {ExtensionTime} from '../../shared/entity';
 import {ExtensionTimeEditModalComponent} from '../edit/extension-time-edit-modal.component';
 import {getDateDiff} from '../../shared/helpers';
+import {NavController} from '@ionic/angular';
 
 @Component({
     templateUrl: './extension-time-detail.component.html'
@@ -15,7 +16,8 @@ export class ExtensionTimeDetailComponent implements OnInit {
 
     constructor(private _route: ActivatedRoute,
                 private _extensionTimeService: ExtensionTimeService,
-                private _modalService: ModalService) {
+                private _modalService: ModalService,
+                private _navController: NavController) {
     }
 
     ngOnInit(): void {
@@ -25,7 +27,10 @@ export class ExtensionTimeDetailComponent implements OnInit {
 
     async edit() {
         const modal = await this._modalService.present(ExtensionTimeEditModalComponent, {id: this.id});
-        await modal.onWillDismiss();
+        const res = await modal.onWillDismiss();
+        if (res.data.removed) {
+            return this._navController.back();
+        }
         this._loadData();
     }
 

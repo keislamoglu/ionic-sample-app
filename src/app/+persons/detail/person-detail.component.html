@@ -10,12 +10,19 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-item>T.C. No: {{person.nId}}</ion-item>
-    <ion-item>Ad: {{person.name}}</ion-item>
-    <ion-item>İkinci Ad: {{person.middlename || '-'}}</ion-item>
-    <ion-item>Soyad: {{person.lastname}}</ion-item>
-    <ion-item>Telefon: {{person.phone}}</ion-item>
-    <ion-item>Adres: {{person.address}}</ion-item>
-    <ion-button expand="block" (click)="navToPetitions(person.id)">Dilekçeler</ion-button>
-    <ion-button expand="block" (click)="newPetition()">Yeni Dilekçe</ion-button>
+    <ion-item><ion-label>Ad: </ion-label>{{person.name}}</ion-item>
+    <ion-item><ion-label>İkinci Ad: </ion-label>{{person.middlename || '-'}}</ion-item>
+    <ion-item><ion-label>Soyad: </ion-label>{{person.lastname}}</ion-item>
+    <ion-item><ion-label>Anne Adı: </ion-label>{{person.motherName}}</ion-item>
+    <ion-item><ion-label>Baba Adı: </ion-label>{{person.fatherName}}</ion-item>
+    <ion-item><ion-label>T.C. No: </ion-label>{{person.nId}}</ion-item>
+    <ion-item><ion-label>Doğum Tarihi: </ion-label>
+        <ion-datetime readonly
+                      displayFormat="DD/MM/YYYY"
+                      [value]="person.birthDate.toISOString()"></ion-datetime>
+    </ion-item>
+    <ion-item><ion-label>Doğum Yeri: </ion-label>{{person.birthPlace}}</ion-item>
+    <ion-item><ion-label>Adres: </ion-label>{{person.address}}</ion-item>
+    <ion-item><ion-label>Mernis Adresi: </ion-label>{{person.mernisAddress}}</ion-item>
+    <ion-item><ion-label>Telefon: </ion-label>{{person.phone}}</ion-item>
 </ion-content>

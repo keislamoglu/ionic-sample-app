@@ -42,7 +42,10 @@ export class PersonDetailComponent implements OnInit {
 
     async edit() {
         const modal = await this._modalService.present(PersonEditModalComponent, {id: this.id});
-        await modal.onWillDismiss();
+        const res = await modal.onWillDismiss();
+        if (res.data.removed) {
+            return this._navController.back();
+        }
         this._loadData();
     }
 

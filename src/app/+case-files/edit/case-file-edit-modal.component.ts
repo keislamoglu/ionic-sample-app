@@ -50,8 +50,8 @@ export class CaseFileEditModalComponent implements OnInit {
         this.new();
     }
 
-    dismiss() {
-        this._modalController.dismiss();
+    dismiss(removed: boolean = false) {
+        this._modalController.dismiss({removed});
     }
 
     new() {
@@ -89,7 +89,7 @@ export class CaseFileEditModalComponent implements OnInit {
 
     private _remove() {
         this._caseFileService.remove(this.caseFile.id)
-            .subscribe(() => this.dismiss());
+            .subscribe(() => this.dismiss(true));
     }
 
     private _loadCompetentAuthorities(caseFileType: CaseFileType) {

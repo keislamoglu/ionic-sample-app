@@ -31,8 +31,8 @@ export class PetitionEditModalComponent implements OnInit {
         this.new();
     }
 
-    dismiss() {
-        this._modalController.dismiss();
+    dismiss(removed: boolean = false) {
+        this._modalController.dismiss({removed});
     }
 
     new() {
@@ -106,6 +106,6 @@ export class PetitionEditModalComponent implements OnInit {
 
     private _remove() {
         this._petitionService.remove(this.petition.id)
-            .subscribe(() => this.dismiss());
+            .subscribe(() => this.dismiss(true));
     }
 }

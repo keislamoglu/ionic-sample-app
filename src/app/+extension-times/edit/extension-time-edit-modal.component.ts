@@ -35,8 +35,8 @@ export class ExtensionTimeEditModalComponent implements OnInit {
         this.new();
     }
 
-    dismiss() {
-        this._modalController.dismiss();
+    dismiss(removed: boolean = false) {
+        this._modalController.dismiss({removed});
     }
 
     new() {
@@ -69,6 +69,7 @@ export class ExtensionTimeEditModalComponent implements OnInit {
     }
 
     private _remove() {
-        this._extensionTimeService.remove(this.id).subscribe(() => this.dismiss());
+        this._extensionTimeService.remove(this.id)
+            .subscribe(() => this.dismiss(true));
     }
 }

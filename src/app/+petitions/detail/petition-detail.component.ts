@@ -4,6 +4,7 @@ import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {DocxFileService, ModalService, PetitionService, PetitionTemplateService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
+import {NavController} from '@ionic/angular';
 
 @Component({
     templateUrl: './petition-detail.component.html'
@@ -17,6 +18,7 @@ export class PetitionDetailComponent implements OnInit {
                 private _petitionTemplateService: PetitionTemplateService,
                 private _modalService: ModalService,
                 private _route: ActivatedRoute,
+                private _navController: NavController,
                 private _docxFileService: DocxFileService) {
     }
 
@@ -31,7 +33,10 @@ export class PetitionDetailComponent implements OnInit {
 
     async edit() {
         const modal = await this._modalService.present(PetitionEditModalComponent, {id: this.id});
-        await modal.onWillDismiss();
+        const res = await modal.onWillDismiss();
+        if (res.data.removed) {
+            return this._navController.back();
+        }
         this._loadData();
     }
 

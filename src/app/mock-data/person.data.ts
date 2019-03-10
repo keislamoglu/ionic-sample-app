@@ -25,8 +25,8 @@ function createPerson(name: string, lastname: string): Person {
         address: 'Namık Kemal Mah. Topçu Sok. No:4/7',
         birthDate: new Date(),
         birthPlace: 'Lorem',
-        fatherName: 'Foo',
-        motherName: 'Bar',
+        fatherName: 'Baba',
+        motherName: 'Anne',
         mernisAddress: 'Kemal Namık Mah.',
         parties: []
     };

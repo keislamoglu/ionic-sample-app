@@ -10,6 +10,16 @@ export class PersonEditModalComponent implements OnInit {
     @Input() id: string;
     person: Person | null = null;
 
+    get birthDate(): string {
+        return this.person.birthDate
+            ? this.person.birthDate.toISOString()
+            : void 0;
+    }
+
+    set birthDate(value: string) {
+        this.person.birthDate = new Date(value);
+    }
+
     constructor(private _modalController: ModalController,
                 private _personService: PersonService,
                 private _alertService: AlertService) {
@@ -24,9 +34,8 @@ export class PersonEditModalComponent implements OnInit {
         this.new();
     }
 
-    dismiss() {
-        this._reset();
-        this._modalController.dismiss();
+    dismiss(removed: boolean = false) {
+        this._modalController.dismiss({removed});
     }
 
     new() {
@@ -58,11 +67,7 @@ export class PersonEditModalComponent implements OnInit {
 
     private _remove() {
         this._personService.remove(this.person.id)
-            .subscribe(() => this.dismiss());
-    }
-
-    private _reset() {
-        this.person = null;
+            .subscribe(() => this.dismiss(true));
     }
 
     private _fullName(person: Person) {
