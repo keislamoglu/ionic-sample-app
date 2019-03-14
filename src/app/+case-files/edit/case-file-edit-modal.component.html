@@ -20,7 +20,7 @@
         </ion-item>
         <!--COMPETENT AUTHORITY-->
         <ion-item *ngIf="caseFile.type">
-            <ion-label>Merci:</ion-label>
+            <ion-label>{{getCompetentAuthorityLabel(caseFile.type)}}:</ion-label>
             <ion-select required name="competentAuthority"
                         [(ngModel)]="caseFile.competentAuthorityId" placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let cAuthority of competentAuthorities"
@@ -28,8 +28,8 @@
             </ion-select>
         </ion-item>
         <!--FILE NO-->
-        <ion-item>
-            <ion-label>Dosya numarası</ion-label>
+        <ion-item *ngIf="caseFile.type">
+            <ion-label>{{caseFile.type}} no</ion-label>
             <ion-input name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
         </ion-item>
         <!--CONCILIATION NO-->
@@ -39,7 +39,7 @@
         </ion-item>
         <!--CONCILIATION START DATE-->
         <ion-item>
-            <ion-label>Uzlaştırma başlangıcı</ion-label>
+            <ion-label>Dosya kabul tar.</ion-label>
             <ion-datetime required
                           displayFormat="DD/MM/YYYY"
                           name="conciliationStartDate"
@@ -47,7 +47,7 @@
         </ion-item>
         <!--CHARGE DATE-->
         <ion-item>
-            <ion-label>Görevlendirilme tarihi</ion-label>
+            <ion-label>Görevlendirilme tar.</ion-label>
             <ion-datetime required
                           displayFormat="DD/MM/YYYY"
                           name="chargeDate"

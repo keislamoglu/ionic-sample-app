@@ -4,8 +4,8 @@ import {COMPETENT_AUTHORITIES} from './competent-authority.data';
 
 let i = 0;
 export const CASE_FILES: CaseFile[] = [
-    createCaseFile(`123/2017`, CaseFileType.Investigation, COMPETENT_AUTHORITIES[i++]),
-    createCaseFile(`249/2018`, CaseFileType.Investigation, COMPETENT_AUTHORITIES[i++]),
+    createCaseFile(`123/2017`, CaseFileType.Prosecution, COMPETENT_AUTHORITIES[i++]),
+    createCaseFile(`249/2018`, CaseFileType.Prosecution, COMPETENT_AUTHORITIES[i++]),
     createCaseFile(`12784/2018`, CaseFileType.Prosecution, COMPETENT_AUTHORITIES[i++]),
 ];
 

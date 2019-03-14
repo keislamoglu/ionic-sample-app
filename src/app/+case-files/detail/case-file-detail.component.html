@@ -6,7 +6,7 @@
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
         </ion-buttons>
-        <ion-title>Dosya: {{caseFile.fileNo}}</ion-title>
+        <ion-title>{{caseFile.type}} no: {{caseFile.fileNo}}</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -17,7 +17,7 @@
         <ion-label>Uzlaştırma nu.: </ion-label>{{caseFile.conciliationNo}}
     </ion-item>
     <ion-item>
-        <ion-label>Uzlaştırma baş. tar.: </ion-label>
+        <ion-label>Dosya kabul tar.: </ion-label>
         <ion-datetime readonly
                       [value]="caseFile.conciliationStartDate.toISOString()" displayFormat="DD/MM/YYYY"></ion-datetime>
     </ion-item>

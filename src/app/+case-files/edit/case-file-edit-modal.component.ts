@@ -87,6 +87,18 @@ export class CaseFileEditModalComponent implements OnInit {
         });
     }
 
+    onTypeChange(type: CaseFileType) {
+        this.caseFile.competentAuthorityId = void 0;
+        this._loadCompetentAuthorities(type)
+            .subscribe(competentAuthorities => this.competentAuthorities = competentAuthorities);
+    }
+
+    getCompetentAuthorityLabel(type: CaseFileType) {
+        return type === CaseFileType.Investigation
+            ? 'Cumhuriyet Başs.'
+            : 'Mahkeme';
+    }
+
     private _remove() {
         this._caseFileService.remove(this.caseFile.id)
             .subscribe(() => this.dismiss(true));
@@ -94,14 +106,8 @@ export class CaseFileEditModalComponent implements OnInit {
 
     private _loadCompetentAuthorities(caseFileType: CaseFileType) {
         const cType = caseFileType === CaseFileType.Investigation
-            ? CompetentAuthorityType.CourtHouse
-            : CompetentAuthorityType.ProsecutionOffice;
+            ? CompetentAuthorityType.AttorneyGeneralship
+            : CompetentAuthorityType.CourtHouse;
         return this._competentAuthorityService.getByType(cType);
-    }
-
-    onTypeChange(type: CaseFileType) {
-        this.caseFile.competentAuthorityId = void 0;
-        this._loadCompetentAuthorities(type)
-            .subscribe(competentAuthorities => this.competentAuthorities = competentAuthorities);
     }
 }
