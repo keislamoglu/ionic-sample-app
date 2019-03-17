@@ -15,7 +15,7 @@ import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {PartiesModule} from './+parties/parties.module';
 import {ExtensionTimesModule} from './+extension-times/extension-times.module';
-import {DashboardModule} from './+dashboard/dashboard.module';
+import {MenuModule} from './shared/menu/menu.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,12 +24,12 @@ import {DashboardModule} from './+dashboard/dashboard.module';
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        DashboardModule,
         CaseFilesModule,
         PersonsModule,
         PetitionsModule,
         PartiesModule,
         ExtensionTimesModule,
+        MenuModule,
     ],
     providers: [
         File,

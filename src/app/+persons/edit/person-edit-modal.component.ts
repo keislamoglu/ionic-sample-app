@@ -34,8 +34,8 @@ export class PersonEditModalComponent implements OnInit {
         this.new();
     }
 
-    dismiss(removed: boolean = false) {
-        this._modalController.dismiss({removed});
+    dismiss(opts?: { cancelled?: boolean, removed?: boolean, id?: string }) {
+        this._modalController.dismiss(opts || {});
     }
 
     new() {
@@ -53,7 +53,7 @@ export class PersonEditModalComponent implements OnInit {
                 .subscribe(() => this.dismiss());
             return;
         }
-        this._personService.add(this.person).subscribe(() => this.dismiss());
+        this._personService.add(this.person).subscribe(person => this.dismiss({id: person.id}));
     }
 
     removeWithConfirm() {
@@ -67,7 +67,7 @@ export class PersonEditModalComponent implements OnInit {
 
     private _remove() {
         this._personService.remove(this.person.id)
-            .subscribe(() => this.dismiss(true));
+            .subscribe(() => this.dismiss({removed: true}));
     }
 
     private _fullName(person: Person) {

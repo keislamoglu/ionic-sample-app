@@ -11,6 +11,8 @@ import {zip} from 'rxjs';
 export class PartyEditModalComponent implements OnInit {
     @Input() id: string;
     @Input() caseFileId: string;
+    @Input() personId: string;
+
     party: Party | null = null;
     personDataset: Person[] = [];
     partyTypeDataset: EnumList<typeof PartyType> = enumList(PartyType);
@@ -38,6 +40,9 @@ export class PartyEditModalComponent implements OnInit {
             this.personDataset = persons;
             this.party = new Party();
             this.party.caseFileId = this.caseFileId;
+            if (this.personId) {
+                this.party.personId = this.personId;
+            }
         });
     }
 

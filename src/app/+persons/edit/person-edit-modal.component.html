@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-title>Kişi {{ id ? 'Düzenle' : 'Oluştur' }}</ion-title>
         <ion-buttons slot="end">
-            <ion-button (click)="dismiss()">İptal</ion-button>
+            <ion-button (click)="dismiss({cancelled: true})">İptal</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
