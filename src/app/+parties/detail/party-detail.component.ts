@@ -6,6 +6,7 @@ import {Party, Person, Petition} from '../../shared/entity';
 import {switchMap} from 'rxjs/operators';
 import {PartyEditModalComponent} from '../edit/party-edit-modal.component';
 import {zip} from 'rxjs';
+import {PetitionEditModalComponent} from '../../+petitions/edit/petition-edit-modal.component';
 
 @Component({
     templateUrl: './party-detail.component.html'
@@ -26,6 +27,15 @@ export class PartyDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
+        this._loadData();
+    }
+
+
+    async addPetition() {
+        const modal = await this._modalService.present(PetitionEditModalComponent, {
+            partyId: this.id,
+        });
+        await modal.onWillDismiss();
         this._loadData();
     }
 
