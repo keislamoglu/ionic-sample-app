@@ -11,6 +11,7 @@ import {PersonService} from './person.service';
 import {CaseFileService} from './case-file.service';
 import {CompetentAuthorityService} from './competent-authority.service';
 import {UserInfoService} from './user-info.service';
+import {Istinabe, IstinabeProps} from '../../../templates';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -48,6 +49,13 @@ export class PetitionExporterService {
                         competentAuthority,
                         userInfo
                     } as GorusmeyeDavetProps
+                });
+                break;
+            case TemplateDocument.Istinabe:
+                this._docxFileService.export({
+                    fileName: petition.fileName,
+                    docxTemplate: Istinabe,
+                    props: {} as IstinabeProps
                 });
                 break;
         }

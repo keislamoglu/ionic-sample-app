@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ModalService, PartyService, PersonService} from '../../shared/services';
+import {ModalService, PartyService, PersonService, PetitionService} from '../../shared/services';
 import {NavController} from '@ionic/angular';
-import {Party, Person} from '../../shared/entity';
+import {Party, Person, Petition} from '../../shared/entity';
 import {switchMap} from 'rxjs/operators';
 import {PartyEditModalComponent} from '../edit/party-edit-modal.component';
+import {zip} from 'rxjs';
 
 @Component({
     templateUrl: './party-detail.component.html'
@@ -13,9 +14,11 @@ export class PartyDetailComponent implements OnInit {
     id: string;
     party: Party | null = null;
     person: Person | null = null;
+    petitions: Petition[] = [];
 
     constructor(private _route: ActivatedRoute,
                 private _partyService: PartyService,
+                private _petitionService: PetitionService,
                 private _personService: PersonService,
                 private _modalService: ModalService,
                 private _navController: NavController) {
@@ -24,6 +27,10 @@ export class PartyDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
         this._loadData();
+    }
+
+    navToPetition(petitionId: string) {
+        this._navController.navigateForward(`/petitions/${petitionId}`);
     }
 
     navToPetitions() {
@@ -43,9 +50,12 @@ export class PartyDetailComponent implements OnInit {
         this._partyService.get(this.id).pipe(
             switchMap(party => {
                 this.party = party;
-                return this._personService.get(party.personId);
+                return zip(
+                    this._personService.get(party.personId),
+                    this._petitionService.getByParty(party.id)
+                );
             })
-        ).subscribe(person => this.person = person);
+        ).subscribe(val => [this.person, this.petitions] = val);
     }
 
     navToPersonDetail(personId: string) {

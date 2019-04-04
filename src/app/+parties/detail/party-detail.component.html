@@ -15,5 +15,14 @@
         <ion-label>Kişi: </ion-label>
         <ion-button fill="clear" (click)="navToPersonDetail(party.personId)">{{personFullName(person)}}</ion-button>
     </ion-item>
-    <ion-button expand="block" (click)="navToPetitions()">Dilekçeler</ion-button>
+    <ion-list>
+        <ion-list-header>
+            <ion-label>Dilekçeler</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let petition of petitions">
+            <ion-button fill="clear" (click)="navToPetition(petition.id)">
+                {{ petition.name }}
+            </ion-button>
+        </ion-item>
+    </ion-list>
 </ion-content>
