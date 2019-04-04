@@ -4,8 +4,12 @@ import {CardHeaderComponent} from './card-header';
 import {CardComponent} from './card.component';
 import {CardTitleComponent} from './card-title';
 import {CardSubtitleComponent} from './card-subtitle';
+import {IonicModule} from '@ionic/angular';
 
 @NgModule({
+    imports: [
+        IonicModule.forRoot(),
+    ],
     declarations: [
         CardBodyComponent,
         CardHeaderComponent,
