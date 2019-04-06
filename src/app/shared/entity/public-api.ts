@@ -10,3 +10,5 @@ export * from './case-file-type';
 export * from './extension-time';
 export * from './party';
 export * from './party-type';
+export * from './city';
+export * from './address';

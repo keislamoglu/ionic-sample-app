@@ -1,4 +1,5 @@
 import {Party} from './party';
+import {Address} from './address';
 
 export class Person {
     id: string;
@@ -6,12 +7,14 @@ export class Person {
     middlename?: string;
     lastname: string;
     nId: string;
-    address: string;
-    mernisAddress: string;
+    addressId: string;
+    mernisAddressId: string;
     phone: string;
     fatherName: string;
     motherName: string;
     birthPlace: string;
+    address: Address;
+    mernisAddress: Address;
     birthDate: Date;
     parties: Party[];
 }
