@@ -22,7 +22,7 @@
                       [value]="person.birthDate.toISOString()"></ion-datetime>
     </ion-item>
     <ion-item><ion-label>Doğum Yeri: </ion-label>{{person.birthPlace}}</ion-item>
-    <ion-item><ion-label>Adres: </ion-label>{{person.address}}</ion-item>
-    <ion-item><ion-label>Mernis Adresi: </ion-label>{{person.mernisAddress}}</ion-item>
     <ion-item><ion-label>Telefon: </ion-label>{{person.phone}}</ion-item>
+    <ion-item><ion-label>Adres: </ion-label>{{getAddressInfo(address)}}</ion-item>
+    <ion-item><ion-label>Mernis Adresi: </ion-label>{{getAddressInfo(mernisAddress)}}</ion-item>
 </ion-content>

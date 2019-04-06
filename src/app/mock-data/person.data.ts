@@ -16,17 +16,17 @@ class AddressIterator {
 }
 
 export const PERSONS = [
-    createPerson('Kadir Emin', 'İslamoğlu', AddressIterator.next.id),
-    createPerson('Hakan Emre', 'İslamoğlu', AddressIterator.next.id),
-    createPerson('Gökhan', 'Keçeci', AddressIterator.next.id),
-    createPerson('Recep', 'Altunsu', AddressIterator.next.id),
-    createPerson('Ahmet', 'Taş', AddressIterator.next.id),
-    createPerson('Burak', 'Mollaibrahimoğlu', AddressIterator.next.id),
-    createPerson('Gökhan', 'Tınkır', AddressIterator.next.id),
-    createPerson('Serkan', 'Elçiçek', AddressIterator.next.id),
+    createPerson('Kadir Emin', 'İslamoğlu'),
+    createPerson('Hakan Emre', 'İslamoğlu'),
+    createPerson('Gökhan', 'Keçeci'),
+    createPerson('Recep', 'Altunsu'),
+    createPerson('Ahmet', 'Taş'),
+    createPerson('Burak', 'Mollaibrahimoğlu'),
+    createPerson('Gökhan', 'Tınkır'),
+    createPerson('Serkan', 'Elçiçek'),
 ];
 
-function createPerson(name: string, lastname: string, addressId: string): Person {
+function createPerson(name: string, lastname: string): Person {
     let middlename;
     [name, middlename] = name.split(' ');
     return {
@@ -36,8 +36,8 @@ function createPerson(name: string, lastname: string, addressId: string): Person
         id: guid(),
         nId: '12345678901',
         phone: '05001234567',
-        addressId: addressId,
-        mernisAddressId: addressId,
+        addressId: AddressIterator.next.id,
+        mernisAddressId: AddressIterator.next.id,
         birthDate: new Date(),
         birthPlace: 'Lorem',
         fatherName: 'Baba',

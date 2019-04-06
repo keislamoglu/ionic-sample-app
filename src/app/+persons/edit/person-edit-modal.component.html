@@ -6,63 +6,98 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
     <form (ngSubmit)="save()" #form="ngForm" *ngIf="person">
         <!--NAME-->
         <ion-item>
-            <ion-label>Ad</ion-label>
+            <ion-label position="floating">Ad</ion-label>
             <ion-input name="name" [(ngModel)]="person.name" required></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>İkinci ad</ion-label>
+            <ion-label position="floating">İkinci ad</ion-label>
             <ion-input name="middlename" [(ngModel)]="person.middlename"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Soyad</ion-label>
+            <ion-label position="floating">Soyad</ion-label>
             <ion-input name="lastname" [(ngModel)]="person.lastname" required></ion-input>
         </ion-item>
         <!--PARENT INFO-->
         <ion-item>
-            <ion-label>Anne Adı</ion-label>
+            <ion-label position="floating">Anne Adı</ion-label>
             <ion-input name="motherName" [(ngModel)]="person.motherName" required></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Baba Adı</ion-label>
+            <ion-label position="floating">Baba Adı</ion-label>
             <ion-input name="fatherName" [(ngModel)]="person.fatherName" required></ion-input>
         </ion-item>
         <!--NATIONAL ID-->
         <ion-item>
-            <ion-label>T.C. Kimlik No</ion-label>
+            <ion-label position="floating">T.C. Kimlik No</ion-label>
             <ion-input name="nId" [(ngModel)]="person.nId" required></ion-input>
         </ion-item>
         <!--BIRTH DATE-->
         <ion-item>
-            <ion-label>Doğum Tarihi</ion-label>
+            <ion-label position="floating">Doğum Tarihi</ion-label>
             <ion-datetime required name="birthDate"
                           displayFormat="DD/MM/YYYY"
                           [(ngModel)]="birthDate"></ion-datetime>
         </ion-item>
         <!--BIRTH PLACE-->
         <ion-item>
-            <ion-label>Doğum Yeri</ion-label>
+            <ion-label position="floating">Doğum Yeri</ion-label>
             <ion-input name="birthPlace" [(ngModel)]="person.birthPlace"></ion-input>
-        </ion-item>
-        <!--ADDRESS-->
-        <ion-item>
-            <ion-label>Adres</ion-label>
-            <ion-textarea name="address" [(ngModel)]="person.address" required></ion-textarea>
-        </ion-item>
-        <!--MERNIS ADDRESS-->
-        <ion-item>
-            <ion-label>Mernis Adresi</ion-label>
-            <ion-textarea name="mernisAddress" [(ngModel)]="person.mernisAddress" required></ion-textarea>
         </ion-item>
         <!--PHONE-->
         <ion-item>
-            <ion-label>Tel. No</ion-label>
+            <ion-label position="floating">Tel. No</ion-label>
             <ion-input type="tel" name="phone" [(ngModel)]="person.phone" required></ion-input>
         </ion-item>
+        <!--ADDRESS-->
+        <ion-item-group>
+            <ion-item-divider>Beyan Adresi</ion-item-divider>
+            <ion-item>
+                <ion-label position="floating">Şehir</ion-label>
+                <ion-select name="address.city" [(ngModel)]="address.cityId" required placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let city of cities"
+                                       [value]="city.id">{{ city.name }}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">İlçe</ion-label>
+                <ion-input name="address.district" required [(ngModel)]="address.district"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Cadde-Sokak</ion-label>
+                <ion-input name="address.street" required [(ngModel)]="address.street"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Açık Adres</ion-label>
+                <ion-textarea name="address.full" required [(ngModel)]="address.fullAddress"></ion-textarea>
+            </ion-item>
+        </ion-item-group>
+        <!--MERNIS ADDRESS-->
+        <ion-item-group>
+            <ion-item-divider>Mernis Adresi</ion-item-divider>
+            <ion-item>
+                <ion-label position="floating">Şehir</ion-label>
+                <ion-select name="mernisAddress.city" [(ngModel)]="mernisAddress.cityId" required placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let city of cities"
+                                       [value]="city.id">{{ city.name }}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">İlçe</ion-label>
+                <ion-input name="mernisAddress.district" required [(ngModel)]="mernisAddress.district"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Cadde-Sokak</ion-label>
+                <ion-input name="mernisAddress.street" required [(ngModel)]="mernisAddress.street"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Açık Adres</ion-label>
+                <ion-textarea name="mernisAddress.full" required [(ngModel)]="mernisAddress.fullAddress"></ion-textarea>
+            </ion-item>
+        </ion-item-group>
         <!--ACTIONS-->
         <ion-item lines="none">
             <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>
