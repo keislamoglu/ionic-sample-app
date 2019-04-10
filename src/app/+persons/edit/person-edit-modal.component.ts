@@ -108,6 +108,6 @@ export class PersonEditModalComponent implements OnInit {
     }
 
     private _fullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
+        return PersonService.FullName(person);
     }
 }
