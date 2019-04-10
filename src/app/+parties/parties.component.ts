@@ -1,23 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalService, PartyService} from '../shared/services';
-import {Party} from '../shared/entity';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ModalService, PartyService, PersonService} from '../shared/services';
+import {Party, Person} from '../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {PartyEditModalComponent} from './edit/party-edit-modal.component';
 import {PersonEditModalComponent} from '../+persons/edit/person-edit-modal.component';
+import {getGrouped} from '../shared/helpers';
+import {switchMap} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
 
 @Component({
-    templateUrl: './parties.component.html'
+    templateUrl: './parties.component.html',
+    styleUrls: ['./parties.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PartiesComponent implements OnInit {
     caseFileId: string;
     parties: Party[] = [];
+    persons: Person[] = [];
+    groupedParties: Array<Party[]> = [];
+    itemCountPerRow = 2;
+    columnSize = 12 / this.itemCountPerRow;
 
     constructor(private _route: ActivatedRoute,
                 private _modalService: ModalService,
                 private _partyService: PartyService,
+                private _personService: PersonService,
                 private _actionSheetController: ActionSheetController,
-                private _navController: NavController) {
+                private _navController: NavController,
+                private _changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
@@ -68,11 +79,27 @@ export class PartiesComponent implements OnInit {
     }
 
     private _loadData() {
-        this._partyService.getByCaseFile(this.caseFileId)
-            .subscribe(parties => this.parties = parties);
+        this._partyService.getByCaseFile(this.caseFileId).pipe(
+            switchMap(parties => {
+                this.parties = parties;
+                return forkJoin(parties.map(party => this._personService.get(party.personId)));
+            }),
+        ).subscribe(persons => {
+            this.persons = persons;
+            const visualParties = [null, ...this.parties];
+            this.groupedParties = getGrouped(visualParties, this.itemCountPerRow);
+            this._changeDetectorRef.markForCheck();
+        });
     }
 
     navToDetail(id: string) {
         this._navController.navigateForward(`/parties/${id}`);
+    }
+
+    personName(party: Party) {
+        const person = this.persons.find(t => t.id === party.personId);
+        return person
+            ? PersonService.FullName(person)
+            : '';
     }
 }

@@ -3,17 +3,31 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-buttons slot="end">
-            <ion-button fill="clear" (click)="create()">Taraf ekle</ion-button>
-        </ion-buttons>
         <ion-title>Taraflar</ion-title>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let party of parties">
-            <ion-button fill="clear" (click)="navToDetail(party.id)">{{party.type}}</ion-button>
-        </ion-item>
-    </ion-list>
+    <ion-grid>
+        <ion-row *ngFor="let parties of groupedParties">
+            <ion-col *ngFor="let party of parties" [size]="columnSize">
+                <app-card *ngIf="!party" (click)="create()" class="add-new">
+                    <app-card-body>
+                        <ion-button fill="clear" slot="start">
+                            <ion-icon size="large" name="add-circle-outline"></ion-icon>
+                        </ion-button>
+                    </app-card-body>
+                </app-card>
+                <app-card *ngIf="party" (click)="navToDetail(party.id)">
+                    <app-card-header>
+                        <app-card-title>
+                            {{ party.type }}
+                        </app-card-title>
+                        <app-card-subtitle>
+                            {{ personName(party) }}
+                        </app-card-subtitle>
+                    </app-card-header>
+                </app-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

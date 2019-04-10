@@ -7,6 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
+import {CardModule} from '../shared/card';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import {FormsModule} from '@angular/forms';
         CommonModule,
         ServicesModule,
         FormsModule,
+        CardModule,
         PartiesRoutingModule,
     ],
     declarations: [
