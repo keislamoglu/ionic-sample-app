@@ -1,4 +1,4 @@
-import {CaseFile, Person, CompetentAuthority, UserInfo} from '../app/shared/entity';
+import {CaseFile, Person, CompetentAuthority, User} from '../app/shared/entity';
 import {DocxFileTemplate, TextAlign} from './docx-file-template';
 
 export interface GorusmeyeDavetProps {
@@ -6,7 +6,7 @@ export interface GorusmeyeDavetProps {
     person: Person;
     competentAuthority: CompetentAuthority;
     date: Date;
-    userInfo: UserInfo;
+    user: User;
 }
 
 export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
@@ -46,7 +46,7 @@ export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
         this.addText('Saygı ile bilgilerinize sunarım. ' + this.props.date.toLocaleDateString()).tab();
 
         this.newLine();
-        this.addText(this.fullName(this.props.userInfo), TextAlign.Right);
+        this.addText(this.fullName(this.props.user), TextAlign.Right);
         this.addText('Uzlaştırmacı', TextAlign.Right);
 
         this.newLine();
@@ -62,15 +62,15 @@ export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
         const addressP = this.createP();
         this.addText('Adres', addressP).bold();
         this.addText(': ', addressP).bold().tab().tab();
-        this.addText(this.props.userInfo.address, addressP);
+        this.addText(this.props.user.address, addressP);
 
         const phoneP = this.createP();
         this.addText('Telefon', phoneP).bold();
         this.addText(': ', phoneP).bold().tab().tab();
-        this.addText(this.props.userInfo.phone, phoneP);
+        this.addText(this.props.user.phone, phoneP);
     }
 
-    private fullName(person: Person | UserInfo) {
+    private fullName(person: Person | User) {
         return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

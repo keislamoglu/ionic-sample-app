@@ -1,12 +1,12 @@
-import {UserInfo} from '../shared/entity';
+import {User} from '../shared/entity';
 import {guid, lorem} from '../shared/helpers';
 
-export const USER_INFOS: UserInfo[] = [
+export const USERS: User[] = [
     createUser('Fatih', 'Aytuç')
 ];
 
 
-function createUser(name: string, lastname: string): UserInfo {
+function createUser(name: string, lastname: string): User {
     let middlename;
     [name, middlename] = name.split(' ', 1);
     return {

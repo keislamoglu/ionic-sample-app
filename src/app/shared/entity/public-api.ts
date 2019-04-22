@@ -4,7 +4,7 @@ export * from './petition';
 export * from './petition-template';
 export * from './competent-authority';
 export * from './competent-authority-type';
-export * from './user-info';
+export * from './user';
 export * from './template-document';
 export * from './case-file-type';
 export * from './extension-time';

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CaseFile, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument, UserInfo} from '../entity';
+import {CaseFile, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument, User} from '../entity';
 import {GorusmeyeDavet, GorusmeyeDavetProps} from '../../../templates';
 import {map, switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
@@ -10,7 +10,7 @@ import {DocxFileService} from './docx-file.service';
 import {PersonService} from './person.service';
 import {CaseFileService} from './case-file.service';
 import {CompetentAuthorityService} from './competent-authority.service';
-import {UserInfoService} from './user-info.service';
+import {UserService} from './user.service';
 import {Istinabe, IstinabeProps} from '../../../templates';
 
 
@@ -19,7 +19,7 @@ export class PetitionExporterService {
 
     constructor(private _petitionService: PetitionService,
                 private _petitionTemplateService: PetitionTemplateService,
-                private _userInfoService: UserInfoService,
+                private _userService: UserService,
                 private _caseFileService: CaseFileService,
                 private _partyService: PartyService,
                 private _personService: PersonService,
@@ -35,7 +35,7 @@ export class PetitionExporterService {
         const caseFile = await this._getCaseFile(party.caseFileId);
         const competentAuthority = await this._getCompetentAuthority(caseFile.competentAuthorityId);
 
-        const userInfo: UserInfo = await this._getUserInfo();
+        const user: User = await this._getUser();
 
         switch (template.slugName) {
             case TemplateDocument.UzlasmaGorusmesineDavet:
@@ -47,7 +47,7 @@ export class PetitionExporterService {
                         person,
                         caseFile,
                         competentAuthority,
-                        userInfo
+                        user: user
                     } as GorusmeyeDavetProps
                 });
                 break;
@@ -85,8 +85,8 @@ export class PetitionExporterService {
         return this._competentAuthorityService.get(id).toPromise();
     }
 
-    private _getUserInfo(): Promise<UserInfo> {
-        return this._userInfoService.getAll().pipe(map(users => users[0])).toPromise();
+    private _getUser(): Promise<User> {
+        return this._userService.getAll().pipe(map(users => users[0])).toPromise();
     }
 
     private _getCaseFileParties(caseFileId: string) {
