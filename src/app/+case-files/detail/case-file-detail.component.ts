@@ -1,11 +1,12 @@
 import {NavController} from '@ionic/angular';
 import {Component, OnInit} from '@angular/core';
-import {CaseFileService, CompetentAuthorityService, ExtensionTimeService, ModalService} from '../../shared/services';
-import {CaseFile, CompetentAuthority} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
+import {ModalService} from '../../shared/services';
+import {CaseFile, CompetentAuthority} from '../../shared/entity';
 import {getDateDiff} from '../../shared/helpers';
+import {CaseFileService, CompetentAuthorityService, ExtensionTimeService} from '../../shared/repositories';
+import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component';
 
 @Component({
     templateUrl: './case-file-detail.component.html',

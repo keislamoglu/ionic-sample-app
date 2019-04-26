@@ -1,15 +1,21 @@
 import {CompetentAuthorityType, CompetentAuthority} from '../shared/entity';
-import {guid, lorem} from '../shared/helpers';
+import {lorem} from '../shared/helpers';
 
 export const COMPETENT_AUTHORITIES: CompetentAuthority[] = [
-    competentAuthority(lorem(5), 'İstanbul Çağlayan Adliyesi', CompetentAuthorityType.CourtHouse),
-    competentAuthority(lorem(4), 'İstanbul Kartal Adliyesi', CompetentAuthorityType.CourtHouse),
-    competentAuthority(lorem(3), 'İstanbul Cumhuriyet Başsavcılığı', CompetentAuthorityType.AttorneyGeneralship),
+    competentAuthority('d37d50b4-dda4-41dd-dba0-221803431625',
+        lorem(5), 'İstanbul Çağlayan Adliyesi',
+        CompetentAuthorityType.CourtHouse),
+    competentAuthority('8b9ddb45-aee7-4734-8bc9-2e8d5bbdb439',
+        lorem(4),
+        'İstanbul Kartal Adliyesi', CompetentAuthorityType.CourtHouse),
+    competentAuthority('cd10d954-ebda-420d-738e-7cac09324d25',
+        lorem(3),
+        'İstanbul Cumhuriyet Başsavcılığı', CompetentAuthorityType.AttorneyGeneralship),
 ];
 
-function competentAuthority(address: string, name: string, type: CompetentAuthorityType): CompetentAuthority {
+function competentAuthority(id: string, address: string, name: string, type: CompetentAuthorityType): CompetentAuthority {
     return {
-        id: guid(),
+        id,
         address,
         name,
         type

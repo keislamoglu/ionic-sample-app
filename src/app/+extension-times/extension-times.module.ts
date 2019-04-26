@@ -7,12 +7,14 @@ import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
+import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     imports: [
         IonicModule.forRoot(),
         CommonModule,
         ServicesModule,
+        RepositoriesModule,
         FormsModule,
         ExtensionsTimeRoutingModule
     ],

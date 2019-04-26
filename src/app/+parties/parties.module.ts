@@ -8,12 +8,14 @@ import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
 import {CardModule} from '../shared/card';
+import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     imports: [
         IonicModule.forRoot(),
         CommonModule,
         ServicesModule,
+        RepositoriesModule,
         FormsModule,
         CardModule,
         PartiesRoutingModule,

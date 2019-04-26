@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
 import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {DocxFileService, ModalService, PetitionService, PetitionTemplateService} from '../../shared/services';
+import {DocxFileService, ModalService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
+import {PetitionService, PetitionTemplateService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './petition-detail.component.html'

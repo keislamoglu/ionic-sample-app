@@ -9,5 +9,5 @@ export class Petition {
     party: Party;
     templateId: string;
     template: PetitionTemplate;
-    date: Date;
+    date: string;
 }

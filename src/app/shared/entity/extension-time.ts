@@ -1,6 +1,6 @@
 export class ExtensionTime {
     id: string;
     caseFileId: string;
-    date: Date;
+    date: string;
     duration: number; // day
 }

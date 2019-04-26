@@ -8,6 +8,7 @@ import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component'
 import {CaseFileDetailComponent} from './detail/case-file-detail.component';
 import {CaseFilesRoutingModule} from './case-files-routing.module';
 import {CardModule} from '../shared/card';
+import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import {CardModule} from '../shared/card';
         IonicModule.forRoot(),
         CommonModule,
         ServicesModule,
+        RepositoriesModule,
         FormsModule,
         CaseFilesRoutingModule,
         CardModule,

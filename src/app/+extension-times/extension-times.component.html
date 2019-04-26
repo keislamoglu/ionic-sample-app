@@ -16,7 +16,7 @@
             <ion-button fill="clear" (click)="navToDetail(extensionTime.id)">
                 <ion-datetime readonly
                               displayFormat="DD/MM/YYYY"
-                              [value]="extensionTime.date.toISOString()"></ion-datetime>
+                              [value]="extensionTime.date"></ion-datetime>
                 ({{remaining(extensionTime)}} gün)
             </ion-button>
         </ion-item>

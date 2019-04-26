@@ -7,12 +7,14 @@ import {PetitionEditModalComponent} from './edit/petition-edit-modal.component';
 import {ServicesModule} from '../shared/services';
 import {PetitionDetailComponent} from './detail/petition-detail.component';
 import {PetitionsRoutingModule} from './petitions-routing.module';
+import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     imports: [
         IonicModule.forRoot(),
         CommonModule,
         ServicesModule,
+        RepositoriesModule,
         FormsModule,
         PetitionsRoutingModule,
     ],

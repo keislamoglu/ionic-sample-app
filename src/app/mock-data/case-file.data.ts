@@ -13,8 +13,8 @@ function createCaseFile(fileNo: string, type: CaseFileType, authority: Competent
     return {
         id: guid(),
         fileNo: fileNo,
-        chargeDate: new Date(),
-        conciliationStartDate: new Date(),
+        chargeDate: new Date().toLocaleDateString(),
+        conciliationStartDate: new Date().toLocaleDateString(),
         type: type,
         conciliationNo: 'Foo',
         competentAuthorityId: authority.id,

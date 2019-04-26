@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {AlertService, PetitionExporterService, PetitionService, PetitionTemplateService} from '../../shared/services';
+import {AlertService, PetitionExporterService} from '../../shared/services';
 import {Petition, PetitionTemplate} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {guid} from '../../shared/helpers';
+import {PetitionService, PetitionTemplateService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',

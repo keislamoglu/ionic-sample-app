@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {ServicesModule} from './services.module';
-import {BaseCrud} from './base-crud';
-import {ExtensionTime} from '../entity';
 import {Observable, of} from 'rxjs';
+import {ExtensionTime} from '../entity';
+import {BaseCrud} from './base-crud';
+import {RepositoriesModule} from './repositories.module';
+import {map} from 'rxjs/operators';
 
-@Injectable({providedIn: ServicesModule})
+@Injectable({providedIn: RepositoriesModule})
 export class ExtensionTimeService extends BaseCrud<ExtensionTime> {
-    protected dataSet: ExtensionTime[] = [];
+    protected dataSetName = 'extension_times';
+    protected dataSet$ = of([]);
 
     static getNotPassedOne(extensionTimes: ExtensionTime[]): ExtensionTime | null {
         const now = new Date();
@@ -24,6 +26,8 @@ export class ExtensionTimeService extends BaseCrud<ExtensionTime> {
     }
 
     getByCaseFile(caseFileId: string): Observable<ExtensionTime[]> {
-        return of(this.dataSet.filter(t => t.caseFileId === caseFileId));
+        return this.getAll().pipe(
+            map(dataSet => dataSet.filter(t => t.caseFileId === caseFileId))
+        );
     }
 }

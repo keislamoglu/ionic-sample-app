@@ -7,6 +7,7 @@ import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
 import {PersonDetailComponent} from './detail/person-detail.component';
 import {PersonsRoutingModule} from './persons-routing.module';
+import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import {PersonsRoutingModule} from './persons-routing.module';
         IonicModule.forRoot(),
         CommonModule,
         ServicesModule,
+        RepositoriesModule,
         FormsModule,
         PersonsRoutingModule,
     ],

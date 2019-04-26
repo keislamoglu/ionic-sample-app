@@ -15,7 +15,7 @@ function createPetition(party: Party, template: PetitionTemplate): Petition {
         id: guid(),
         name: `Dilekçe-${i + 1}`,
         templateId: template.id,
-        date: new Date(),
+        date: new Date().toLocaleDateString(),
         template: void 0,
         party: party,
         partyId: party.id,

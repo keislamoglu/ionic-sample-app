@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ServicesModule} from './services.module';
 import {User} from '../entity';
 import {BaseCrud} from './base-crud';
 import {USERS} from '../../mock-data';
+import {RepositoriesModule} from './repositories.module';
+import {of} from 'rxjs';
 
-@Injectable({providedIn: ServicesModule})
+@Injectable({providedIn: RepositoriesModule})
 export class UserService extends BaseCrud<User> {
-    protected dataSet: User[] = USERS;
+    protected dataSetName = 'users';
+    protected dataSet$ = of(USERS);
 }

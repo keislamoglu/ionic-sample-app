@@ -6,10 +6,10 @@
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
         </ion-buttons>
-        <ion-title>{{caseFile.type}} no: {{caseFile.fileNo}}</ion-title>
+        <ion-title *ngIf="caseFile">{{caseFile.type}} no: {{caseFile.fileNo}}</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="caseFile">
     <ion-item>
         <ion-label>Dosya türü: </ion-label>{{caseFile.type}}
     </ion-item>
@@ -19,12 +19,12 @@
     <ion-item>
         <ion-label>Dosya kabul tar.: </ion-label>
         <ion-datetime readonly
-                      [value]="caseFile.conciliationStartDate.toISOString()" displayFormat="DD/MM/YYYY"></ion-datetime>
+                      [value]="caseFile.conciliationStartDate" displayFormat="DD/MM/YYYY"></ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Görevlendirme tar.: </ion-label>
         <ion-datetime readonly
-                      [value]="caseFile.chargeDate.toISOString()" displayFormat="DD/MM/YYYY"></ion-datetime>
+                      [value]="caseFile.chargeDate" displayFormat="DD/MM/YYYY"></ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Merci: </ion-label>{{competentAuthority.name}}

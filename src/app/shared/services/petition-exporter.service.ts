@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {CaseFile, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument, User} from '../entity';
-import {GorusmeyeDavet, GorusmeyeDavetProps} from '../../../templates';
+import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps} from '../../../templates';
 import {map, switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
-import {PetitionService} from './petition.service';
-import {PetitionTemplateService} from './petition-template.service';
-import {PartyService} from './party.service';
+import {
+    CaseFileService,
+    CompetentAuthorityService,
+    PartyService,
+    PersonService,
+    PetitionService,
+    PetitionTemplateService,
+    UserService
+} from '../repositories';
 import {DocxFileService} from './docx-file.service';
-import {PersonService} from './person.service';
-import {CaseFileService} from './case-file.service';
-import {CompetentAuthorityService} from './competent-authority.service';
-import {UserService} from './user.service';
-import {Istinabe, IstinabeProps} from '../../../templates';
 
 
 @Injectable({providedIn: ServicesModule})

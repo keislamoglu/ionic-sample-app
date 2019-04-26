@@ -1,10 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {CaseFile, CompetentAuthority} from '../shared/entity';
-import {CaseFileService, CompetentAuthorityService, ModalService} from '../shared/services';
 import {NavController} from '@ionic/angular';
-import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 import {zip} from 'rxjs';
+import {CaseFile, CompetentAuthority} from '../shared/entity';
+import {ModalService} from '../shared/services';
 import {getGrouped} from '../shared/helpers';
+import {CaseFileService, CompetentAuthorityService} from '../shared/repositories';
+import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 
 @Component({
     selector: 'case-file',

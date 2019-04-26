@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {AddressService, AlertService, CityService, PersonService} from '../../shared/services';
+import {AlertService} from '../../shared/services';
 import {Address, City, Person} from '../../shared/entity';
 import {switchMap, tap} from 'rxjs/operators';
 import {zip} from 'rxjs';
+import {AddressService, CityService, PersonService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './person-edit-modal.component.html',

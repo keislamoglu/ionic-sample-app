@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ModalService, PartyService, PersonService} from '../shared/services';
+import {ModalService} from '../shared/services';
 import {Party, Person} from '../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {ActionSheetController, NavController} from '@ionic/angular';
@@ -8,6 +8,7 @@ import {PersonEditModalComponent} from '../+persons/edit/person-edit-modal.compo
 import {getGrouped} from '../shared/helpers';
 import {switchMap} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
+import {PartyService, PersonService} from '../shared/repositories';
 
 @Component({
     templateUrl: './parties.component.html',

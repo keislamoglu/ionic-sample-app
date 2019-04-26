@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {AlertService, CaseFileService, CompetentAuthorityService, PersonService} from '../../shared/services';
+import {AlertService} from '../../shared/services';
+import {CaseFileService, CompetentAuthorityService, PersonService} from '../../shared/repositories';
 import {CaseFile, CaseFileType, CompetentAuthority, CompetentAuthorityType} from '../../shared/entity';
 import {EnumList, enumList} from '../../shared/helpers';
 import {switchMap} from 'rxjs/operators';
@@ -14,26 +15,6 @@ export class CaseFileEditModalComponent implements OnInit {
     // Data sets
     caseFileTypeDataset: EnumList<typeof CaseFileType> = enumList(CaseFileType);
     competentAuthorities: CompetentAuthority[] = [];
-
-    get conciliationStartDate(): string {
-        return this.caseFile.conciliationStartDate
-            ? this.caseFile.conciliationStartDate.toISOString()
-            : void 0;
-    }
-
-    set conciliationStartDate(value: string) {
-        this.caseFile.conciliationStartDate = new Date(value);
-    }
-
-    get chargeDate(): string {
-        return this.caseFile.chargeDate
-            ? this.caseFile.chargeDate.toISOString()
-            : void 0;
-    }
-
-    set chargeDate(value: string) {
-        this.caseFile.chargeDate = new Date(value);
-    }
 
     constructor(private _modalController: ModalController,
                 private _caseFileService: CaseFileService,

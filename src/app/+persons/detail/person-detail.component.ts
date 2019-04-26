@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {AddressService, CityService, ModalService, PersonService} from '../../shared/services';
+import {ModalService} from '../../shared/services';
 import {Address, Person} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {PersonEditModalComponent} from '../edit/person-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
 import {zip} from 'rxjs';
+import {AddressService, CityService, PersonService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './person-detail.component.html'

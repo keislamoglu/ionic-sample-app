@@ -7,9 +7,9 @@ export class CaseFile {
     id: string;
     fileNo: string; // Soruşturma veya kovuşturma dosya numarası
     conciliationNo: string; // Uzlaştırma no
-    conciliationStartDate: Date; // Discount from 30 days
+    conciliationStartDate: string; // Discount from 30 days
     extensionTimes: ExtensionTime[]; // Ek süre
-    chargeDate: Date; // Görevlendirme tarihi
+    chargeDate: string; // Görevlendirme tarihi
     parties: Party[]; // Taraflar
     type: CaseFileType; // Dosya tipi (soruşturma veya kovuşturma)
     competentAuthorityId: string;

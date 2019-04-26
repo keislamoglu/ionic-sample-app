@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ModalService, PartyService, PersonService, PetitionService} from '../../shared/services';
+import {ModalService} from '../../shared/services';
 import {NavController} from '@ionic/angular';
 import {Party, Person, Petition} from '../../shared/entity';
 import {switchMap} from 'rxjs/operators';
 import {PartyEditModalComponent} from '../edit/party-edit-modal.component';
 import {zip} from 'rxjs';
 import {PetitionEditModalComponent} from '../../+petitions/edit/petition-edit-modal.component';
+import {PartyService, PersonService, PetitionService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './party-detail.component.html'

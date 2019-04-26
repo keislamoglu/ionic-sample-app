@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {AlertService, ExtensionTimeService} from '../../shared/services';
+import {AlertService} from '../../shared/services';
 import {ExtensionTime} from '../../shared/entity';
+import {ExtensionTimeService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './extension-time-edit-modal.component.html'
@@ -10,16 +11,6 @@ export class ExtensionTimeEditModalComponent implements OnInit {
     @Input() id: string;
     @Input() caseFileId: string;
     extensionTime: ExtensionTime | null = null;
-
-    get date(): string {
-        return this.extensionTime.date
-            ? this.extensionTime.date.toISOString()
-            : void 0;
-    }
-
-    set date(value: string) {
-        this.extensionTime.date = new Date(value);
-    }
 
     constructor(private _extensionTimeService: ExtensionTimeService,
                 private _modalController: ModalController,

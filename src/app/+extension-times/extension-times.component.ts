@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {CaseFileService, ExtensionTimeService, ModalService} from '../shared/services';
+import {ModalService} from '../shared/services';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {ExtensionTimeEditModalComponent} from './edit/extension-time-edit-modal.component';
 import {CaseFile, ExtensionTime} from '../shared/entity';
 import {getDateDiff} from '../shared/helpers';
+import {CaseFileService, ExtensionTimeService} from '../shared/repositories';
 
 @Component({
     templateUrl: './extension-times.component.html'

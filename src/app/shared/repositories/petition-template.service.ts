@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ServicesModule} from './services.module';
 import {BaseCrud} from './base-crud';
 import {PetitionTemplate} from '../entity';
 import {PETITION_TEMPLATES} from '../../mock-data';
+import {RepositoriesModule} from './repositories.module';
+import {of} from 'rxjs';
 
-@Injectable({providedIn: ServicesModule})
+@Injectable({providedIn: RepositoriesModule})
 export class PetitionTemplateService extends BaseCrud<PetitionTemplate> {
-    protected dataSet: PetitionTemplate[] = PETITION_TEMPLATES;
+    protected dataSetName = 'petition_templates';
+    protected dataSet$ = of(PETITION_TEMPLATES);
 }

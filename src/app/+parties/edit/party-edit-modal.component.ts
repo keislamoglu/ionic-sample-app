@@ -2,8 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {enumList, EnumList} from '../../shared/helpers';
 import {Party, PartyType, Person} from '../../shared/entity';
-import {AlertService, PartyService, PersonService} from '../../shared/services';
+import {AlertService} from '../../shared/services';
 import {zip} from 'rxjs';
+import {PartyService, PersonService} from '../../shared/repositories';
 
 @Component({
     templateUrl: './party-edit-modal.component.html'

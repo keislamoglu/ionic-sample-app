@@ -38,7 +38,7 @@ function createPerson(name: string, lastname: string): Person {
         phone: '05001234567',
         addressId: AddressIterator.next.id,
         mernisAddressId: AddressIterator.next.id,
-        birthDate: new Date(),
+        birthDate: new Date().toLocaleDateString(),
         birthPlace: 'Lorem',
         fatherName: 'Baba',
         motherName: 'Anne',

@@ -15,6 +15,6 @@ export class Person {
     birthPlace: string;
     address: Address;
     mernisAddress: Address;
-    birthDate: Date;
+    birthDate: string;
     parties: Party[];
 }

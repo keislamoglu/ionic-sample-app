@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonEditModalComponent} from './edit/person-edit-modal.component';
 import {Person} from '../shared/entity';
-import {ModalService, PersonService} from '../shared/services';
+import {ModalService} from '../shared/services';
 import {NavController} from '@ionic/angular';
+import {PersonService} from '../shared/repositories';
 
 @Component({
     templateUrl: './persons.component.html',

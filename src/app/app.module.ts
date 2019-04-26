@@ -16,6 +16,8 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {PartiesModule} from './+parties/parties.module';
 import {ExtensionTimesModule} from './+extension-times/extension-times.module';
 import {MenuModule} from './shared/menu/menu.module';
+import {LoginModule} from './+login/login.module';
+import {RegisterModule} from './+register/register.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,6 +32,8 @@ import {MenuModule} from './shared/menu/menu.module';
         PartiesModule,
         ExtensionTimesModule,
         MenuModule,
+        LoginModule,
+        RegisterModule,
     ],
     providers: [
         File,
