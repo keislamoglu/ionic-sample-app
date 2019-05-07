@@ -86,7 +86,6 @@ export class PartiesComponent implements OnInit {
                 const visualParties = [null, ...parties];
                 this.groupedParties = getGrouped(visualParties, this.itemCountPerRow);
                 this._changeDetectorRef.markForCheck();
-                // TODO what if 'parties' is empty
                 return parties.length > 0
                     ? forkJoin(parties.map(party => this._personService.get(party.personId)))
                     : of([]);
