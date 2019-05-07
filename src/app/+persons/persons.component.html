@@ -13,6 +13,9 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="_loadData($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-list>
         <ion-item *ngFor="let person of persons">
             <ion-button fill="clear" (click)="navToDetail(person.id)">{{_fullName(person)}} - {{person.nId}}</ion-button>

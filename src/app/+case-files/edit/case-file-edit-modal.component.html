@@ -10,7 +10,7 @@
     <form (ngSubmit)="save()" #form="ngForm" *ngIf="caseFile">
         <!--FILE TYPE-->
         <ion-item>
-            <ion-label>Dosya tipi</ion-label>
+            <ion-label position="floating">Dosya tipi</ion-label>
             <ion-select required name="caseFileType"
                         (ngModelChange)="onTypeChange($event)"
                         [(ngModel)]="caseFile.type" placeholder="-- Seçiniz --">
@@ -20,7 +20,7 @@
         </ion-item>
         <!--COMPETENT AUTHORITY-->
         <ion-item *ngIf="caseFile.type">
-            <ion-label>{{getCompetentAuthorityLabel(caseFile.type)}}:</ion-label>
+            <ion-label position="floating">{{getCompetentAuthorityLabel(caseFile.type)}}:</ion-label>
             <ion-select required name="competentAuthority"
                         [(ngModel)]="caseFile.competentAuthorityId" placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let cAuthority of competentAuthorities"
@@ -29,17 +29,17 @@
         </ion-item>
         <!--FILE NO-->
         <ion-item *ngIf="caseFile.type">
-            <ion-label>{{caseFile.type}} no</ion-label>
+            <ion-label position="floating">{{caseFile.type}} no</ion-label>
             <ion-input name="fileNo" [(ngModel)]="caseFile.fileNo" required></ion-input>
         </ion-item>
         <!--CONCILIATION NO-->
         <ion-item>
-            <ion-label>Uzlaştırma numarası</ion-label>
+            <ion-label position="floating">Uzlaştırma numarası</ion-label>
             <ion-input name="conciliationNo" [(ngModel)]="caseFile.conciliationNo" required></ion-input>
         </ion-item>
         <!--CONCILIATION START DATE-->
         <ion-item>
-            <ion-label>Dosya kabul tar.</ion-label>
+            <ion-label position="floating">Dosya kabul tar.</ion-label>
             <ion-datetime required
                           displayFormat="DD/MM/YYYY"
                           name="conciliationStartDate"
@@ -47,7 +47,7 @@
         </ion-item>
         <!--CHARGE DATE-->
         <ion-item>
-            <ion-label>Görevlendirilme tar.</ion-label>
+            <ion-label position="floating">Görevlendirilme tar.</ion-label>
             <ion-datetime required
                           displayFormat="DD/MM/YYYY"
                           name="chargeDate"

@@ -6,7 +6,7 @@
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="create()">Yeni ek süre</ion-button>
         </ion-buttons>
-        <ion-title>{{caseFile.type}} - {{caseFile.fileNo}} ek süreleri</ion-title>
+        <ion-title *ngIf="caseFile">{{caseFile.type}} - {{caseFile.fileNo}} ek süreleri</ion-title>
     </ion-toolbar>
 </ion-header>
 

@@ -10,7 +10,7 @@
     <form (ngSubmit)="save()" #form="ngForm" *ngIf="party">
         <!--PARTY TYPE-->
         <ion-item>
-            <ion-label>Taraf tipi</ion-label>
+            <ion-label position="floating">Taraf tipi</ion-label>
             <ion-select required name="partyType"
                         [(ngModel)]="party.type" placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let partyType of partyTypeDataset"
@@ -19,7 +19,7 @@
         </ion-item>
         <!--PERSON-->
         <ion-item>
-            <ion-label>Kişi</ion-label>
+            <ion-label position="floating">Kişi</ion-label>
             <ion-select required name="person"
                         [(ngModel)]="party.personId" placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let person of personDataset"

@@ -16,16 +16,6 @@ export class PersonEditModalComponent implements OnInit {
     mernisAddress: Address | null = null;
     cities: City[] = [];
 
-    get birthDate(): string {
-        return this.person.birthDate
-            ? this.person.birthDate.toISOString()
-            : void 0;
-    }
-
-    set birthDate(value: string) {
-        this.person.birthDate = new Date(value);
-    }
-
     constructor(private _modalController: ModalController,
                 private _personService: PersonService,
                 private _cityService: CityService,

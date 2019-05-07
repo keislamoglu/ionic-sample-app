@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ExtensionTime} from '../entity';
 import {BaseCrud} from './base-crud';
 import {RepositoriesModule} from './repositories.module';
@@ -8,7 +8,6 @@ import {map} from 'rxjs/operators';
 @Injectable({providedIn: RepositoriesModule})
 export class ExtensionTimeService extends BaseCrud<ExtensionTime> {
     protected dataSetName = 'extension_times';
-    protected dataSet$ = of([]);
 
     static getNotPassedOne(extensionTimes: ExtensionTime[]): ExtensionTime | null {
         const now = new Date();

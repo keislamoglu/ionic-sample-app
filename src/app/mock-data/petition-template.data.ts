@@ -1,24 +1,16 @@
 import {PetitionTemplate, TemplateDocument} from '../shared/entity';
-import {guid} from '../shared/helpers';
 
-let i = 1;
 export const PETITION_TEMPLATES: PetitionTemplate[] = [
     {
-        id: guid(),
+        id: 'cebf733d-14ae-4244-bd97-abf224023bd9',
         name: 'Görüşmeye Davet',
         slugName: TemplateDocument.UzlasmaGorusmesineDavet,
         petitions: []
     },
-    createPetitionTemplate(),
-    createPetitionTemplate(),
+    {
+        id: '68c0e11e-8292-4c95-bde5-de7d732aaea8',
+        name: 'İstinabe',
+        slugName: TemplateDocument.Istinabe,
+        petitions: []
+    }
 ];
-
-function createPetitionTemplate(): PetitionTemplate {
-    const id = guid();
-    return {
-        id,
-        name: `Şablon-${i++}`,
-        slugName: TemplateDocument.Ornek,
-        petitions: [],
-    };
-}

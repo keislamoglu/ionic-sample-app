@@ -7,7 +7,7 @@ import {PartyEditModalComponent} from './edit/party-edit-modal.component';
 import {PersonEditModalComponent} from '../+persons/edit/person-edit-modal.component';
 import {getGrouped} from '../shared/helpers';
 import {switchMap} from 'rxjs/operators';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
 import {PartyService, PersonService} from '../shared/repositories';
 
 @Component({
@@ -83,12 +83,18 @@ export class PartiesComponent implements OnInit {
         this._partyService.getByCaseFile(this.caseFileId).pipe(
             switchMap(parties => {
                 this.parties = parties;
-                return forkJoin(parties.map(party => this._personService.get(party.personId)));
+                const visualParties = [null, ...parties];
+                this.groupedParties = getGrouped(visualParties, this.itemCountPerRow);
+                this._changeDetectorRef.markForCheck();
+                // TODO what if 'parties' is empty
+                return parties.length > 0
+                    ? forkJoin(parties.map(party => this._personService.get(party.personId)))
+                    : of([]);
             }),
         ).subscribe(persons => {
             this.persons = persons;
-            const visualParties = [null, ...this.parties];
-            this.groupedParties = getGrouped(visualParties, this.itemCountPerRow);
+            // const visualParties = [null, ...this.parties];
+            // this.groupedParties = getGrouped(visualParties, this.itemCountPerRow);
             this._changeDetectorRef.markForCheck();
         });
     }

@@ -5,7 +5,7 @@ export interface GorusmeyeDavetProps {
     caseFile: CaseFile;
     person: Person;
     competentAuthority: CompetentAuthority;
-    date: Date;
+    date: string;
     user: User;
 }
 
@@ -43,7 +43,7 @@ export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
             ' irtibata geçmediğiniz takdirde uzlaşma teklifini reddetmiş sayılacağınızı hatırlatırım. Bu durumda soruşturma' +
             ' / kovuşturma işlemlerine kaldığı yerden devam edilecek ve bir daha uzlaşma usulü uygulanamayacaktır.', p3);
 
-        this.addText('Saygı ile bilgilerinize sunarım. ' + this.props.date.toLocaleDateString()).tab();
+        this.addText('Saygı ile bilgilerinize sunarım. ' + new Date(this.props.date).toLocaleDateString()).tab();
 
         this.newLine();
         this.addText(this.fullName(this.props.user), TextAlign.Right);

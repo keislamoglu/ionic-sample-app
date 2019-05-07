@@ -58,7 +58,7 @@ export class PetitionEditModalComponent implements OnInit {
     }
 
     save(): void {
-        this.petition.date = new Date();
+        this.petition.date = '' + new Date();
         this.petition.fileName = `${guid()}.docx`;
         if (this.petition.id) {
             this._petitionService.update(this.petition.id, this.petition)

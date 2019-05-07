@@ -8,8 +8,10 @@
         </ion-title>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="_loadData($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-grid>
         <ion-row *ngFor="let group of groupedCaseFiles">
             <ion-col *ngFor="let caseFile of group" [size]="columnSize">
@@ -23,10 +25,10 @@
                 <app-card *ngIf="caseFile" (click)="navToDetail(caseFile.id)">
                     <app-card-header>
                         <app-card-title>
-                            {{ getCompetentAuthority(caseFile.competentAuthorityId).name }}
+                            {{ caseFile.fileNo }} ({{ getRemainingTime(caseFile.id) }} Gün)
                         </app-card-title>
                         <app-card-subtitle>
-                            {{ caseFile.fileNo }}
+                            {{ getCompetentAuthority(caseFile.competentAuthorityId).name }}
                         </app-card-subtitle>
                     </app-card-header>
                 </app-card>

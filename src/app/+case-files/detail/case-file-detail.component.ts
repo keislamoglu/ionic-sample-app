@@ -49,25 +49,11 @@ export class CaseFileDetailComponent implements OnInit {
     }
 
     calculateRemainingTime() {
-        this.remainingTime = 0;
-        if (!this.caseFile) {
-            return;
+        if (this.caseFile) {
+            this._caseFileService.getRemainingTime(this.caseFile.id).subscribe(remainingTime => {
+                this.remainingTime = remainingTime;
+            });
         }
-        const now = new Date();
-        const targetDate = new Date(this.caseFile.conciliationStartDate);
-        targetDate.setDate(targetDate.getDate() + 30); // Discount from 30 days;
-        const dateDiff = getDateDiff(now, targetDate);
-        if (dateDiff > 0) {
-            this.remainingTime = dateDiff;
-            return;
-        }
-
-        this._extensionTimeService.getByCaseFile(this.id).subscribe(extensionTimes => {
-            const ext = ExtensionTimeService.getNotPassedOne(extensionTimes);
-            if (ext) {
-                this.remainingTime = getDateDiff(now, ExtensionTimeService.getDateWithDuration(ext));
-            }
-        });
     }
 
     private _loadData() {

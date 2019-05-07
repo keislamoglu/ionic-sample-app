@@ -10,7 +10,7 @@
     <form (ngSubmit)="save()" #form="ngForm" *ngIf="extensionTime">
         <!--DATE-->
         <ion-item>
-            <ion-label>Tarih</ion-label>
+            <ion-label position="floating">Tarih</ion-label>
             <ion-datetime required
                           displayFormat="DD/MM/YYYY"
                           name="date"
@@ -18,7 +18,7 @@
         </ion-item>
         <!--DURATION-->
         <ion-item>
-            <ion-label>Süre (gün)</ion-label>
+            <ion-label position="floating">Süre (gün)</ion-label>
             <ion-input name="duration" type="number" [(ngModel)]="extensionTime.duration" required></ion-input>
         </ion-item>
         <!--ACTIONS-->

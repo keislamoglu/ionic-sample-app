@@ -12,7 +12,7 @@
     <form (ngSubmit)="save()" #form="ngForm">
         <!--TEMPLATE-->
         <ion-item>
-            <ion-label>Şablon</ion-label>
+            <ion-label position="floating">Şablon</ion-label>
             <ion-select required name="template"
                         (ngModelChange)="onTemplateChange($event)"
                         [(ngModel)]="petition.templateId" placeholder="-- Seçiniz --">
@@ -22,7 +22,7 @@
         </ion-item>
         <!--NAME-->
         <ion-item>
-            <ion-label>Dilekçe Adı</ion-label>
+            <ion-label position="floating">Dilekçe Adı</ion-label>
             <ion-input placeholder="Dilekçe adı giriniz" name="name" [(ngModel)]="petition.name" required></ion-input>
         </ion-item>
         <!--ACTIONS-->

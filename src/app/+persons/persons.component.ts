@@ -26,9 +26,14 @@ export class PersonsComponent implements OnInit {
         this._loadData();
     }
 
-    private _loadData() {
+    private _loadData(refreshEvent?) {
         this._personService.getAll()
-            .subscribe(persons => this.persons = persons);
+            .subscribe(persons => {
+                this.persons = persons;
+                if (refreshEvent) {
+                    refreshEvent.target.complete();
+                }
+            });
     }
 
     private _fullName(person: Person) {
