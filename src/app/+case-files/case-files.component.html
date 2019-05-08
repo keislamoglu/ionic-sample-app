@@ -23,9 +23,10 @@
                     </app-card-body>
                 </app-card>
                 <app-card *ngIf="caseFile" (click)="navToDetail(caseFile.id)">
+                    <span class="remaining-time">{{ getRemainingTime(caseFile.id) }}</span>
                     <app-card-header>
                         <app-card-title>
-                            {{ caseFile.fileNo }} ({{ getRemainingTime(caseFile.id) }} Gün)
+                            {{ caseFile.fileNo }}
                         </app-card-title>
                         <app-card-subtitle>
                             {{ getCompetentAuthority(caseFile.competentAuthorityId).name }}

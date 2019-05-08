@@ -9,4 +9,16 @@ app-card {
       text-align: center;
     }
   }
+
+  .remaining-time {
+    position: absolute;
+    right: -.15rem;
+    top: -.15rem;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    font-size: .8rem;
+    padding: .3rem;
+    font-weight: bold;
+  }
 }
