@@ -15,7 +15,7 @@ import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {PartiesModule} from './+parties/parties.module';
 import {ExtensionTimesModule} from './+extension-times/extension-times.module';
-import {MenuModule} from './shared/menu/menu.module';
+import {MenuModule} from './menu/menu.module';
 import {LoginModule} from './+login/login.module';
 import {RegisterModule} from './+register/register.module';
 

@@ -7,7 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {ServicesModule} from '../shared/services';
 import {FormsModule} from '@angular/forms';
-import {CardModule} from '../shared/card';
+import {CardModule} from '../card';
 import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({

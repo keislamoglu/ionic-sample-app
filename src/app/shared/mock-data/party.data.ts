@@ -1,5 +1,5 @@
-import {CaseFile, Party, PartyType, Person} from '../shared/entity';
-import {guid} from '../shared/helpers';
+import {CaseFile, Party, PartyType, Person} from '../entity';
+import {guid} from '../helpers';
 import {PERSONS} from './person.data';
 import {CASE_FILES} from './case-file.data';
 

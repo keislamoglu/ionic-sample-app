@@ -1,5 +1,5 @@
-import {Person} from '../shared/entity';
-import {guid} from '../shared/helpers';
+import {Person} from '../entity';
+import {guid} from '../helpers';
 import {ADDRESSES} from './address.data';
 
 

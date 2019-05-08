@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseCrud} from './base-crud';
 import {PetitionTemplate} from '../entity';
-import {PETITION_TEMPLATES} from '../../mock-data';
+import {PETITION_TEMPLATES} from '../mock-data';
 import {RepositoriesModule} from './repositories.module';
 import {of} from 'rxjs';
 

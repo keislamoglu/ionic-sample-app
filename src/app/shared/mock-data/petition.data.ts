@@ -1,5 +1,5 @@
-import {Party, Petition, PetitionTemplate} from '../shared/entity';
-import {guid} from '../shared/helpers';
+import {Party, Petition, PetitionTemplate} from '../entity';
+import {guid} from '../helpers';
 import {PETITION_TEMPLATES} from './petition-template.data';
 import {PARTIES} from './party.data';
 

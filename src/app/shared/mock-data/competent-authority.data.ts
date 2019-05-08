@@ -1,5 +1,5 @@
-import {CompetentAuthorityType, CompetentAuthority} from '../shared/entity';
-import {lorem} from '../shared/helpers';
+import {CompetentAuthorityType, CompetentAuthority} from '../entity';
+import {lorem} from '../helpers';
 
 export const COMPETENT_AUTHORITIES: CompetentAuthority[] = [
     competentAuthority('d37d50b4-dda4-41dd-dba0-221803431625',

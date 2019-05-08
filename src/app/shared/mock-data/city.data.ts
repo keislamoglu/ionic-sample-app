@@ -1,4 +1,4 @@
-import {City} from '../shared/entity';
+import {City} from '../entity';
 
 export const CITIES: City[] = [
     ['İstanbul', '0d066c9f-3237-4f02-bc69-4ff0e4114ec3'],

@@ -1,5 +1,5 @@
-import {CaseFile, CaseFileType, CompetentAuthority} from '../shared/entity';
-import {guid} from '../shared/helpers';
+import {CaseFile, CaseFileType, CompetentAuthority} from '../entity';
+import {guid} from '../helpers';
 import {COMPETENT_AUTHORITIES} from './competent-authority.data';
 
 let i = 0;

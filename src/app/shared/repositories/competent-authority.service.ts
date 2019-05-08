@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {COMPETENT_AUTHORITIES} from '../../mock-data';
+import {COMPETENT_AUTHORITIES} from '../mock-data';
 import {CompetentAuthority, CompetentAuthorityType} from '../entity';
 import {BaseCrud} from './base-crud';
 import {RepositoriesModule} from './repositories.module';

@@ -1,5 +1,5 @@
-import {User} from '../shared/entity';
-import {guid, lorem} from '../shared/helpers';
+import {User} from '../entity';
+import {guid, lorem} from '../helpers';
 
 export const USERS: User[] = [
     createUser('Fatih', 'Aytuç')

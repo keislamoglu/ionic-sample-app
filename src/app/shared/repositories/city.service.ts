@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CITIES} from '../../mock-data';
+import {CITIES} from '../mock-data';
 import {City} from '../entity';
 import {BaseCrud} from './base-crud';
 import {of} from 'rxjs';

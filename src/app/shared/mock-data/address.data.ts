@@ -1,5 +1,5 @@
-import {Address} from '../shared/entity';
-import {guid, lorem} from '../shared/helpers';
+import {Address} from '../entity';
+import {guid, lorem} from '../helpers';
 import {CITIES} from './city.data';
 
 let i = 0;
