@@ -3,7 +3,10 @@ import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
     imports: [
-        IonicStorageModule.forRoot()
+        IonicStorageModule.forRoot({
+            name: '__uzlastrdb',
+            driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage'],
+        })
     ]
 })
 export class RepositoriesModule {

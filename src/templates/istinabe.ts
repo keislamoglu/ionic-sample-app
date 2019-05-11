@@ -1,11 +1,11 @@
-import {CaseFile, CompetentAuthority, Person, User} from '../app/shared/entity';
+import {CaseFile, CompetentAuthority, Person, ClientUser} from '../app/shared/entity';
 import {DocxFileTemplate, TextAlign} from './docx-file-template';
 
 export interface IstinabeProps {
     caseFile: CaseFile;
     person: Person;
     competentAuthority: CompetentAuthority;
-    user: User;
+    user: ClientUser;
 }
 
 export class Istinabe extends DocxFileTemplate<IstinabeProps> {
@@ -26,7 +26,7 @@ export class Istinabe extends DocxFileTemplate<IstinabeProps> {
         this.addText('Uzlaştırma raporu', TextAlign.Left);
     }
 
-    private fullName(person: Person | User) {
+    private fullName(person: Person | ClientUser) {
         return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

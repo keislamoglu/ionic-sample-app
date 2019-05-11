@@ -1,4 +1,4 @@
-import {CaseFile, Person, CompetentAuthority, User} from '../app/shared/entity';
+import {CaseFile, Person, CompetentAuthority, ClientUser} from '../app/shared/entity';
 import {DocxFileTemplate, TextAlign} from './docx-file-template';
 
 export interface GorusmeyeDavetProps {
@@ -6,7 +6,7 @@ export interface GorusmeyeDavetProps {
     person: Person;
     competentAuthority: CompetentAuthority;
     date: string;
-    user: User;
+    user: ClientUser;
 }
 
 export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
@@ -70,7 +70,7 @@ export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
         this.addText(this.props.user.phone, phoneP);
     }
 
-    private fullName(person: Person | User) {
+    private fullName(person: Person | ClientUser) {
         return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
     }
 }

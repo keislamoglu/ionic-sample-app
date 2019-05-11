@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {CaseFile, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument, User} from '../entity';
+import {CaseFile, ClientUser, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument} from '../entity';
 import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps} from '../../../templates';
-import {map, switchMap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
     CaseFileService,
@@ -10,9 +10,9 @@ import {
     PersonService,
     PetitionService,
     PetitionTemplateService,
-    UserService
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
+import {UserService} from './user.service';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -36,7 +36,7 @@ export class PetitionExporterService {
         const caseFile = await this._getCaseFile(party.caseFileId);
         const competentAuthority = await this._getCompetentAuthority(caseFile.competentAuthorityId);
 
-        const user: User = await this._getUser();
+        const user: ClientUser = await this._getUser();
 
         switch (template.slugName) {
             case TemplateDocument.UzlasmaGorusmesineDavet:
@@ -86,8 +86,8 @@ export class PetitionExporterService {
         return this._competentAuthorityService.get(id).toPromise();
     }
 
-    private _getUser(): Promise<User> {
-        return this._userService.getAll().pipe(map(users => users[0])).toPromise();
+    private _getUser(): ClientUser {
+        return this._userService.currentUser;
     }
 
     private _getCaseFileParties(caseFileId: string) {

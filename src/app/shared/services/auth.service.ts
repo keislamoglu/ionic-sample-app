@@ -1,14 +1,26 @@
 import {Injectable} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ClientUser, BackendUser} from '../entity';
+import {BackendUser, ClientUser} from '../entity';
 import {map} from 'rxjs/operators';
 import {AppConfig} from '../app-config';
+import {fromPromise} from 'rxjs/internal-compatibility';
+import {UserService} from './user.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+    private _hasServerGrant = false;
     private _authenticated = false;
 
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient, private _storage: Storage, private _userService: UserService) {
+        fromPromise(this._storage.get('user')).subscribe(user => {
+            this._userService.currentUser = user;
+            this._authenticated = !!user;
+        });
+    }
+
+    get isAuthenticated(): boolean {
+        return this._authenticated;
     }
 
     login(email: string, password: string) {
@@ -30,8 +42,7 @@ export class AuthService {
                     subscriptionStatus: resp.subscriptionStatus,
                     subscriptionDate: resp.subscriptionDate
                 };
-                this._authenticated = true;
-                // TODO: save localStorage
+                this._authenticated = this._hasServerGrant = true;
 
                 return user;
             })
@@ -39,12 +50,12 @@ export class AuthService {
     }
 
     logout() {
-        this._authenticated = false;
-        // TODO: remove from localStorage
+        this._authenticated = this._hasServerGrant = false;
+        this._storage.remove('user');
     }
 
-    isAuthenticated() {
-        return this._authenticated;
+    hasServerGrant() {
+        return this._hasServerGrant;
     }
 
     private _hashPassword(password: string) {

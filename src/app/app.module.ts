@@ -18,11 +18,16 @@ import {ExtensionTimesModule} from './+extension-times/extension-times.module';
 import {MenuModule} from './menu/menu.module';
 import {LoginModule} from './+login/login.module';
 import {RegisterModule} from './+register/register.module';
+import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
     imports: [
+        IonicStorageModule.forRoot({
+            name: 'uzlastrstorage',
+            driverOrder: ['localstorage']
+        }),
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,

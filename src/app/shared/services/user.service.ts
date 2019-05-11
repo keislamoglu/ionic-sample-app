@@ -1,6 +1,6 @@
+import {Storage} from '@ionic/storage';
 import {Injectable} from '@angular/core';
 import {BackendUser, ClientUser, SubscriptionStatus} from '../entity';
-import {RepositoriesModule} from './repositories.module';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AppConfig} from '../app-config';
@@ -12,10 +12,11 @@ interface RegisterResp {
     subscriptionDate: string;
 }
 
-@Injectable({providedIn: RepositoriesModule})
+@Injectable({providedIn: 'root'})
 export class UserService {
+    currentUser: ClientUser | null = null;
 
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient, private _storage: Storage) {
     }
 
     static toBackendUser(clientUser: ClientUser): BackendUser {
@@ -52,7 +53,7 @@ export class UserService {
         };
     }
 
-    add(data: BackendUser): Observable<ClientUser> {
+    create(data: BackendUser): Observable<ClientUser> {
         const headers = new HttpHeaders({'Auth-Token': AppConfig.authToken});
         return this._http.post(AppConfig.registerUrl, data, {headers}).pipe(
             map((resp: RegisterResp) => {

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {AlertService, AuthService} from '../shared/services';
+import {AlertService, AuthService, UserService} from '../shared/services';
 import {BackendUser} from '../shared/entity';
-import {UserService} from '../shared/repositories';
 
 @Component({
     templateUrl: './register.component.html'
@@ -17,7 +16,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this._authService.isAuthenticated()) {
+        if (this._authService.isAuthenticated) {
             this._navController.navigateRoot('/case-files');
         }
     }
@@ -27,7 +26,7 @@ export class RegisterComponent implements OnInit {
     }
 
     register() {
-        this._userService.add(this.user).subscribe({
+        this._userService.create(this.user).subscribe({
             next: () => {
                 this.navToLogin();
             },
