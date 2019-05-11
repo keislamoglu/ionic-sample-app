@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {AppConfig} from '../app-config';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {UserService} from './user.service';
+import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
         return this._authenticated;
     }
 
-    login(email: string, password: string) {
+    login(email: string, password: string): Observable<ClientUser> {
         const headers = new HttpHeaders({'Auth-Token': AppConfig.authToken});
         return this._http.post(AppConfig.loginUrl, {email, password}, {headers}).pipe(
             map((resp: BackendUser) => {
@@ -43,22 +44,19 @@ export class AuthService {
                     subscriptionDate: resp.subscriptionDate
                 };
                 this._authenticated = this._hasServerGrant = true;
+                this._userService.currentUser = user;
 
                 return user;
             })
         );
     }
 
-    logout() {
+    logout(): void {
         this._authenticated = this._hasServerGrant = false;
         this._storage.remove('user');
     }
 
-    hasServerGrant() {
+    hasServerGrant(): boolean {
         return this._hasServerGrant;
-    }
-
-    private _hashPassword(password: string) {
-        return password;
     }
 }
