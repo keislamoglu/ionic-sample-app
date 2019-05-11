@@ -4,10 +4,35 @@
     </ion-text>
     <ion-list>
         <ion-item>
-            <ion-input placeholder="Kullanıcı adı"></ion-input>
+            <ion-label position="floating">E-posta</ion-label>
+            <ion-input name="email" type="email" [(ngModel)]="user.email"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input placeholder="Parola" type="password"></ion-input>
+            <ion-label position="floating">Parola</ion-label>
+            <ion-input name="password" type="password" [(ngModel)]="user.password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">İsim</ion-label>
+            <ion-input name="name" type="text" [(ngModel)]="user.name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Soyisim</ion-label>
+            <ion-input name="surname" type="text" [(ngModel)]="user.surname"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Telefon</ion-label>
+            <ion-input name="phone" type="tel" [(ngModel)]="user.phone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Adres</ion-label>
+            <ion-textarea name="address" [(ngModel)]="user.address"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Görevlendirilme tar.</ion-label>
+            <ion-datetime required
+                          displayFormat="DD/MM/YYYY"
+                          name="commissioningDate"
+                          [(ngModel)]="user.commissioningDate"></ion-datetime>
         </ion-item>
     </ion-list>
 
