@@ -16,7 +16,7 @@ interface ConfirmOptions {
 }
 
 interface MessageOptions {
-    title: string,
+    title: string;
     message: string;
     close?: {
         text?: string,
