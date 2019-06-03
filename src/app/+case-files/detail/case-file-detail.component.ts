@@ -2,9 +2,8 @@ import {NavController} from '@ionic/angular';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
-import {ModalService} from '../../shared/services';
+import {AlertService, ModalService} from '../../shared/services';
 import {CaseFile, CompetentAuthority} from '../../shared/entity';
-import {getDateDiff} from '../../shared/helpers';
 import {CaseFileService, CompetentAuthorityService, ExtensionTimeService} from '../../shared/repositories';
 import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component';
 
@@ -16,6 +15,7 @@ export class CaseFileDetailComponent implements OnInit {
     caseFile: CaseFile;
     competentAuthority: CompetentAuthority;
     remainingTime = 0;
+    processing = false;
 
     constructor(
         private _route: ActivatedRoute,
@@ -23,6 +23,7 @@ export class CaseFileDetailComponent implements OnInit {
         private _competentAuthorityService: CompetentAuthorityService,
         private _extensionTimeService: ExtensionTimeService,
         private _navController: NavController,
+        private _alertService: AlertService,
         private _modalService: ModalService) {
     }
 
@@ -64,5 +65,17 @@ export class CaseFileDetailComponent implements OnInit {
                 return this._competentAuthorityService.get(caseFile.competentAuthorityId);
             }),
         ).subscribe(competentAuthority => this.competentAuthority = competentAuthority);
+    }
+
+    agreementReachedChange({detail: {checked}}) {
+        this.caseFile.agreementReached = checked;
+        this.processing = true;
+        this._caseFileService.update(this.caseFile.id, this.caseFile).subscribe({
+            error: () => this._alertService.message({
+                message: 'Bir sorun oluştu',
+                title: 'Hata'
+            }),
+            complete: () => this.processing = false
+        });
     }
 }

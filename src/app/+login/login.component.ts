@@ -18,6 +18,12 @@ export class LoginComponent implements OnInit {
         if (this._authService.isAuthenticated) {
             this.navToCaseFiles();
         }
+
+        this._authService.loginStatusChanged.subscribe(isAuthenticated => {
+            if (isAuthenticated) {
+                this.navToCaseFiles();
+            }
+        });
     }
 
     signIn() {

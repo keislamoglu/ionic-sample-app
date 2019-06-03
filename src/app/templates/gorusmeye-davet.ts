@@ -1,5 +1,5 @@
-import {CaseFile, Person, CompetentAuthority, ClientUser} from '../app/shared/entity';
-import {DocxFileTemplate, TextAlign} from './docx-file-template';
+import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
+import {BaseTemplate, TextAlign} from './base';
 
 export interface GorusmeyeDavetProps {
     caseFile: CaseFile;
@@ -9,7 +9,7 @@ export interface GorusmeyeDavetProps {
     user: ClientUser;
 }
 
-export class GorusmeyeDavet extends DocxFileTemplate<GorusmeyeDavetProps> {
+export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
     protected prepareDocument() {
         this.addText('UZLAŞMA GÖRÜŞMESİNE DAVET MEKTUBU', TextAlign.Center).bold().underline();
 

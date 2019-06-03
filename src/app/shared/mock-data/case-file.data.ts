@@ -20,6 +20,7 @@ function createCaseFile(fileNo: string, type: CaseFileType, authority: Competent
         competentAuthorityId: authority.id,
         parties: [],
         competentAuthority: void 0,
-        extensionTimes: []
+        extensionTimes: [],
+        agreementReached: false
     };
 }

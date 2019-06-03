@@ -12,8 +12,8 @@ import {PetitionService, PetitionTemplateService} from '../../shared/repositorie
 })
 export class PetitionDetailComponent implements OnInit {
     id: string;
-    petition: Petition;
-    template: PetitionTemplate;
+    petition: Petition = new Petition();
+    template: PetitionTemplate = new PetitionTemplate();
 
     constructor(private _petitionService: PetitionService,
                 private _petitionTemplateService: PetitionTemplateService,

@@ -5,10 +5,10 @@ export enum TextAlign {
     Left, Right, Center, Justified
 }
 
-export abstract class DocxFileTemplate<T> {
+export abstract class DocxFileTemplate {
     protected doc = new Document();
 
-    constructor(protected props: T) {
+    constructor(protected props: any) {
         this.prepareDocument();
     }
 
@@ -46,8 +46,10 @@ export abstract class DocxFileTemplate<T> {
         return p.createTextRun(text).font('Arial');
     }
 
-    protected newLine() {
-        this.doc.createParagraph().createTextRun('').font('Arial').break();
+    protected newLine(times = 1) {
+        for (let i = 0; i < times; i++) {
+            this.doc.createParagraph().createTextRun('').font('Arial').break();
+        }
     }
 
     getDocument() {

@@ -20,5 +20,6 @@ function createPetition(party: Party, template: PetitionTemplate): Petition {
         party: party,
         partyId: party.id,
         fileName: guid(),
+        extraData: void 0
     };
 }

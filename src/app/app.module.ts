@@ -19,17 +19,16 @@ import {MenuModule} from './menu/menu.module';
 import {LoginModule} from './+login/login.module';
 import {RegisterModule} from './+register/register.module';
 import {IonicStorageModule} from '@ionic/storage';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
     imports: [
-        IonicStorageModule.forRoot({
-            name: 'uzlastrstorage',
-            driverOrder: ['localstorage']
-        }),
+        IonicStorageModule.forRoot(),
         BrowserModule,
         IonicModule.forRoot(),
+        HttpClientModule,
         AppRoutingModule,
         CaseFilesModule,
         PersonsModule,

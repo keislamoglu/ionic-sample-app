@@ -14,8 +14,8 @@ import {PartyService, PersonService, PetitionService} from '../../shared/reposit
 })
 export class PartyDetailComponent implements OnInit {
     id: string;
-    party: Party | null = null;
-    person: Person | null = null;
+    party: Party = new Party();
+    person: Person = new Person();
     petitions: Petition[] = [];
 
     constructor(private _route: ActivatedRoute,

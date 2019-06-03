@@ -3,7 +3,7 @@ import {ModalController} from '@ionic/angular';
 import {AlertService} from '../../shared/services';
 import {Address, City, Person} from '../../shared/entity';
 import {switchMap, tap} from 'rxjs/operators';
-import {zip} from 'rxjs';
+import {of, zip} from 'rxjs';
 import {AddressService, CityService, PersonService} from '../../shared/repositories';
 
 @Component({
@@ -11,9 +11,9 @@ import {AddressService, CityService, PersonService} from '../../shared/repositor
 })
 export class PersonEditModalComponent implements OnInit {
     @Input() id: string;
-    person: Person | null = null;
-    address: Address | null = null;
-    mernisAddress: Address | null = null;
+    person: Person = new Person();
+    address: Address = new Address();
+    mernisAddress: Address = new Address();
     cities: City[] = [];
 
     constructor(private _modalController: ModalController,
@@ -37,11 +37,7 @@ export class PersonEditModalComponent implements OnInit {
     }
 
     new() {
-        this._loadData().subscribe(() => {
-            this.address = new Address();
-            this.mernisAddress = new Address();
-            this.person = new Person();
-        });
+        this._loadData().subscribe();
     }
 
     edit(id: string) {
@@ -49,30 +45,43 @@ export class PersonEditModalComponent implements OnInit {
             switchMap(() => this._personService.get(id)),
             switchMap(person => {
                 this.person = person;
+                const hasMernisAddress = !!person.mernisAddressId;
                 return zip(
                     this._addressService.get(person.addressId),
-                    this._addressService.get(person.mernisAddressId)
+                    hasMernisAddress ? this._addressService.get(person.mernisAddressId) : of(new Address())
                 );
             })
         ).subscribe(val => [this.address, this.mernisAddress] = val);
     }
 
     save() {
+        const hasMernisAddress = !!this.mernisAddress.cityId;
+
         if (this.person.id) {
             this._personService.update(this.person.id, this.person).pipe(
-                switchMap(() => this._addressService.update(this.address.id, this.address)),
-                switchMap(() => this._addressService.update(this.mernisAddress.id, this.mernisAddress))
+                switchMap(() => {
+                    return this._addressService.update(this.address.id, this.address);
+                }),
+                switchMap(() => {
+                    if (hasMernisAddress) {
+                        return this._addressService.update(this.mernisAddress.id, this.mernisAddress);
+                    } else {
+                        return of(void 0);
+                    }
+                })
             ).subscribe(() => this.dismiss());
             return;
         }
         // Firstly add addresses to db, then assign address ids to person's relevant fields.
         zip(
             this._addressService.add(this.address),
-            this._addressService.add(this.mernisAddress)
+            hasMernisAddress ? this._addressService.add(this.mernisAddress) : of(void 0)
         ).pipe(
             switchMap(([address, mernisAddress]) => {
                 this.person.addressId = address.id;
-                this.person.mernisAddressId = mernisAddress.id;
+                if (mernisAddress) {
+                    this.person.mernisAddressId = mernisAddress.id;
+                }
                 return this._personService.add(this.person);
             })
         ).subscribe(person => this.dismiss({id: person.id}));

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CaseFile, ClientUser, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument} from '../entity';
-import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps} from '../../../templates';
+import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps} from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
@@ -13,6 +13,7 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
+import {SegbisGorusmeDavet, SegbisGorusmeDavetProps} from '../../templates/segbis-gorusme-davet';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -28,7 +29,7 @@ export class PetitionExporterService {
                 private _docxFileService: DocxFileService) {
     }
 
-    async export(petitionId: string) {
+    async export(petitionId: string, extraData?: any) {
         const petition: Petition = await this._getPetition(petitionId);
         const template = await this._getTemplate(petition.templateId);
         const party = await this._getParty(petition.partyId);
@@ -57,6 +58,20 @@ export class PetitionExporterService {
                     fileName: petition.fileName,
                     docxTemplate: Istinabe,
                     props: {} as IstinabeProps
+                });
+                break;
+            case TemplateDocument.SegbisGorusmeDavet:
+                this._docxFileService.export({
+                    fileName: petition.fileName,
+                    docxTemplate: SegbisGorusmeDavet,
+                    props: {
+                        competentAuthority,
+                        user,
+                        date: new Date().toString(),
+                        person,
+                        caseFile,
+                        extraData
+                    } as SegbisGorusmeDavetProps
                 });
                 break;
         }

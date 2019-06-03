@@ -33,5 +33,12 @@
         <ion-label>Kalan süre: </ion-label>{{remainingTime}} gün
         <ion-button slot="end" color="secondary" size="small" fill="outline" (click)="navToExtensionTimes()">Ek süre</ion-button>
     </ion-item>
+    <ion-item>
+        <ion-label>Uzlaşma sağlandı</ion-label>
+        <ion-toggle color="success"
+                    [checked]="caseFile.agreementReached"
+                    [disabled]="processing"
+                    (ionChange)="agreementReachedChange($event)"></ion-toggle>
+    </ion-item>
     <ion-button expand="block" (click)="navToParties()">Taraflar</ion-button>
 </ion-content>

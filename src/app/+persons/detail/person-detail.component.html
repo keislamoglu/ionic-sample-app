@@ -6,10 +6,10 @@
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="edit()">Düzenle</ion-button>
         </ion-buttons>
-        <ion-title>{{_fullName(person)}}</ion-title>
+        <ion-title *ngIf="person">{{_fullName(person)}}</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="person">
     <ion-item><ion-label>Ad: </ion-label>{{person.name}}</ion-item>
     <ion-item><ion-label>İkinci Ad: </ion-label>{{person.middlename || '-'}}</ion-item>
     <ion-item><ion-label>Soyad: </ion-label>{{person.lastname}}</ion-item>
@@ -19,7 +19,7 @@
     <ion-item><ion-label>Doğum Tarihi: </ion-label>
         <ion-datetime readonly
                       displayFormat="DD/MM/YYYY"
-                      [value]="person.birthDate.toISOString()"></ion-datetime>
+                      [value]="person.birthDate"></ion-datetime>
     </ion-item>
     <ion-item><ion-label>Doğum Yeri: </ion-label>{{person.birthPlace}}</ion-item>
     <ion-item><ion-label>Telefon: </ion-label>{{person.phone}}</ion-item>

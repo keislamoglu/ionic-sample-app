@@ -14,4 +14,5 @@ export class CaseFile {
     type: CaseFileType; // Dosya tipi (soruşturma veya kovuşturma)
     competentAuthorityId: string;
     competentAuthority: CompetentAuthority; // Yetkili merci (adliye veya savcılık)
+    agreementReached = false; // Uzlaşmaya varıldı
 }

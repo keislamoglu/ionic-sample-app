@@ -10,4 +10,5 @@ export class Petition {
     templateId: string;
     template: PetitionTemplate;
     date: string;
+    extraData?: string; // JSON
 }

@@ -5,7 +5,7 @@ import {Address, Person} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
 import {PersonEditModalComponent} from '../edit/person-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
-import {zip} from 'rxjs';
+import {of, zip} from 'rxjs';
 import {AddressService, CityService, PersonService} from '../../shared/repositories';
 
 @Component({
@@ -66,13 +66,15 @@ export class PersonDetailComponent implements OnInit {
                 this.mernisAddress.address = mernisAddress;
                 return zip(
                     this._cityService.get(address.cityId),
-                    this._cityService.get(mernisAddress.cityId),
+                    mernisAddress ? this._cityService.get(mernisAddress.cityId) : of(void 0),
                 );
             })
         )
             .subscribe(([city, mernisCity]) => {
                 this.address.cityName = city.name;
-                this.mernisAddress.cityName = mernisCity.name;
+                if (mernisCity) {
+                    this.mernisAddress.cityName = mernisCity.name;
+                }
             });
     }
 

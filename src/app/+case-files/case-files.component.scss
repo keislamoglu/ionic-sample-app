@@ -17,8 +17,14 @@ app-card {
     color: white;
     background-color: red;
     border-radius: 50%;
-    font-size: .8rem;
+    font-size: .7rem;
     padding: .3rem;
     font-weight: bold;
+    width: 1.75rem;
+    height: 1.75rem;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.2rem;
+    display: block;
   }
 }

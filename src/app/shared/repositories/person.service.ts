@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Person} from '../entity';
+import {ClientUser, Person} from '../entity';
 import {BaseCrud} from './base-crud';
 import {RepositoriesModule} from './repositories.module';
 
@@ -7,7 +7,7 @@ import {RepositoriesModule} from './repositories.module';
 export class PersonService extends BaseCrud<Person> {
     protected dataSetName = 'persons';
 
-    static FullName(person: Person) {
+    static FullName(person: Person | ClientUser) {
         return [person.name, person.middlename, person.lastname].filter(t => t).join(' ');
     }
 }

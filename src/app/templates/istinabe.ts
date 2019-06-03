@@ -1,5 +1,5 @@
-import {CaseFile, CompetentAuthority, Person, ClientUser} from '../app/shared/entity';
-import {DocxFileTemplate, TextAlign} from './docx-file-template';
+import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
+import {BaseTemplate, TextAlign} from './base';
 
 export interface IstinabeProps {
     caseFile: CaseFile;
@@ -8,7 +8,7 @@ export interface IstinabeProps {
     user: ClientUser;
 }
 
-export class Istinabe extends DocxFileTemplate<IstinabeProps> {
+export class Istinabe extends BaseTemplate<IstinabeProps> {
     protected prepareDocument() {
         this.addText(`${this.props.competentAuthority.name} UZLAŞMA BÜROSU'NA`, TextAlign.Center);
         this.newLine();

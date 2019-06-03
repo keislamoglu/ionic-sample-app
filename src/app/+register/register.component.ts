@@ -17,12 +17,22 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         if (this._authService.isAuthenticated) {
-            this._navController.navigateRoot('/case-files');
+            this.navToCaseFiles();
         }
+
+        this._authService.loginStatusChanged.subscribe(auth => {
+            if (auth) {
+                this.navToCaseFiles();
+            }
+        });
     }
 
     navToLogin() {
         this._navController.navigateRoot('/login');
+    }
+
+    navToCaseFiles() {
+        this._navController.navigateRoot('/case-files');
     }
 
     register() {

@@ -8,13 +8,13 @@ export class Person {
     lastname: string;
     nId: string;
     addressId: string;
-    mernisAddressId: string;
+    mernisAddressId?: string;
     phone: string;
     fatherName: string;
     motherName: string;
     birthPlace: string;
     address: Address;
-    mernisAddress: Address;
+    mernisAddress?: Address;
     birthDate: string;
     parties: Party[];
 }

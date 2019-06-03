@@ -9,11 +9,12 @@
 
 <ion-content>
     <!--FORM-->
-    <form (ngSubmit)="save()" #form="ngForm">
+    <form (ngSubmit)="save()" [formGroup]="form">
         <!--TEMPLATE-->
         <ion-item>
             <ion-label position="floating">Şablon</ion-label>
             <ion-select required name="template"
+                        [formControlName]="'template'"
                         (ngModelChange)="onTemplateChange($event)"
                         [(ngModel)]="petition.templateId" placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let _template of templates"
@@ -23,8 +24,13 @@
         <!--NAME-->
         <ion-item>
             <ion-label position="floating">Dilekçe Adı</ion-label>
-            <ion-input placeholder="Dilekçe adı giriniz" name="name" [(ngModel)]="petition.name" required></ion-input>
+            <ion-input placeholder="Dilekçe adı giriniz" name="name" [formControlName]="'name'" [(ngModel)]="petition.name" required></ion-input>
         </ion-item>
+        <!--TEMPLATE SPECIFIC QUESTIONS-->
+        <app-dynamic-form *ngIf="dynamicQuestions"
+                          (formGroupUpdated)="onDynamicFormUpdated($event)"
+                          [form]="form"
+                          [questions]="dynamicQuestions"></app-dynamic-form>
         <!--ACTIONS-->
         <ion-item lines="none">
             <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>

@@ -32,7 +32,10 @@ export class PetitionsComponent implements OnInit {
         const modal = await this._modalService.present(PetitionEditModalComponent, {
             partyId: this.partyId,
         });
-        await modal.onWillDismiss();
+        const res = await modal.onWillDismiss();
+        if (res.data.removed) {
+            return this._navController.back();
+        }
         this._loadData();
     }
 

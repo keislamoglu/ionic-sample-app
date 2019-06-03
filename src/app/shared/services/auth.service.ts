@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BackendUser, ClientUser} from '../entity';
@@ -12,11 +12,13 @@ import {Observable} from 'rxjs';
 export class AuthService {
     private _hasServerGrant = false;
     private _authenticated = false;
+    loginStatusChanged = new EventEmitter();
 
     constructor(private _http: HttpClient, private _storage: Storage, private _userService: UserService) {
         fromPromise(this._storage.get('user')).subscribe(user => {
             this._userService.currentUser = user;
             this._authenticated = !!user;
+            this._propagateLoginStatus();
         });
     }
 
@@ -45,6 +47,7 @@ export class AuthService {
                 };
                 this._authenticated = this._hasServerGrant = true;
                 this._userService.currentUser = user;
+                this._propagateLoginStatus();
 
                 return user;
             })
@@ -54,9 +57,14 @@ export class AuthService {
     logout(): void {
         this._authenticated = this._hasServerGrant = false;
         this._storage.remove('user');
+        this._propagateLoginStatus();
     }
 
     hasServerGrant(): boolean {
         return this._hasServerGrant;
+    }
+
+    private _propagateLoginStatus() {
+        this.loginStatusChanged.emit(this._authenticated);
     }
 }
