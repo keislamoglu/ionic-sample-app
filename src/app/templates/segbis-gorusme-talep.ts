@@ -3,18 +3,16 @@ import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity
 import {PersonService} from '../shared/repositories';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 
-export interface SegbisGorusmeTalepExtraData {
-    jailType: string;
-    requestDate: string;
-}
-
 export interface SegbisGorusmeTalepProps {
     user: ClientUser;
     caseFile: CaseFile;
     person: Person;
-    extraData: SegbisGorusmeTalepExtraData;
     competentAuthority: CompetentAuthority;
     date: string;
+    extraData: {
+        jailType: string,
+        requestDate: string
+    };
 }
 
 export const SegbisGorusmeTalepQuestions: Question[] = [
