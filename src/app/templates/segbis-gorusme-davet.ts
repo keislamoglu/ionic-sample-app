@@ -25,6 +25,7 @@ export const SegbisGorusmeDavetQuestions: Question[] = [
     }),
     new DateQuestion({
         key: 'requestDate',
+        format: 'DD/MM/YYYY HH:mm',
         label: 'Görüşme talep tarihi',
         required: true
     })
