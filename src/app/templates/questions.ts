@@ -1,8 +1,8 @@
 import {TemplateDocument} from '../shared/entity';
-import {SegbisGorusmeDavetQuestions} from './segbis-gorusme-davet';
+import {SegbisGorusmeTalepQuestions} from './segbis-gorusme-talep';
 
 export const TemplateQuestions = {
-    [TemplateDocument.SegbisGorusmeDavet]: SegbisGorusmeDavetQuestions,
+    [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
     [TemplateDocument.Istinabe]: [],
     [TemplateDocument.UzlasmaGorusmesineDavet]: []
 };

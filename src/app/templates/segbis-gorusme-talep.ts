@@ -3,21 +3,21 @@ import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity
 import {PersonService} from '../shared/repositories';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 
-export interface SegbisGorusmeDavetExtraData {
+export interface SegbisGorusmeTalepExtraData {
     jailType: string;
     requestDate: string;
 }
 
-export interface SegbisGorusmeDavetProps {
+export interface SegbisGorusmeTalepProps {
     user: ClientUser;
     caseFile: CaseFile;
     person: Person;
-    extraData: SegbisGorusmeDavetExtraData;
+    extraData: SegbisGorusmeTalepExtraData;
     competentAuthority: CompetentAuthority;
     date: string;
 }
 
-export const SegbisGorusmeDavetQuestions: Question[] = [
+export const SegbisGorusmeTalepQuestions: Question[] = [
     new TextboxQuestion({
         key: 'jailType',
         label: 'Ceza evi tipi',
@@ -31,7 +31,7 @@ export const SegbisGorusmeDavetQuestions: Question[] = [
     })
 ];
 
-export class SegbisGorusmeDavet extends BaseTemplate<SegbisGorusmeDavetProps> {
+export class SegbisGorusmeTalep extends BaseTemplate<SegbisGorusmeTalepProps> {
 
     protected prepareDocument() {
         const props = this.props;

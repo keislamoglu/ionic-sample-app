@@ -15,8 +15,8 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
     },
     {
         id: '18572edd-3f4d-463c-826d-8c7806c97fc7',
-        name: 'SEGBİS Görüşme Daveti',
-        slugName: TemplateDocument.SegbisGorusmeDavet,
+        name: 'SEGBİS Görüşme Talebi',
+        slugName: TemplateDocument.SegbisGorusmeTalep,
         petitions: []
     }
 ];

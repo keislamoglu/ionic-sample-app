@@ -1,6 +1,6 @@
 export enum TemplateDocument {
     UzlasmaGorusmesineDavet = 'uzlasma-gorusmesine-davet',
     Istinabe = 'istinabe',
-    SegbisGorusmeDavet = 'segbis-gorusme-davet',
+    SegbisGorusmeTalep = 'segbis-gorusme-talep',
     Ornek = 'ornek-sablon',
 }

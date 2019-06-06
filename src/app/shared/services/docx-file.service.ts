@@ -5,10 +5,10 @@ import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {DocxFileTemplate} from '../../templates';
 
-export interface DocxFileExportOptions {
+export interface DocxFileExportOptions<T = {}> {
     fileName: string;
     docxTemplate: (new (...args: any[]) => any);
-    props?: {};
+    props?: T;
 }
 
 export const DIR_NAME = 'uzlastr';
@@ -18,7 +18,7 @@ export class DocxFileService {
     constructor(private _file: File, private _fileOpener: FileOpener) {
     }
 
-    async export(options: DocxFileExportOptions) {
+    async export<T>(options: DocxFileExportOptions<T>) {
         this._createDocsDirIfNotExists();
         return this._file.writeFile(
             this._getPath(),

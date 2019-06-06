@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CaseFile, ClientUser, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument} from '../entity';
-import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps} from '../../templates';
+import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps, SegbisGorusmeTalep, SegbisGorusmeTalepProps} from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
@@ -13,7 +13,6 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
-import {SegbisGorusmeDavet, SegbisGorusmeDavetProps} from '../../templates/segbis-gorusme-davet';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -41,7 +40,7 @@ export class PetitionExporterService {
 
         switch (template.slugName) {
             case TemplateDocument.UzlasmaGorusmesineDavet:
-                this._docxFileService.export({
+                this._docxFileService.export<GorusmeyeDavetProps>({
                     fileName: petition.fileName,
                     docxTemplate: GorusmeyeDavet,
                     props: {
@@ -49,21 +48,26 @@ export class PetitionExporterService {
                         person,
                         caseFile,
                         competentAuthority,
-                        user: user
-                    } as GorusmeyeDavetProps
+                        user
+                    }
                 });
                 break;
             case TemplateDocument.Istinabe:
-                this._docxFileService.export({
+                this._docxFileService.export<IstinabeProps>({
                     fileName: petition.fileName,
                     docxTemplate: Istinabe,
-                    props: {} as IstinabeProps
+                    props: {
+                        caseFile,
+                        competentAuthority,
+                        person,
+                        user
+                    }
                 });
                 break;
-            case TemplateDocument.SegbisGorusmeDavet:
-                this._docxFileService.export({
+            case TemplateDocument.SegbisGorusmeTalep:
+                this._docxFileService.export<SegbisGorusmeTalepProps>({
                     fileName: petition.fileName,
-                    docxTemplate: SegbisGorusmeDavet,
+                    docxTemplate: SegbisGorusmeTalep,
                     props: {
                         competentAuthority,
                         user,
@@ -71,7 +75,7 @@ export class PetitionExporterService {
                         person,
                         caseFile,
                         extraData
-                    } as SegbisGorusmeDavetProps
+                    }
                 });
                 break;
         }
