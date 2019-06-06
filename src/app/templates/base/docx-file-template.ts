@@ -9,10 +9,10 @@ export abstract class DocxFileTemplate {
     protected doc = new Document();
 
     constructor(protected props: any) {
-        this.prepareDocument();
+        this.prepareDocument(props);
     }
 
-    protected abstract prepareDocument();
+    protected abstract prepareDocument(props: any);
 
     protected createP() {
         return this.doc.createParagraph();

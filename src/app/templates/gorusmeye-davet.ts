@@ -10,17 +10,17 @@ export interface GorusmeyeDavetProps {
 }
 
 export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
-    protected prepareDocument() {
+    protected prepareDocument(props: GorusmeyeDavetProps) {
         this.addText('UZLAŞMA GÖRÜŞMESİNE DAVET MEKTUBU', TextAlign.Center).bold().underline();
 
         this.newLine();
-        this.addText(`Uzlaştırma No: ${this.props.caseFile.fileNo}`).bold();
+        this.addText(`Uzlaştırma No: ${props.caseFile.fileNo}`).bold();
 
         this.newLine();
-        this.addText(`Sayın ${this.fullName(this.props.person)}`, TextAlign.Center).bold();
-        this.addText(`(Adres: ${this.props.person.address})`, TextAlign.Center);
+        this.addText(`Sayın ${this.fullName(props.person)}`, TextAlign.Center).bold();
+        this.addText(`(Adres: ${props.person.address})`, TextAlign.Center);
 
-        this.addText(this.props.competentAuthority.name +
+        this.addText(props.competentAuthority.name +
             ' Cumhuriyet Başsavcılığı tarafından yürütülen yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız.' +
             ' Soruşturma/kovuşturmaya konu suçun, 5271 sayılı CMK\'nın 253 ve 254’üncü maddeleri gereğince uzlaşma kapsamındaki' +
             ' suçlardan olması nedeniyle, uzlaşma işlemlerinin yürütülebilmesi için Cumhuriyet Başsavcılığı Uzlaştırma Bürosu' +
@@ -43,10 +43,10 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
             ' irtibata geçmediğiniz takdirde uzlaşma teklifini reddetmiş sayılacağınızı hatırlatırım. Bu durumda soruşturma' +
             ' / kovuşturma işlemlerine kaldığı yerden devam edilecek ve bir daha uzlaşma usulü uygulanamayacaktır.', p3);
 
-        this.addText('Saygı ile bilgilerinize sunarım. ' + new Date(this.props.date).toLocaleDateString()).tab();
+        this.addText('Saygı ile bilgilerinize sunarım. ' + new Date(props.date).toLocaleDateString()).tab();
 
         this.newLine();
-        this.addText(this.fullName(this.props.user), TextAlign.Right);
+        this.addText(this.fullName(props.user), TextAlign.Right);
         this.addText('Uzlaştırmacı', TextAlign.Right);
 
         this.newLine();
@@ -62,12 +62,12 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
         const addressP = this.createP();
         this.addText('Adres', addressP).bold();
         this.addText(': ', addressP).bold().tab().tab();
-        this.addText(this.props.user.address, addressP);
+        this.addText(props.user.address, addressP);
 
         const phoneP = this.createP();
         this.addText('Telefon', phoneP).bold();
         this.addText(': ', phoneP).bold().tab().tab();
-        this.addText(this.props.user.phone, phoneP);
+        this.addText(props.user.phone, phoneP);
     }
 
     private fullName(person: Person | ClientUser) {

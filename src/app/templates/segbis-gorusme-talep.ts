@@ -31,8 +31,7 @@ export const SegbisGorusmeTalepQuestions: Question[] = [
 
 export class SegbisGorusmeTalep extends BaseTemplate<SegbisGorusmeTalepProps> {
 
-    protected prepareDocument() {
-        const props = this.props;
+    protected prepareDocument(props) {
         this.addText(`${props.competentAuthority.name} CUMHURİYET BAŞSAVCILIĞINA`, TextAlign.Center).bold();
         this.addText(`(Uzlaştırma Bürosu)`, TextAlign.Center).bold();
         this.newLine(2);
