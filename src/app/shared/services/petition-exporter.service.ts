@@ -13,6 +13,10 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
+import {
+    KovusturmaUzlastirmaciGorusmeTutanagi,
+    KovusturmaUzlastirmaciGorusmeTutanagiProps
+} from '../../templates/kovusturma-uzlastirmaci-gorusme-tutanagi';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -75,6 +79,20 @@ export class PetitionExporterService {
                         person,
                         caseFile,
                         extraData
+                    }
+                });
+                break;
+            case TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi:
+                this._docxFileService.export<KovusturmaUzlastirmaciGorusmeTutanagiProps>({
+                    fileName: petition.fileName,
+                    docxTemplate: KovusturmaUzlastirmaciGorusmeTutanagi,
+                    props: {
+                        user,
+                        competentAuthority,
+                        caseFile,
+                        party,
+                        person,
+                        extraData,
                     }
                 });
                 break;
