@@ -1,6 +1,6 @@
 import {BaseTemplate, TextAlign} from './base';
-import {CaseFile, ClientUser, CompetentAuthority, Party, Person, Address, City} from '../shared/entity';
-import {Question, TextboxQuestion, DateQuestion} from '../dynamic-form-question/models';
+import {Address, CaseFile, City, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
+import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {PersonService} from '../shared/repositories';
 
 export interface KovusturmaUzlasmaTeklifProps {
@@ -40,10 +40,10 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         this.addText([
             competentAuthority.name,
             ' CUMHURİYET BAŞSAVCILIĞI'
-        ], TextAlign.Center);
+        ], TextAlign.Center).bold();
         this.newLine();
         const p1 = this.createP();
-        this.addText('Uzlaştırma No:', p1).bold();
+        this.addText('Uzlaştırma No: ', p1).bold();
         this.addText(caseFile.conciliationNo, p1);
 
         this.newLine();
@@ -61,11 +61,14 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
             'Saat: ',
             this._formatTime(extraData.date)
         ], p2);
-        this.addText('Teklifte Bulunan Uzlaştırmacının').bold();
-        this.addText('Adı Soyadı').bold();
-        this.addText(PersonService.FullName(user));
-        this.addText('Sicil No').bold();
-        this.addText(user.sicilNumber);
+
+        this.newLine();
+
+        this.addText('Teklifte Bulunan Uzlaştırmacının', TextAlign.Right).bold();
+        this.addText('Adı Soyadı', TextAlign.Right).bold();
+        this.addText(PersonService.FullName(user), TextAlign.Right);
+        this.addText('Sicil No', TextAlign.Right).bold();
+        this.addText(user.sicilNumber, TextAlign.Right);
 
         this.newLine();
 
@@ -75,29 +78,30 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         this.newLine();
 
         this.addText('C. UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN').bold();
-        const p3 = this.createP();
-        this.addText('T.C. Kimlik No: ', p3);
-        this.addText(person.nId, p3).tab().tab();
-        const p4 = this.createP();
-        this.addText('Adı Soyadı: ', p4);
-        this.addText(PersonService.FullName(person), p4).tab();
-        const p5 = this.createP();
-        this.addText('Baba Adı: ', p5);
-        this.addText(person.fatherName, p5).tab();
-        const p6 = this.createP();
-        this.addText('Anne Adı: ', p6);
-        this.addText(person.motherName, p6).tab();
-        const p7 = this.createP();
-        this.addText('Doğum Yeri ve Tarihi: ', p7);
-        this.addText([person.birthPlace, ', ', this._formatDate(person.birthDate)], p7).tab();
-        const p8 = this.createP();
-        this.addText('Adres: ', p8);
-        this.addText([
-            personAddress.fullAddress, ' ', personCity.name, ' ', personAddress.district
-        ], p8).tab();
-        const p9 = this.createP();
-        this.addText('Telefon: ', p9);
-        this.addText(person.phone, p9).tab();
+
+        const personInformation = [
+            ['T.C. Kimlik No', person.nId],
+            ['Adı Soyadı', PersonService.FullName(person)],
+            ['Baba Adı', person.fatherName],
+            ['Anne Adı', person.motherName],
+            ['Doğum Yeri ve Tarihi', [person.birthPlace, ' ', this._formatDate(person.birthDate)].join('')],
+            ['Adres', [personAddress.fullAddress, ', ', personCity.name, '/', personAddress.district].join('')],
+            ['Telefon', person.phone]
+        ];
+
+        for (let i = 0, l = personInformation.length; i < l; i++) {
+            const _p = this.createP();
+            for (let j = 0; j < 2; j++) {
+                let text = personInformation[i][j];
+                if (j % 2 === 0) {
+                    text += ': ';
+                }
+                const run = this.addText(text, _p);
+                if (j % 2 === 0) {
+                    run.bold();
+                }
+            }
+        }
 
         this.newLine();
 
@@ -180,6 +184,9 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         this.addText(
             'UZLAŞTIRMANIN MAHİYETİ, UZLAŞMAYI KABUL VEYA REDDETMENİN HUKUKI SONUÇLARINI ANLADIM. FORMUN BİR ÖRNEGİNİ ALDIM.'
         ).bold();
+
+        this.newLine();
+
         this.addText('Şahsıma yapılan uzlaşma teklifini;').bold();
 
         const p10 = this.createP();

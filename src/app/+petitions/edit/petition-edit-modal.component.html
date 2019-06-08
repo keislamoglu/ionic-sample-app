@@ -16,7 +16,7 @@
             <ion-select required name="template"
                         [formControlName]="'template'"
                         (ngModelChange)="onTemplateChange($event)"
-                        [(ngModel)]="petition.templateId" placeholder="-- Seçiniz --">
+                        placeholder="-- Seçiniz --">
                 <ion-select-option *ngFor="let _template of templates"
                                    [value]="_template.id">{{_template.name}}</ion-select-option>
             </ion-select>
@@ -24,7 +24,9 @@
         <!--NAME-->
         <ion-item>
             <ion-label position="floating">Dilekçe Adı</ion-label>
-            <ion-input placeholder="Dilekçe adı giriniz" name="name" [formControlName]="'name'" [(ngModel)]="petition.name" required></ion-input>
+            <ion-input required name="name"
+                       [formControlName]="'name'"
+                       placeholder="Dilekçe adı giriniz"></ion-input>
         </ion-item>
         <!--TEMPLATE SPECIFIC QUESTIONS-->
         <app-dynamic-form *ngIf="dynamicQuestions"

@@ -75,10 +75,17 @@ export class PetitionEditModalComponent implements OnInit {
                 this.petition = petition;
                 return this._loadTemplate(petition.templateId);
             })
-        ).subscribe(() => this._markForCheck());
+        ).subscribe(() => {
+            const {name, templateId: template} = this.petition;
+            this.form.patchValue({template, name});
+            this._markForCheck();
+        });
     }
 
     save(): void {
+        const {name, template: templateId} = this.form.value;
+        this.petition.templateId = templateId;
+        this.petition.name = name;
         if (this.dynamicQuestionAnswers) {
             this.petition.extraData = JSON.stringify(this.dynamicQuestionAnswers);
         }
