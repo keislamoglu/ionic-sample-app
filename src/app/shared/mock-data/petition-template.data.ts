@@ -18,7 +18,12 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
     },
     {
         id: '5931a8fe-73c6-489b-81d3-be660fe64277',
-        name: 'Kovuşturma Dosyası Uzlaştırma Görüşme Tutanağı',
+        name: 'Kov. Dos. Uzlaştırma Görüşme Tutanağı',
         slugName: TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi
+    },
+    {
+        id: '4425eb02-9ef4-41a7-b71a-2f7948cce69e',
+        name: 'Kov. Uzlaşma Teklif Formu',
+        slugName: TemplateDocument.KovusturmaUzlasmaTeklif
     }
 ];
