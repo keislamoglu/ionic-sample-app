@@ -1,10 +1,33 @@
 import {Injectable} from '@angular/core';
-import {CaseFile, ClientUser, CompetentAuthority, Party, Person, Petition, PetitionTemplate, TemplateDocument} from '../entity';
-import {GorusmeyeDavet, GorusmeyeDavetProps, Istinabe, IstinabeProps, SegbisGorusmeTalep, SegbisGorusmeTalepProps} from '../../templates';
+import {
+    Address,
+    CaseFile,
+    City,
+    ClientUser,
+    CompetentAuthority,
+    Party,
+    Person,
+    Petition,
+    PetitionTemplate,
+    TemplateDocument
+} from '../entity';
+import {
+    GorusmeyeDavet,
+    GorusmeyeDavetProps,
+    Istinabe,
+    IstinabeProps,
+    KovusturmaUzlasmaTeklif,
+    KovusturmaUzlasmaTeklifProps,
+    KovusturmaUzlastirmaciGorusmeTutanagi,
+    KovusturmaUzlastirmaciGorusmeTutanagiProps,
+    SegbisGorusmeTalep,
+    SegbisGorusmeTalepProps
+} from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
-    CaseFileService,
+    AddressService,
+    CaseFileService, CityService,
     CompetentAuthorityService,
     PartyService,
     PersonService,
@@ -13,10 +36,6 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
-import {
-    KovusturmaUzlastirmaciGorusmeTutanagi,
-    KovusturmaUzlastirmaciGorusmeTutanagiProps
-} from '../../templates/kovusturma-uzlastirmaci-gorusme-tutanagi';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -29,6 +48,8 @@ export class PetitionExporterService {
                 private _partyService: PartyService,
                 private _personService: PersonService,
                 private _competentAuthorityService: CompetentAuthorityService,
+                private _addressService: AddressService,
+                private _cityService: CityService,
                 private _docxFileService: DocxFileService) {
     }
 
@@ -39,64 +60,73 @@ export class PetitionExporterService {
         const person = await this._getPerson(party.personId);
         const caseFile = await this._getCaseFile(party.caseFileId);
         const competentAuthority = await this._getCompetentAuthority(caseFile.competentAuthorityId);
+        const personAddress = await this._getAddress(person.addressId);
+        const personCity = await this._getCity(personAddress.cityId);
 
         const user: ClientUser = await this._getUser();
-
+        let props = {};
+        let docxTemplate;
         switch (template.slugName) {
             case TemplateDocument.UzlasmaGorusmesineDavet:
-                this._docxFileService.export<GorusmeyeDavetProps>({
-                    fileName: petition.fileName,
-                    docxTemplate: GorusmeyeDavet,
-                    props: {
-                        date: petition.date,
-                        person,
-                        caseFile,
-                        competentAuthority,
-                        user
-                    }
-                });
+                docxTemplate = GorusmeyeDavet;
+                props = <GorusmeyeDavetProps>{
+                    date: petition.date,
+                    caseFile,
+                    person,
+                    competentAuthority,
+                    user
+                };
                 break;
             case TemplateDocument.Istinabe:
-                this._docxFileService.export<IstinabeProps>({
-                    fileName: petition.fileName,
-                    docxTemplate: Istinabe,
-                    props: {
-                        caseFile,
-                        competentAuthority,
-                        person,
-                        user
-                    }
-                });
+                docxTemplate = Istinabe;
+                props = <IstinabeProps>{
+                    caseFile,
+                    competentAuthority,
+                    person,
+                    user
+                };
+                break;
+            case TemplateDocument.KovusturmaUzlasmaTeklif:
+                docxTemplate = KovusturmaUzlasmaTeklif;
+                props = <KovusturmaUzlasmaTeklifProps>{
+                    caseFile,
+                    competentAuthority,
+                    party,
+                    person,
+                    user,
+                    personAddress,
+                    personCity,
+                    extraData
+                };
                 break;
             case TemplateDocument.SegbisGorusmeTalep:
-                this._docxFileService.export<SegbisGorusmeTalepProps>({
-                    fileName: petition.fileName,
-                    docxTemplate: SegbisGorusmeTalep,
-                    props: {
-                        competentAuthority,
-                        user,
-                        date: new Date().toString(),
-                        person,
-                        caseFile,
-                        extraData
-                    }
-                });
+                docxTemplate = SegbisGorusmeTalep;
+                props = <SegbisGorusmeTalepProps>{
+                    extraData,
+                    caseFile,
+                    competentAuthority,
+                    date: new Date().toString(),
+                    person,
+                    user
+                };
                 break;
             case TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi:
-                this._docxFileService.export<KovusturmaUzlastirmaciGorusmeTutanagiProps>({
-                    fileName: petition.fileName,
-                    docxTemplate: KovusturmaUzlastirmaciGorusmeTutanagi,
-                    props: {
-                        user,
-                        competentAuthority,
-                        caseFile,
-                        party,
-                        person,
-                        extraData,
-                    }
-                });
+                docxTemplate = KovusturmaUzlastirmaciGorusmeTutanagi;
+                props = <KovusturmaUzlastirmaciGorusmeTutanagiProps>{
+                    user,
+                    competentAuthority,
+                    caseFile,
+                    party,
+                    person,
+                    extraData,
+                };
                 break;
         }
+        this._docxFileService.export({
+            fileName: petition.fileName,
+            docxTemplate,
+            props
+        });
     }
 
     private _getPetition(id: string): Promise<Petition> {
@@ -125,6 +155,14 @@ export class PetitionExporterService {
 
     private _getUser(): ClientUser {
         return this._userService.currentUser;
+    }
+
+    private _getAddress(id: string): Promise<Address> {
+        return this._addressService.get(id).toPromise();
+    }
+
+    private _getCity(id: string): Promise<City> {
+        return this._cityService.get(id).toPromise();
     }
 
     private _getCaseFileParties(caseFileId: string) {
