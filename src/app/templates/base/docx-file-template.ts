@@ -1,4 +1,4 @@
-import {Document, Paragraph} from 'docx';
+import {Document, Paragraph, Run} from 'docx';
 
 
 export enum TextAlign {
@@ -14,19 +14,22 @@ export abstract class DocxFileTemplate {
 
     protected abstract prepareDocument(props: any);
 
-    protected createP() {
+    protected createP(): Paragraph {
         return this.doc.createParagraph();
     }
 
-    protected addText(text: string, textAlignOrParagraph?: TextAlign | Paragraph) {
+    protected addText(text: string | string[], textAlignOrParagraph?: TextAlign | Paragraph): Run {
         let paragraph;
         let align;
+
         if (textAlignOrParagraph instanceof Paragraph) {
             paragraph = textAlignOrParagraph;
         } else {
             align = textAlignOrParagraph;
         }
+
         const p = paragraph || this.doc.createParagraph();
+
         switch (align) {
             case TextAlign.Left:
                 p.left();
@@ -43,6 +46,11 @@ export abstract class DocxFileTemplate {
             default:
                 p.left();
         }
+
+        if (Array.isArray(text)) {
+            text = text.join('');
+        }
+
         return p.createTextRun(text).font('Arial');
     }
 
@@ -52,7 +60,7 @@ export abstract class DocxFileTemplate {
         }
     }
 
-    getDocument() {
+    getDocument(): Document {
         return this.doc;
     }
 }
