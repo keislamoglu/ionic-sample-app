@@ -1,6 +1,7 @@
 export enum TemplateDocument {
-    KovusturmaUzlastirmaciGorusmeTutanagi = 'KovusturmaUzlastirmaciGorusmeTutanagi',
-    UzlasmaGorusmesineDavet = 'UzlasmaGorusmesineDavet',
     Istinabe = 'Istinabe',
+    KovusturmaUzlasmaTeklif = 'KovusturmaUzlasmaTeklif',
+    KovusturmaUzlastirmaciGorusmeTutanagi = 'KovusturmaUzlastirmaciGorusmeTutanagi',
     SegbisGorusmeTalep = 'SegbisGorusmeTalep',
+    UzlasmaGorusmesineDavet = 'UzlasmaGorusmesineDavet'
 }
