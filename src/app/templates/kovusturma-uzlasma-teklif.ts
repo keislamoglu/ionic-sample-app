@@ -79,7 +79,10 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
 
         this.addText('C. UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN').bold();
 
-        const personInformation = [
+        // The below statement will print like:
+        // T.C. Kimlik No: 12345678901
+        // ...
+        this.printLabelValue([
             ['T.C. Kimlik No', person.nId],
             ['Adı Soyadı', PersonService.FullName(person)],
             ['Baba Adı', person.fatherName],
@@ -87,21 +90,7 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
             ['Doğum Yeri ve Tarihi', [person.birthPlace, ' ', this._formatDate(person.birthDate)].join('')],
             ['Adres', [personAddress.fullAddress, ', ', personCity.name, '/', personAddress.district].join('')],
             ['Telefon', person.phone]
-        ];
-
-        for (let i = 0, l = personInformation.length; i < l; i++) {
-            const _p = this.createP();
-            for (let j = 0; j < 2; j++) {
-                let text = personInformation[i][j];
-                if (j % 2 === 0) {
-                    text += ': ';
-                }
-                const run = this.addText(text, _p);
-                if (j % 2 === 0) {
-                    run.bold();
-                }
-            }
-        }
+        ]);
 
         this.newLine();
 

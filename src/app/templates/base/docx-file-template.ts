@@ -60,6 +60,14 @@ export abstract class DocxFileTemplate {
         }
     }
 
+    protected printLabelValue(labelValueArray: Array<string[]>): void {
+        labelValueArray.forEach(([label, value]) => {
+            const p = this.createP();
+            this.addText(`${label}: `, p).bold();
+            this.addText(value, p);
+        });
+    }
+
     getDocument(): Document {
         return this.doc;
     }
