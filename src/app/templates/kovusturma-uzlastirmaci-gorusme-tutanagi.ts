@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {CaseFile, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import { PersonService } from '../shared/repositories/person.service';
+import {PersonService} from '../shared/repositories';
 
 export interface KovusturmaUzlastirmaciGorusmeTutanagiProps {
     user: ClientUser;
@@ -66,7 +66,7 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
             ['Uzlaştırmacı', PersonService.FullName(user)]
         ]);
         const p3 = this.createP();
-        this.addText('Müşteki', p3).tab();
+        this.addText('Müşteki', p3).bold().tab();
         this.addText([
             ' ile yapılan görüşmede uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve ',
             'sonuçları anlatılmış; "'
