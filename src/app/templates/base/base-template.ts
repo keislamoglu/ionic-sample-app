@@ -13,6 +13,14 @@ export abstract class BaseTemplate<T = {}> extends DocxFileTemplate {
         });
     }
 
+    protected printIndentedLabelValue(labelValueArray: Array<string[]>): void {
+        labelValueArray.forEach(([label, value]) => {
+            const p = this.createP();
+            this.addText(`${label}: `, p).tab();
+            this.addText(value, p);
+        });
+    }
+
     protected printDate(dateString: string): string {
         return new Date(dateString).toLocaleDateString();
     }
