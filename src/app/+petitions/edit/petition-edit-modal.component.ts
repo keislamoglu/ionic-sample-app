@@ -138,7 +138,7 @@ export class PetitionEditModalComponent implements OnInit {
         return this._petitionTemplateService.get(templateId).pipe(
             map(template => {
                 this.templateModel = template;
-                this.petition.name = template.name;
+                this.form.patchValue({name: template.name});
                 this.dynamicQuestions = TemplateQuestions[template.slugName];
             })
         );
