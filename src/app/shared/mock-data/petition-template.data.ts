@@ -25,5 +25,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: '4425eb02-9ef4-41a7-b71a-2f7948cce69e',
         name: 'Kov. Uzlaşma Teklif Formu',
         slugName: TemplateDocument.KovusturmaUzlasmaTeklif
+    },
+    {
+        id: '75735d45-174b-4033-b667-cafd7f0d315e',
+        name: 'Kov. Dos. Olumlu Uzlaştırma Raporu',
+        slugName: TemplateDocument.KovusturmaOlumluUzlastirmaRaporu
     }
 ];

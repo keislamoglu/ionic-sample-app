@@ -27,8 +27,10 @@ import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
     AddressService,
-    CaseFileService, CityService,
+    CaseFileService,
+    CityService,
     CompetentAuthorityService,
+    ExtensionTimeService,
     PartyService,
     PersonService,
     PetitionService,
@@ -36,6 +38,8 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
+import {KovusturmaOlumluUzlastirmaRaporu, KovusturmaOlumluUzlastirmaRaporuProps} from '../../templates/kovusturma-olumlu-uzlastirma-raporu';
+import {forkJoin} from 'rxjs';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -50,6 +54,7 @@ export class PetitionExporterService {
                 private _competentAuthorityService: CompetentAuthorityService,
                 private _addressService: AddressService,
                 private _cityService: CityService,
+                private _extensionTimeService: ExtensionTimeService,
                 private _docxFileService: DocxFileService) {
     }
 
@@ -62,6 +67,7 @@ export class PetitionExporterService {
         const competentAuthority = await this._getCompetentAuthority(caseFile.competentAuthorityId);
         const personAddress = await this._getAddress(person.addressId);
         const personCity = await this._getCity(personAddress.cityId);
+        const extensionTimes = await this._getExtensionTimes(caseFile.id);
 
         const user: ClientUser = await this._getUser();
         let props = {};
@@ -121,6 +127,20 @@ export class PetitionExporterService {
                     extraData,
                 };
                 break;
+            case TemplateDocument.KovusturmaOlumluUzlastirmaRaporu:
+                docxTemplate = KovusturmaOlumluUzlastirmaRaporu;
+                props = <KovusturmaOlumluUzlastirmaRaporuProps>{
+                    allAddresses: await this._addressService.getAll().toPromise(),
+                    allCities: await this._cityService.getAll().toPromise(),
+                    allParties: await this._getCaseFileParties(caseFile.id),
+                    allPersons: await this._getCaseFilePersons(caseFile.id),
+                    caseFile,
+                    competentAuthority,
+                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extraData,
+                    user
+                };
+                break;
         }
         this._docxFileService.export({
             fileName: petition.fileName,
@@ -172,8 +192,12 @@ export class PetitionExporterService {
     private _getCaseFilePersons(caseFileId: string) {
         return this._partyService.getByCaseFile(caseFileId).pipe(
             switchMap(parties => {
-                return parties.map(party => this._personService.get(party.personId));
-            })
+                return forkJoin(parties.map(party => this._personService.get(party.personId)));
+            }),
         ).toPromise();
+    }
+
+    private _getExtensionTimes(caseFileId: string) {
+        return this._extensionTimeService.getByCaseFile(caseFileId).toPromise();
     }
 }
