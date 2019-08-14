@@ -11,9 +11,11 @@
         <!--FILE TYPE-->
         <ion-item>
             <ion-label position="floating">Dosya tipi</ion-label>
-            <ion-select required name="caseFileType"
+            <ion-select required
+                        name="caseFileType"
+                        placeholder="-- Seçiniz --"
                         (ngModelChange)="onTypeChange($event)"
-                        [(ngModel)]="caseFile.type" placeholder="-- Seçiniz --">
+                        [(ngModel)]="caseFile.type">
                 <ion-select-option *ngFor="let caseFileType of caseFileTypeDataset"
                                    [value]="caseFileType.value">{{caseFileType.value}}</ion-select-option>
             </ion-select>
@@ -21,8 +23,10 @@
         <!--COMPETENT AUTHORITY-->
         <ion-item *ngIf="caseFile.type">
             <ion-label position="floating">{{getCompetentAuthorityLabel(caseFile.type)}}:</ion-label>
-            <ion-select required name="competentAuthority"
-                        [(ngModel)]="caseFile.competentAuthorityId" placeholder="-- Seçiniz --">
+            <ion-select required
+                        name="competentAuthority"
+                        placeholder="-- Seçiniz --"
+                        [(ngModel)]="caseFile.competentAuthorityId">
                 <ion-select-option *ngFor="let cAuthority of competentAuthorities"
                                    [value]="cAuthority.id">{{cAuthority.name}}</ion-select-option>
             </ion-select>
