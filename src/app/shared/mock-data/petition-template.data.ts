@@ -30,5 +30,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: '75735d45-174b-4033-b667-cafd7f0d315e',
         name: 'Kov. Dos. Olumlu Uzlaştırma Raporu',
         slugName: TemplateDocument.KovusturmaOlumluUzlastirmaRaporu
-    }
+    },
+    {
+        id: '212f74d0-c51f-4b9d-8b74-518f1e1019bb',
+        name: 'Kov. Dos. Olumsuz Uzlaştırma Raporu',
+        slugName: TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu
+    },
 ];

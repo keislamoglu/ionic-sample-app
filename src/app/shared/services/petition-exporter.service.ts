@@ -40,6 +40,10 @@ import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
 import {KovusturmaOlumluUzlastirmaRaporu, KovusturmaOlumluUzlastirmaRaporuProps} from '../../templates/kovusturma-olumlu-uzlastirma-raporu';
 import {forkJoin} from 'rxjs';
+import {
+    KovusturmaOlumsuzUzlastirmaRaporu,
+    KovusturmaOlumsuzUzlastirmaRaporuProps
+} from '../../templates/kovusturma-olumsuz-uzlastirma-raporu';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -130,6 +134,20 @@ export class PetitionExporterService {
             case TemplateDocument.KovusturmaOlumluUzlastirmaRaporu:
                 docxTemplate = KovusturmaOlumluUzlastirmaRaporu;
                 props = <KovusturmaOlumluUzlastirmaRaporuProps>{
+                    allAddresses: await this._addressService.getAll().toPromise(),
+                    allCities: await this._cityService.getAll().toPromise(),
+                    allParties: await this._getCaseFileParties(caseFile.id),
+                    allPersons: await this._getCaseFilePersons(caseFile.id),
+                    caseFile,
+                    competentAuthority,
+                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extraData,
+                    user
+                };
+                break;
+            case TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu:
+                docxTemplate = KovusturmaOlumsuzUzlastirmaRaporu;
+                props = <KovusturmaOlumsuzUzlastirmaRaporuProps>{
                     allAddresses: await this._addressService.getAll().toPromise(),
                     allCities: await this._cityService.getAll().toPromise(),
                     allParties: await this._getCaseFileParties(caseFile.id),
