@@ -16,12 +16,16 @@ import {
     GorusmeyeDavetProps,
     Istinabe,
     IstinabeProps,
+    KovusturmaOlumluUzlastirmaRaporu,
+    KovusturmaOlumluUzlastirmaRaporuProps,
+    KovusturmaOlumsuzUzlastirmaRaporu,
+    KovusturmaOlumsuzUzlastirmaRaporuProps,
     KovusturmaUzlasmaTeklif,
     KovusturmaUzlasmaTeklifProps,
     KovusturmaUzlastirmaciGorusmeTutanagi,
     KovusturmaUzlastirmaciGorusmeTutanagiProps,
     SegbisGorusmeTalep,
-    SegbisGorusmeTalepProps
+    SegbisGorusmeTalepProps, SorusturmaOlumluUzlastirmaRaporu, SorusturmaOlumluUzlastirmaRaporuProps
 } from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
@@ -38,12 +42,7 @@ import {
 } from '../repositories';
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
-import {KovusturmaOlumluUzlastirmaRaporu, KovusturmaOlumluUzlastirmaRaporuProps} from '../../templates/kovusturma-olumlu-uzlastirma-raporu';
 import {forkJoin} from 'rxjs';
-import {
-    KovusturmaOlumsuzUzlastirmaRaporu,
-    KovusturmaOlumsuzUzlastirmaRaporuProps
-} from '../../templates/kovusturma-olumsuz-uzlastirma-raporu';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -148,6 +147,20 @@ export class PetitionExporterService {
             case TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu:
                 docxTemplate = KovusturmaOlumsuzUzlastirmaRaporu;
                 props = <KovusturmaOlumsuzUzlastirmaRaporuProps>{
+                    allAddresses: await this._addressService.getAll().toPromise(),
+                    allCities: await this._cityService.getAll().toPromise(),
+                    allParties: await this._getCaseFileParties(caseFile.id),
+                    allPersons: await this._getCaseFilePersons(caseFile.id),
+                    caseFile,
+                    competentAuthority,
+                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extraData,
+                    user
+                };
+                break;
+            case TemplateDocument.SorusturmaOlumluUzlastirmaRaporu:
+                docxTemplate = SorusturmaOlumluUzlastirmaRaporu;
+                props = <SorusturmaOlumluUzlastirmaRaporuProps>{
                     allAddresses: await this._addressService.getAll().toPromise(),
                     allCities: await this._cityService.getAll().toPromise(),
                     allParties: await this._getCaseFileParties(caseFile.id),
