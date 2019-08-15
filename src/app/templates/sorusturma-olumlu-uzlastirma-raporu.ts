@@ -149,7 +149,7 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
         this.addText([
             `Müşteki`,
             ` ${PersonService.FullName(injured)} 'a`,
-            ` uzlaşmak için taleplerini belirtmesinin istenmesi üzeirne;`,
+            ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Maddi-manevi hiçbir talebim olmaksızın uzlaşmak istiyorum." dedi`
         ]).tab();
 
