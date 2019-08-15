@@ -43,6 +43,10 @@ import {
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
 import {forkJoin} from 'rxjs';
+import {
+    SorusturmaOlumsuzUzlastirmaRaporu,
+    SorusturmaOlumsuzUzlastirmaRaporuProps
+} from '../../templates/sorusturma-olumsuz-uzlastirma-raporu';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -165,6 +169,20 @@ export class PetitionExporterService {
                     allCities: await this._cityService.getAll().toPromise(),
                     allParties: await this._getCaseFileParties(caseFile.id),
                     allPersons: await this._getCaseFilePersons(caseFile.id),
+                    caseFile,
+                    competentAuthority,
+                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extraData,
+                    user
+                };
+                break;
+            case TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu:
+                docxTemplate = SorusturmaOlumsuzUzlastirmaRaporu;
+                props = <SorusturmaOlumsuzUzlastirmaRaporuProps> {
+                    allAddresses: await this._addressService.getAll().toPromise(),
+                    allCities: await this._cityService.getAll().toPromise(),
+                    allParties: await this._getCaseFileParties(caseFile.id),
+                    allPersons:  await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
                     extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),

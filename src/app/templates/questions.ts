@@ -5,6 +5,7 @@ import {KovusturmaUzlasmaTelifQuestions} from './kovusturma-uzlasma-teklif';
 import {KovusturmaOlumluUzlastirmaRaporuQuestions} from './kovusturma-olumlu-uzlastirma-raporu';
 import {KovusturmaOlumsuzUzlastirmaRaporuQuestions} from './kovusturma-olumsuz-uzlastirma-raporu';
 import {SorusturmaOlumluUzlastirmaRaporuQuestions} from './sorusturma-olumlu-uzlastirma-raporu';
+import {SorusturmaOlumsuzUzlastirmaRaporuQuestions} from './sorusturma-olumsuz-uzlastirma-raporu';
 
 export const TemplateQuestions = {
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
@@ -15,4 +16,5 @@ export const TemplateQuestions = {
     [TemplateDocument.KovusturmaOlumluUzlastirmaRaporu]: KovusturmaOlumluUzlastirmaRaporuQuestions,
     [TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu]: KovusturmaOlumsuzUzlastirmaRaporuQuestions,
     [TemplateDocument.SorusturmaOlumluUzlastirmaRaporu]: SorusturmaOlumluUzlastirmaRaporuQuestions,
+    [TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu]: SorusturmaOlumsuzUzlastirmaRaporuQuestions,
 };
