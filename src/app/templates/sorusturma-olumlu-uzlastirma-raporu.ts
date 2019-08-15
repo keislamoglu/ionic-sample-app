@@ -154,10 +154,10 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
         ]).tab();
 
         this.addText([
-            `Sanık `,
+            `Şüpheli `,
             ` ${PersonService.FullName(suspected)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
-            ` "Müştekinin talebi doğrultusunda uzlaşmak istiyorum." dedi`
+            ` "Müştekinin talebi doğrultusunda uzlaşmak istiyorum." dedi.`
         ]).tab();
 
         this.newLine();
