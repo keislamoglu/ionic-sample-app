@@ -58,7 +58,7 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
             user,
             extensionTime,
         } = props;
-        this.addText('UZLAŞTIRMA RAPORU').bold();
+        this.text('UZLAŞTIRMA RAPORU').bold();
         this.newLine();
         this.printLabelValue([
             ['Mahkeme Adı ve Dosya No', `${extraData.courtHouse} / ${caseFile.fileNo}`],
@@ -133,14 +133,14 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
             ['Uzlaştırma sonucu', 'UZLAŞMA SAĞLANDI']
         ]);
 
-        this.addText([
+        this.text([
             competentAuthority.name,
             ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
         ]).tab();
 
         this.newLine();
 
-        this.addText([
+        this.text([
             `Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek,`,
             ` uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür`,
             ` iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`
@@ -148,18 +148,18 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        this.addText(`Yapılan görüşmelerde;`);
+        this.text(`Yapılan görüşmelerde;`);
 
         this.newLine();
 
-        this.addText([
+        this.text([
             `Müşteki`,
             ` ${PersonService.FullName(injured)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzeirne;`,
             ` "Maddi-manevi hiçbir talebim olmaksızın uzlaşmak istiyorum." dedi`
         ]).tab();
 
-        this.addText([
+        this.text([
             `Sanık `,
             ` ${PersonService.FullName(suspected)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
@@ -168,21 +168,21 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        const p = this.createP();
+        const p = this.createParagraph();
 
-        this.addText([
+        this.text([
             `Taraflar özgür iradeleriyle uzlaştıklarını ve birbirlerinden başkaca`,
             ` herhangi bir talepleri olmadığını beyan etmişlerdir. Taraflar arasında`,
             ` CMK. 253. ve 254. maddeleri uyarınca `,
         ], p).tab();
-        this.addText('UZLAŞMA GERÇEKLEŞMİŞ', p).bold();
-        this.addText([
+        this.text('UZLAŞMA GERÇEKLEŞMİŞ', p).bold();
+        this.text([
             ` olup, taraflara gerçekleşen uzlaşma nedeniyle "davanın düşmesine" karar`,
             ` verileceği ve tarafların yaşanan bu olay nedeniyle bir daha şikayetçi olamayacakları`,
             ` ve herhangi bir maddi ve manevi talebin de olamayacağı bilgisi verilmiştir.`
         ], p);
 
-        this.addText([
+        this.text([
             `Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak`,
             ` "uzlaşmanın hukuki sonuçlarını anladık", demişlerdir. İş bu uzlaştırma raporu hep`,
             ` birlikte imza altına alınmıştır.`
@@ -190,33 +190,33 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        this.addText(`Tarafların üzerinde anlaştıkları edimin yerine getirilme şekli ve zamanı: -`).bold();
+        this.text(`Tarafların üzerinde anlaştıkları edimin yerine getirilme şekli ve zamanı: -`).bold();
 
         this.newLine();
 
-        this.addText(`Yapılan giderler: -`).bold();
+        this.text(`Yapılan giderler: -`).bold();
 
         this.newLine();
 
-        this.addText('İmzalar', TextAlign.Left).underline().bold();
+        this.text('İmzalar', TextAlign.Left).underline().bold();
 
         ['Sanık', 'Mağdur / Müşteki', 'Müdafi', 'Vekil', 'Kanuni Temsilci', 'Uzlaştırmacı']
             .forEach(lbl => {
-                this.addText(lbl).bold().underline();
+                this.text(lbl).bold().underline();
                 this.newLine();
             });
 
-        this.addText('ONAY ŞERHİ').bold().underline();
+        this.text('ONAY ŞERHİ').bold().underline();
 
         this.newLine();
 
-        ['Tarih', 'Hâkim'].forEach(lbl => this.addText(lbl).bold);
+        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);
 
-        this.addText('ONAYLAMAMA GEREKÇESİ:').bold().underline();
+        this.text('ONAYLAMAMA GEREKÇESİ:').bold().underline();
 
         this.newLine();
 
-        ['Tarih', 'Hâkim'].forEach(lbl => this.addText(lbl).bold);
+        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);
     }
 
     getPerson(personId: string): Person {

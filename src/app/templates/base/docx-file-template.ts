@@ -14,11 +14,15 @@ export abstract class DocxFileTemplate {
 
     protected abstract prepareDocument(props: any);
 
-    protected createP(): Paragraph {
+    protected createParagraph(): Paragraph {
         return this.doc.createParagraph();
     }
 
-    protected addText(text: string | string[], textAlignOrParagraph?: TextAlign | Paragraph): Run {
+    protected indentedText(text: string | string[], textAlignOrParagraph?: TextAlign | Paragraph): Run {
+        return this.text(text, textAlignOrParagraph).tab();
+    }
+
+    protected text(text: string | string[], textAlignOrParagraph?: TextAlign | Paragraph): Run {
         let paragraph;
         let align;
 

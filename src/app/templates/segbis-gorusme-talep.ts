@@ -32,23 +32,23 @@ export const SegbisGorusmeTalepQuestions: Question[] = [
 export class SegbisGorusmeTalep extends BaseTemplate<SegbisGorusmeTalepProps> {
 
     protected prepareDocument(props) {
-        this.addText(`${props.competentAuthority.name} CUMHURİYET BAŞSAVCILIĞINA`, TextAlign.Center).bold();
-        this.addText(`(Uzlaştırma Bürosu)`, TextAlign.Center).bold();
+        this.text(`${props.competentAuthority.name} CUMHURİYET BAŞSAVCILIĞINA`, TextAlign.Center).bold();
+        this.text(`(Uzlaştırma Bürosu)`, TextAlign.Center).bold();
         this.newLine(2);
-        const p1 = this.createP();
-        this.addText('Uzlaştırma No: ', p1).bold();
-        this.addText(props.caseFile.conciliationNo);
+        const p1 = this.createParagraph();
+        this.text('Uzlaştırma No: ', p1).bold();
+        this.text(props.caseFile.conciliationNo);
         this.newLine();
-        this.addText(`Yukarıda uzlaştırma numarası yazılı dosya kapsamında;`);
+        this.text(`Yukarıda uzlaştırma numarası yazılı dosya kapsamında;`);
         this.newLine();
-        this.addText(props.extraData.jailType + ' Tipi Kapalı Ceza ve İnfaz Kurumunda bulunan tutuklu' + this.fullName(props.person) +
+        this.text(props.extraData.jailType + ' Tipi Kapalı Ceza ve İnfaz Kurumunda bulunan tutuklu' + this.fullName(props.person) +
             '(TC: ' + props.person.nId + ') ile uzlaştırma görüşmeleri yapmak üzere ' + this.getDate(props.extraData.requestDate) +
             ' tarihinde saat ' + this.getHours(props.extraData.requestDate) + '\'de SEGBİS (Ses ve Görüntü Bilişim Sistemi)' +
             ' üzerinden görüşme yapmama izin verilmesi hususunda gereğinin takdiri arz olunur. ' +
             this.getDate(props.date), TextAlign.Justified);
         this.newLine(2);
-        this.addText(this.fullName(props.user), TextAlign.Right);
-        this.addText('Uzlaştırmacı', TextAlign.Right);
+        this.text(this.fullName(props.user), TextAlign.Right);
+        this.text('Uzlaştırmacı', TextAlign.Right);
     }
 
     private fullName(person: Person | ClientUser) {

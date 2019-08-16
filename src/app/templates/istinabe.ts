@@ -10,20 +10,20 @@ export interface IstinabeProps {
 
 export class Istinabe extends BaseTemplate<IstinabeProps> {
     protected prepareDocument(props: IstinabeProps) {
-        this.addText(`${props.competentAuthority.name} UZLAŞMA BÜROSU'NA`, TextAlign.Center);
+        this.text(`${props.competentAuthority.name} UZLAŞMA BÜROSU'NA`, TextAlign.Center);
         this.newLine();
-        this.addText(`${props.caseFile.conciliationNo} sayılı
+        this.text(`${props.caseFile.conciliationNo} sayılı
          uzlaşma dosyasında ${this.fullName(props.person)}`, TextAlign.Justified);
         this.newLine();
         this.newLine();
-        this.addText('UZLAŞTIRMACI', TextAlign.Right);
-        this.addText(this.fullName(props.user), TextAlign.Right);
+        this.text('UZLAŞTIRMACI', TextAlign.Right);
+        this.text(this.fullName(props.user), TextAlign.Right);
         this.newLine();
         this.newLine();
         this.newLine();
         this.newLine();
-        this.addText('EKİ: Uzlaşma teklif formu');
-        this.addText('Uzlaştırma raporu', TextAlign.Left);
+        this.text('EKİ: Uzlaşma teklif formu');
+        this.text('Uzlaştırma raporu', TextAlign.Left);
     }
 
     private fullName(person: Person | ClientUser) {
