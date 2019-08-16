@@ -25,7 +25,13 @@ import {
     KovusturmaUzlastirmaciGorusmeTutanagi,
     KovusturmaUzlastirmaciGorusmeTutanagiProps,
     SegbisGorusmeTalep,
-    SegbisGorusmeTalepProps, SorusturmaOlumluUzlastirmaRaporu, SorusturmaOlumluUzlastirmaRaporuProps
+    SegbisGorusmeTalepProps,
+    SorusturmaOlumluUzlastirmaRaporu,
+    SorusturmaOlumluUzlastirmaRaporuProps,
+    SorusturmaOlumsuzUzlastirmaRaporu,
+    SorusturmaOlumsuzUzlastirmaRaporuProps,
+    SorusturmaUzlastirmaciGorusmeTutanagi,
+    SorusturmaUzlastirmaciGorusmeTutanagiProps
 } from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
@@ -43,10 +49,6 @@ import {
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
 import {forkJoin} from 'rxjs';
-import {
-    SorusturmaOlumsuzUzlastirmaRaporu,
-    SorusturmaOlumsuzUzlastirmaRaporuProps
-} from '../../templates/sorusturma-olumsuz-uzlastirma-raporu';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -178,16 +180,26 @@ export class PetitionExporterService {
                 break;
             case TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu:
                 docxTemplate = SorusturmaOlumsuzUzlastirmaRaporu;
-                props = <SorusturmaOlumsuzUzlastirmaRaporuProps> {
+                props = <SorusturmaOlumsuzUzlastirmaRaporuProps>{
                     allAddresses: await this._addressService.getAll().toPromise(),
                     allCities: await this._cityService.getAll().toPromise(),
                     allParties: await this._getCaseFileParties(caseFile.id),
-                    allPersons:  await this._getCaseFilePersons(caseFile.id),
+                    allPersons: await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
                     extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
                     extraData,
                     user
+                };
+                break;
+            case TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi:
+                docxTemplate = SorusturmaUzlastirmaciGorusmeTutanagi;
+                props = <SorusturmaUzlastirmaciGorusmeTutanagiProps>{
+                    user,
+                    person,
+                    extraData,
+                    caseFile,
+                    competentAuthority
                 };
                 break;
         }

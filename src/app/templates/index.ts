@@ -8,4 +8,5 @@ export * from './kovusturma-uzlastirmaci-gorusme-tutanagi';
 export * from './kovusturma-olumlu-uzlastirma-raporu';
 export * from './kovusturma-olumsuz-uzlastirma-raporu';
 export * from './sorusturma-olumlu-uzlastirma-raporu';
-
+export * from './sorusturma-olumsuz-uzlastirma-raporu';
+export * from './sorusturma-uzlastirmaci-gorusme-tutanagi';
