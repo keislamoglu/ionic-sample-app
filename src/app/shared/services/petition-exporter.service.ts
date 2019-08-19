@@ -31,7 +31,7 @@ import {
     SorusturmaOlumsuzUzlastirmaRaporu,
     SorusturmaOlumsuzUzlastirmaRaporuProps,
     SorusturmaUzlastirmaciGorusmeTutanagi,
-    SorusturmaUzlastirmaciGorusmeTutanagiProps
+    SorusturmaUzlastirmaciGorusmeTutanagiProps, TalimatYazisiTalep, TalimatYazisiTalepProps
 } from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
@@ -199,6 +199,18 @@ export class PetitionExporterService {
                     person,
                     extraData,
                     caseFile,
+                    competentAuthority
+                };
+                break;
+            case TemplateDocument.TalimatYazisiTalep:
+                docxTemplate = TalimatYazisiTalep;
+                props = <TalimatYazisiTalepProps>{
+                    personAddress,
+                    personCity,
+                    caseFile,
+                    user,
+                    person,
+                    extraData,
                     competentAuthority
                 };
                 break;

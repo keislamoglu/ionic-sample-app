@@ -50,5 +50,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: '9b961498-1ec5-4a4e-bf79-ce9582c44edc',
         name: 'Sor. Dos. Uzlaştırma Görüşme Tutanağı',
         slugName: TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi
+    },
+    {
+        id: 'e6f0b692-11ee-4411-84a9-94cf2de274cd',
+        name: 'Talimat Yazısı Talep Dilekçesi',
+        slugName: TemplateDocument.TalimatYazisiTalep
     }
 ];
