@@ -12,7 +12,7 @@ import {ConditionChecker} from './condition-checker';
 })
 export class DynamicFormComponent implements OnInit {
     private _questions: Question[] = [];
-    private _conditionChecker: ConditionChecker = new ConditionChecker(this._questionFinder);
+    private _conditionChecker: ConditionChecker = new ConditionChecker(this._questionFinder.bind(this));
 
     @Input() form: FormGroup;
 

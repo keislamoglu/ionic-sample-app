@@ -3,6 +3,8 @@ import {BaseTemplate, TextAlign} from './base';
 import {Comparison, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {PersonService} from '../shared/repositories';
 
+const defaultBank = 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01';
+
 export interface TesimVeMasrafBelgesiProps {
     competentAuthority: CompetentAuthority;
     caseFile: CaseFile;
@@ -24,10 +26,11 @@ export const TesimVeMasrafBelgesiQuestions: Question[] = [
     new DropdownQuestion({
         key: 'bank',
         label: 'Banka',
+        value: defaultBank,
         options: [
             {
-                key: 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01',
-                value: 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01'
+                key: defaultBank,
+                value: defaultBank
             },
             {
                 key: '',
