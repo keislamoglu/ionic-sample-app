@@ -8,6 +8,7 @@ import {SorusturmaOlumluUzlastirmaRaporuQuestions} from './sorusturma-olumlu-uzl
 import {SorusturmaOlumsuzUzlastirmaRaporuQuestions} from './sorusturma-olumsuz-uzlastirma-raporu';
 import {SorusturmaUzlastirmaciGorusmeTutanagiQuestions} from './sorusturma-uzlastirmaci-gorusme-tutanagi';
 import {TalimatYazisiTalepQuestions} from './talimat-yazisi-talep';
+import {TesimVeMasrafBelgesiQuestions} from './tesim-ve-masraf-belgesi';
 
 export const TemplateQuestions = {
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
@@ -20,5 +21,6 @@ export const TemplateQuestions = {
     [TemplateDocument.SorusturmaOlumluUzlastirmaRaporu]: SorusturmaOlumluUzlastirmaRaporuQuestions,
     [TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu]: SorusturmaOlumsuzUzlastirmaRaporuQuestions,
     [TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi]: SorusturmaUzlastirmaciGorusmeTutanagiQuestions,
-    [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalepQuestions
+    [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalepQuestions,
+    [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesiQuestions,
 };

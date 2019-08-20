@@ -1,4 +1,5 @@
 export enum TemplateDocument {
+    TesimVeMasrafBelgesi = 'TesimVeMasrafBelgesi',
     SorusturmaUzlastirmaciGorusmeTutanagi = 'SorusturmaUzlastirmaciGorusmeTutanagi',
     SorusturmaOlumsuzUzlastirmaRaporu = 'SorusturmaOlumsuzUzlastirmaRaporu',
     SorusturmaOlumluUzlastirmaRaporu = 'SorusturmaOlumluUzlastirmaRaporu',

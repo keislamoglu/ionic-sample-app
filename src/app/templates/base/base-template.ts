@@ -29,6 +29,28 @@ export abstract class BaseTemplate<T = {}> extends DocxFileTemplate {
         }
     }
 
+    protected printLikeTable(labelValueArray: Array<string[]>, headerFirstRow = true) {
+        labelValueArray.forEach((rowItems, index) => {
+            const tabCount = 12 / rowItems.length;
+            const [firstItem, ...restItems] = rowItems;
+            const p = this.createParagraph();
+
+            const firstItemText = this.text(firstItem, p);
+
+            if (headerFirstRow && index === 0) {
+                firstItemText.bold();
+            }
+
+            for (const item of restItems) {
+                const text = this.text(item, p);
+
+                for (let i = 0; i < tabCount; i++) {
+                    text.tab();
+                }
+            }
+        });
+    }
+
     protected printDate(dateString: string): string {
         return new Date(dateString).toLocaleDateString();
     }

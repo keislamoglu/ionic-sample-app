@@ -55,5 +55,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: 'e6f0b692-11ee-4411-84a9-94cf2de274cd',
         name: 'Talimat Yazısı Talep Dilekçesi',
         slugName: TemplateDocument.TalimatYazisiTalep
+    },
+    {
+        id: '908c92c9-8c99-430c-a3f7-d8a5c5f9944c',
+        name: 'Tesim ve Masraf Belgesi',
+        slugName: TemplateDocument.TesimVeMasrafBelgesi
     }
 ];

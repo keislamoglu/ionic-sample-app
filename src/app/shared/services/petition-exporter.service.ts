@@ -31,7 +31,9 @@ import {
     SorusturmaOlumsuzUzlastirmaRaporu,
     SorusturmaOlumsuzUzlastirmaRaporuProps,
     SorusturmaUzlastirmaciGorusmeTutanagi,
-    SorusturmaUzlastirmaciGorusmeTutanagiProps, TalimatYazisiTalep, TalimatYazisiTalepProps
+    SorusturmaUzlastirmaciGorusmeTutanagiProps,
+    TalimatYazisiTalep,
+    TalimatYazisiTalepProps, TesimVeMasrafBelgesi, TesimVeMasrafBelgesiProps
 } from '../../templates';
 import {switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
@@ -212,6 +214,15 @@ export class PetitionExporterService {
                     person,
                     extraData,
                     competentAuthority
+                };
+                break;
+            case TemplateDocument.TesimVeMasrafBelgesi:
+                docxTemplate = TesimVeMasrafBelgesi;
+                props = <TesimVeMasrafBelgesiProps>{
+                    caseFile,
+                    competentAuthority,
+                    extraData,
+                    user
                 };
                 break;
         }
