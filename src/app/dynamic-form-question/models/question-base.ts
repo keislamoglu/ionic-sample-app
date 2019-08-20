@@ -1,3 +1,5 @@
+import {Condition} from './condition';
+
 export type ControlType = 'dropdown' | 'textbox' | 'checkbox' | 'radio' | 'date';
 
 export interface QuestionBaseOptions<T = any> {
@@ -7,7 +9,7 @@ export interface QuestionBaseOptions<T = any> {
     required?: boolean;
     order?: number;
     controlType?: ControlType;
-    condition?: boolean;
+    conditions?: Condition[];
 }
 
 export abstract class QuestionBase<T> {
@@ -16,7 +18,7 @@ export abstract class QuestionBase<T> {
     label: string;
     required: boolean;
     order: number;
-    condition: boolean;
+    conditions: Condition[];
     abstract controlType: ControlType;
 
     protected constructor(options: QuestionBaseOptions<T> = {}) {
@@ -25,6 +27,6 @@ export abstract class QuestionBase<T> {
         this.label = options.label || '';
         this.required = !!options.required;
         this.order = options.order === undefined ? 1 : options.order;
-        this.condition = options.condition != null ? options.condition : null;
+        this.conditions = options.conditions != null ? options.conditions : null;
     }
 }

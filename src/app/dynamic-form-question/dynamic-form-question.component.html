@@ -1,5 +1,4 @@
 <ion-item [formGroup]="form"
-          *ngIf="question.condition != null ? question.condition : true"
           [ngSwitch]="question.controlType">
     <ng-container formGroupName="dynamic">
         <ion-label position="floating" [attr.for]="question.key">{{ question.label }}</ion-label>

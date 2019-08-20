@@ -1,6 +1,6 @@
 import {CaseFile, ClientUser, CompetentAuthority} from '../shared/entity';
 import {BaseTemplate, TextAlign} from './base';
-import {DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {Comparison, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {PersonService} from '../shared/repositories';
 
 export interface TesimVeMasrafBelgesiProps {
@@ -39,6 +39,10 @@ export const TesimVeMasrafBelgesiQuestions: Question[] = [
     new TextboxQuestion({
         key: 'otherBank',
         label: 'Diğer Banka (Banka Adı / Hesap No / IBAN)',
+        conditions: [{
+            question: 'bank',
+            comparison: Comparison.IsEmpty
+        }],
         required: false
     }),
     new TextboxQuestion({
