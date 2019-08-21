@@ -10,6 +10,7 @@ import {SorusturmaUzlastirmaciGorusmeTutanagiQuestions} from './sorusturma-uzlas
 import {TalimatYazisiTalepQuestions} from './talimat-yazisi-talep';
 import {TesimVeMasrafBelgesiQuestions} from './tesim-ve-masraf-belgesi';
 import {GorusmelerinYapilamadiginaDairTutanakQuestions} from './gorusmelerin-yapilamadigina-dair-tutanak';
+import {SorusturmaUzlasmaTeklifQuestions} from './sorusturma-uzlasma-teklif';
 
 export const TemplateQuestions = {
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
@@ -23,5 +24,6 @@ export const TemplateQuestions = {
     [TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi]: SorusturmaUzlastirmaciGorusmeTutanagiQuestions,
     [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalepQuestions,
     [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesiQuestions,
-    [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanakQuestions
+    [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanakQuestions,
+    [TemplateDocument.SorusturmaUzlasmaTeklif]: SorusturmaUzlasmaTeklifQuestions
 };

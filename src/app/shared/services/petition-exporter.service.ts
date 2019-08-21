@@ -30,7 +30,7 @@ import {
     SorusturmaOlumluUzlastirmaRaporu,
     SorusturmaOlumluUzlastirmaRaporuProps,
     SorusturmaOlumsuzUzlastirmaRaporu,
-    SorusturmaOlumsuzUzlastirmaRaporuProps,
+    SorusturmaOlumsuzUzlastirmaRaporuProps, SorusturmaUzlasmaTeklif, SorusturmaUzlasmaTeklifProps,
     SorusturmaUzlastirmaciGorusmeTutanagi,
     SorusturmaUzlastirmaciGorusmeTutanagiProps,
     TalimatYazisiTalep,
@@ -230,6 +230,18 @@ export class PetitionExporterService {
                     suspectedPerson: await this._getCaseFilePersonByPartyType(caseFile.id, PartyType.Suspected)
                 };
                 break;
+            case TemplateDocument.SorusturmaUzlasmaTeklif:
+                docxTemplate = SorusturmaUzlasmaTeklif;
+                props = <SorusturmaUzlasmaTeklifProps>{
+                    caseFile,
+                    competentAuthority,
+                    extraData,
+                    party,
+                    person,
+                    personAddress,
+                    personCity,
+                    user
+                };
         }
         this._docxFileService.export({
             fileName: petition.fileName,

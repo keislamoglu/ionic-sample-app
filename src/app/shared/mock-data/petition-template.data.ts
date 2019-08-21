@@ -60,5 +60,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: '22c2b00f-cf18-409f-8c4b-5d175676ed10',
         name: 'Görüşmelerin Yapılamadığına Dair Tutanak',
         slugName: TemplateDocument.GorusmelerinYapilamadiginaDairTutanak
+    },
+    {
+        id: '147e5cd3-6a36-474b-94f3-5ee91efa01ba',
+        name: 'Sor. Uzlaşma Teklif Formu',
+        slugName: TemplateDocument.SorusturmaUzlasmaTeklif
     }
 ];
