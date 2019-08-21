@@ -1,6 +1,6 @@
 <div [formGroup]="form">
     <div *ngFor="let question of questions" class="form-row">
-        <app-question *ngIf="verifyCondition(question)"
+        <app-question *ngIf="checkVisibility(question.key)"
                       [form]="form"
                       [question]="question"></app-question>
     </div>

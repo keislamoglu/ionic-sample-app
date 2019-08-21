@@ -1,4 +1,4 @@
-import {Condition} from './condition';
+import {QuestionCondition} from './questionCondition';
 
 export type ControlType = 'dropdown' | 'textbox' | 'checkbox' | 'radio' | 'date';
 
@@ -9,7 +9,7 @@ export interface QuestionBaseOptions<T = any> {
     required?: boolean;
     order?: number;
     controlType?: ControlType;
-    conditions?: Condition[];
+    conditions?: QuestionCondition[];
 }
 
 export abstract class QuestionBase<T> {
@@ -18,7 +18,7 @@ export abstract class QuestionBase<T> {
     label: string;
     required: boolean;
     order: number;
-    conditions: Condition[];
+    conditions: QuestionCondition[];
     abstract controlType: ControlType;
 
     protected constructor(options: QuestionBaseOptions<T> = {}) {

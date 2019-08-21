@@ -8,7 +8,7 @@ export enum Comparison {
     IsLowerThanOrEqualTo
 }
 
-export interface Condition {
+export interface QuestionCondition {
     /**
      * The key of the question to be compared
      */

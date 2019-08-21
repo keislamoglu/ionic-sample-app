@@ -1,17 +1,19 @@
 import {Comparison, Question} from '../dynamic-form-question/models';
 
-export class ConditionChecker {
-    constructor(private questionFormValueGetter: (key: string) => string) {
+export class QuestionConditionValidator {
+    constructor(private questions: Question[]) {
     }
 
-    verifyCondition(question: Question): boolean {
+    validate(key: string): boolean {
+        const question = this._getQuestion(key);
+
         if (!question.conditions || !question.conditions.length) {
             return true;
         }
 
         return question.conditions.every(condition => {
-            const compareValue = this.questionFormValueGetter(condition.question);
-            return this._compare(question.value, compareValue, condition.comparison);
+            const compareQuestion = this._getQuestion(condition.question);
+            return this._compare(question.value, compareQuestion.value, condition.comparison);
         });
     }
 
@@ -45,5 +47,15 @@ export class ConditionChecker {
         }
 
         return isValid;
+    }
+
+    private _getQuestion(key: string): Question {
+        const question = this.questions.find(q => q.key === key);
+
+        if (!question) {
+            throw new Error(`The key ${key} is not matched with any question`);
+        }
+
+        return question;
     }
 }

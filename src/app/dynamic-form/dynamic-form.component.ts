@@ -3,7 +3,7 @@ import {FormGroup} from '@angular/forms';
 import {Question} from '../dynamic-form-question/models';
 import {QuestionControlService} from '../shared/services/question-control.service';
 import {AlertService} from '../shared/services';
-import {ConditionChecker} from './condition-checker';
+import {QuestionConditionValidator} from './question-condition-validator';
 
 @Component({
     selector: 'app-dynamic-form',
@@ -12,14 +12,15 @@ import {ConditionChecker} from './condition-checker';
 })
 export class DynamicFormComponent implements OnInit {
     private _questions: Question[] = [];
-    private _conditionChecker: ConditionChecker = new ConditionChecker(this._formValueGetter.bind(this));
+    private _conditionValidator: QuestionConditionValidator;
 
     @Input() form: FormGroup;
 
     @Input()
     set questions(value) {
         this._questions = value;
-        this._updateFormGroup();
+        this._conditionValidator = new QuestionConditionValidator(this._questions);
+        this._setQuestionFormGroup();
     }
 
     get questions() {
@@ -35,30 +36,26 @@ export class DynamicFormComponent implements OnInit {
 
 
     ngOnInit() {
-        this._updateFormGroup();
+        this._setQuestionFormGroup();
     }
 
-    verifyCondition(question: Question) {
-        return this._conditionChecker.verifyCondition(question);
+    checkVisibility(key: string) {
+        return this._conditionValidator.validate(key);
     }
 
-    private _updateFormGroup() {
+    private _setQuestionFormGroup() {
         const formGroup = this.qcs.toFormGroup(this.questions);
-        if (this.form.contains('dynamic')) {
-            this.form.removeControl('dynamic');
-        }
-        this.form.addControl('dynamic', formGroup);
+        this.form.setControl('dynamic', formGroup);
         this.formGroupUpdated.emit(formGroup);
         this.changeDetector.markForCheck();
-    }
-
-    private _formValueGetter(key: string) {
-        const control = this.form.get(`dynamic.${key}`);
-
-        if (!control) {
-            throw new Error(`The key "${key}" is not matched with any question`);
-        }
-
-        return control.value;
+        this.form.get('dynamic').valueChanges.subscribe(controls => {
+            this._questions = this.questions.map(question => {
+                const value = controls[question.key];
+                if (question.value !== value) {
+                    question.value = value;
+                }
+                return question;
+            });
+        });
     }
 }

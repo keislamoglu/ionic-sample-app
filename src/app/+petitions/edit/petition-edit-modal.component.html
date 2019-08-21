@@ -30,7 +30,7 @@
         </ion-item>
         <!--TEMPLATE SPECIFIC QUESTIONS-->
         <app-dynamic-form *ngIf="dynamicQuestions"
-                          (formGroupUpdated)="onDynamicFormUpdated($event)"
+                          (formGroupUpdated)="onDynamicFormUpdated()"
                           [form]="form"
                           [questions]="dynamicQuestions"></app-dynamic-form>
         <!--ACTIONS-->
