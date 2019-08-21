@@ -1,6 +1,7 @@
 export enum PartyType {
     Injured = 'Mağdur', // Mağdur
     Suspected = 'Şüpheli', // Şüpheli
+    Defendant = 'Sanık', // Sanık
     Complainant = 'Müşteki', // Müşteki
     InjuredRepresentative = 'Mağdurun vekili', // Mağdurun vekili
     SuspectedRepresentative = 'Şüphelinin vekili', // Şüphelinin vekili
