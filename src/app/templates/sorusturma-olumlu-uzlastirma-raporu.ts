@@ -77,7 +77,7 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
 
         const parties = [
             {
-                title: 'Sanığın',
+                title: 'Şüphelinin',
                 person: suspected
             },
             {
@@ -194,7 +194,7 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
 
         this.text('İmzalar', TextAlign.Left).underline().bold();
 
-        ['Sanık', 'Mağdur / Müşteki', 'Müdafi', 'Vekil', 'Kanuni Temsilci', 'Uzlaştırmacı']
+        ['Şüpheli', 'Mağdur / Müşteki', 'Müdafi', 'Vekil', 'Kanuni Temsilci', 'Uzlaştırmacı']
             .forEach(lbl => {
                 this.text(lbl).bold().underline();
                 this.newLine();
