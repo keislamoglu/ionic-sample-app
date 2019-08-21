@@ -15,7 +15,7 @@ export class QuestionControlService {
 
         questions.forEach(question => {
             group[question.key] = new FormControl(
-                question.value || '',
+                question.value != null ? question.value : '',
                 question.required ? Validators.required : void 0
             );
         });
