@@ -7,9 +7,6 @@ import {Question} from '../../dynamic-form-question/models';
 @Injectable({providedIn: ServicesModule})
 export class QuestionControlService {
 
-    constructor() {
-    }
-
     toFormGroup(questions: Question[]) {
         const group: any = {};
 
