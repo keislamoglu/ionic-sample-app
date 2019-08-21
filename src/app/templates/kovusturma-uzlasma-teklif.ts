@@ -13,7 +13,6 @@ export interface KovusturmaUzlasmaTeklifProps {
     personCity: City;
     extraData: {
         crimes: string,
-        personType: string,
         date: string,
     };
 }
@@ -57,9 +56,9 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
             ' suçun/suçların uzlaştırmaya tabi olması nedeniyle aşağıda ',
             'açık kimliği belirtilen kişiye bu formun (D)bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı ',
             'kabul veya reddetmenin hukuki sonuçları anlatılarak uzlaşma teklifinde bulunulmuştur. ',
-            this._formatDate(extraData.date),
+            this.printDate(extraData.date),
             'Saat: ',
-            this._formatTime(extraData.date)
+            this.printTime(extraData.date)
         ], p2);
 
         this.newLine();
@@ -87,8 +86,8 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
             ['Adı Soyadı', PersonService.FullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
-            ['Doğum Yeri ve Tarihi', [person.birthPlace, ' ', this._formatDate(person.birthDate)].join('')],
-            ['Adres', [personAddress.fullAddress, ', ', personCity.name, '/', personAddress.district].join('')],
+            ['Doğum Yeri ve Tarihi', `${person.birthPlace} ${this.printDate(person.birthDate)}`],
+            ['Adres', `${personAddress.fullAddress}, ${personCity.name}/${personAddress.district}`],
             ['Telefon', person.phone]
         ]);
 
@@ -189,13 +188,5 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         const p12 = this.createParagraph();
         this.text('Kabul etmiyorum.', p12);
         this.text('.../ .../ 20... Saat: ...... İmza', p12).tab();
-    }
-
-    private _formatDate(dateString: string) {
-        return new Date(dateString).toLocaleDateString();
-    }
-
-    private _formatTime(dateString: string) {
-        return new Date(dateString).toLocaleTimeString();
     }
 }
