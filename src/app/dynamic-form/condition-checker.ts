@@ -1,7 +1,7 @@
 import {Comparison, Question} from '../dynamic-form-question/models';
 
 export class ConditionChecker {
-    constructor(private questionFinder: (key: string) => Question) {
+    constructor(private questionFormValueGetter: (key: string) => string) {
     }
 
     verifyCondition(question: Question): boolean {
@@ -10,13 +10,8 @@ export class ConditionChecker {
         }
 
         return question.conditions.every(condition => {
-            const compareQuestion = this.questionFinder(condition.question);
-
-            if (!compareQuestion) {
-                throw new Error(`The key "${condition.question}" is not matched with any question`);
-            }
-
-            return this._compare(question.value, compareQuestion.value, condition.comparison);
+            const compareValue = this.questionFormValueGetter(condition.question);
+            return this._compare(question.value, compareValue, condition.comparison);
         });
     }
 

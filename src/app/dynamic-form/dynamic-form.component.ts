@@ -12,7 +12,7 @@ import {ConditionChecker} from './condition-checker';
 })
 export class DynamicFormComponent implements OnInit {
     private _questions: Question[] = [];
-    private _conditionChecker: ConditionChecker = new ConditionChecker(this._questionFinder.bind(this));
+    private _conditionChecker: ConditionChecker = new ConditionChecker(this._formValueGetter.bind(this));
 
     @Input() form: FormGroup;
 
@@ -52,7 +52,13 @@ export class DynamicFormComponent implements OnInit {
         this.changeDetector.markForCheck();
     }
 
-    private _questionFinder(key: string) {
-        return this.questions.find(q => q.key === key);
+    private _formValueGetter(key: string) {
+        const control = this.form.get(`dynamic.${key}`);
+
+        if (!control) {
+            throw new Error(`The key "${key}" is not matched with any question`);
+        }
+
+        return control.value;
     }
 }
