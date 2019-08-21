@@ -127,18 +127,18 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
             ['Uzlaştırma sonucu', 'UZLAŞMA SAĞLANAMADI']
         ]);
 
-        this.text([
+        this.indentedText([
             competentAuthority.name,
             ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
-        ]).tab();
+        ]);
 
         this.newLine();
 
-        this.text([
+        this.indentedText([
             `Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek,`,
             ` uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür`,
             ` iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`
-        ]).tab();
+        ]);
 
         this.newLine();
 
@@ -146,39 +146,39 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
 
         this.newLine();
 
-        this.text([
+        this.indentedText([
             `Müşteki`,
             ` ${PersonService.FullName(injured)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Şüphelinin 1.000 TL vermesi halinde kendisiyle uzlaşmak istiyorum." dedi`
-        ]).tab();
+        ]);
 
-        this.text([
+        this.indentedText([
             `Şüpheli `,
             ` ${PersonService.FullName(suspected)} 'a`,
             ` müştekinin uzlaşma talebi iletilmiş ve kendisinin de taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Müştekinin, 1.000 TL vermem halinde uzlaşma isteğini kabul etmiyorum. Bunu ödeme gücüm yoktur. Uzlaşmak istemiyorum" dedi.`
-        ]).tab();
+        ]);
 
         this.newLine();
 
         const p1 = this.createParagraph();
 
-        this.text([
+        this.indentedText([
             `Taraflar özgür iradeleriyle uzlaştıklarını ve birbirlerinden başkaca`,
             ` herhangi bir talepleri olmadığını beyan etmişlerdir. Taraflar arasında`,
             ` CMK. 253. maddesi uyarınca `,
-        ], p1).tab();
+        ], p1);
         this.text('UZLAŞMA GERÇEKLEŞMEMİŞ', p1).bold();
         this.text([
             ` olup, CMK. 253. maddesi gereği "kamu davası" açılacağı hususunda taraflara bilgi verilmiştir`
         ], p1);
 
-        this.text([
+        this.indentedText([
             `Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak`,
             ` "uzlaşmanın hukuki sonuçlarını anladık", demişlerdir. İş bu uzlaştırma raporu hep`,
             ` birlikte imza altına alınmıştır.`
-        ]).tab();
+        ]);
 
         this.newLine();
 

@@ -39,9 +39,9 @@ export class SegbisGorusmeTalep extends BaseTemplate<SegbisGorusmeTalepProps> {
         this.text('Uzlaştırma No: ', p1).bold();
         this.text(props.caseFile.conciliationNo);
         this.newLine();
-        this.text(`Yukarıda uzlaştırma numarası yazılı dosya kapsamında;`);
+        this.indentedText(`Yukarıda uzlaştırma numarası yazılı dosya kapsamında;`);
         this.newLine();
-        this.text(props.extraData.jailType + ' Tipi Kapalı Ceza ve İnfaz Kurumunda bulunan tutuklu' + this.fullName(props.person) +
+        this.indentedText(props.extraData.jailType + ' Tipi Kapalı Ceza ve İnfaz Kurumunda bulunan tutuklu' + this.fullName(props.person) +
             '(TC: ' + props.person.nId + ') ile uzlaştırma görüşmeleri yapmak üzere ' + this.getDate(props.extraData.requestDate) +
             ' tarihinde saat ' + this.getHours(props.extraData.requestDate) + '\'de SEGBİS (Ses ve Görüntü Bilişim Sistemi)' +
             ' üzerinden görüşme yapmama izin verilmesi hususunda gereğinin takdiri arz olunur. ' +

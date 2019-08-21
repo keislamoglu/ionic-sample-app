@@ -20,15 +20,15 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
         this.text(`Sayın ${this.fullName(props.person)}`, TextAlign.Center).bold();
         this.text(`(Adres: ${props.person.address})`, TextAlign.Center);
 
-        this.text(props.competentAuthority.name +
+        this.indentedText(props.competentAuthority.name +
             ' Cumhuriyet Başsavcılığı tarafından yürütülen yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız.' +
             ' Soruşturma/kovuşturmaya konu suçun, 5271 sayılı CMK\'nın 253 ve 254’üncü maddeleri gereğince uzlaşma kapsamındaki' +
             ' suçlardan olması nedeniyle, uzlaşma işlemlerinin yürütülebilmesi için Cumhuriyet Başsavcılığı Uzlaştırma Bürosu' +
-            ' tarafından uzlaştırmacı olarak görevlendirilmiş bulunmaktayım.', TextAlign.Justified).tab();
+            ' tarafından uzlaştırmacı olarak görevlendirilmiş bulunmaktayım.', TextAlign.Justified);
 
         const p2 = this.createParagraph().justified();
-        this.text('Bu mektubu, uzlaşma görüşmelerini başlatmak için yazmaktayım.' +
-            ' Mektubun ekinde uzlaşmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukukî sonuçlarının bulunduğu ', p2).tab();
+        this.indentedText('Bu mektubu, uzlaşma görüşmelerini başlatmak için yazmaktayım.' +
+            ' Mektubun ekinde uzlaşmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukukî sonuçlarının bulunduğu ', p2);
         this.text('Uzlaşma Teklif Formu', p2).italic();
         this.text(' bulunmaktadır. Bu formu dikkatlice okumanızı tavsiye ederim. Açıklamamı istediğiniz bir husus' +
             ' var ise 3 günlük süre içerisinde ', p2);
@@ -36,14 +36,14 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
         this.text(' aşağıda belirtilen telefon numarası üzerinden bana ulaşabilirsiniz.', p2);
 
         const p3 = this.createParagraph().justified();
-        this.text('Ceza Muhakemesinde Uzlaştırma Yönetmeliği’nin 30 ve 34/2’nci maddeleri gereğince; bu mektubun' +
-            ' elinize geçmesinden itibaren ', p3).tab();
+        this.indentedText('Ceza Muhakemesinde Uzlaştırma Yönetmeliği’nin 30 ve 34/2’nci maddeleri gereğince; bu mektubun' +
+            ' elinize geçmesinden itibaren ', p3);
         this.text('en geç 3 gün içinde', p3).bold();
         this.text(' tarafımla irtibata geçmeniz ve kararını bildirmeniz gerekmektedir. Bu süre içinde benimle' +
             ' irtibata geçmediğiniz takdirde uzlaşma teklifini reddetmiş sayılacağınızı hatırlatırım. Bu durumda soruşturma' +
             ' / kovuşturma işlemlerine kaldığı yerden devam edilecek ve bir daha uzlaşma usulü uygulanamayacaktır.', p3);
 
-        this.text('Saygı ile bilgilerinize sunarım. ' + new Date(props.date).toLocaleDateString()).tab();
+        this.indentedText('Saygı ile bilgilerinize sunarım. ' + new Date(props.date).toLocaleDateString());
 
         this.newLine();
         this.text(this.fullName(props.user), TextAlign.Right);

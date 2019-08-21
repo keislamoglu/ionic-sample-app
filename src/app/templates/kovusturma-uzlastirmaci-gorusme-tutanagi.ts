@@ -43,7 +43,7 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
         this.text('Uzlaştırm No: ', p1).bold();
         this.text(caseFile.conciliationNo, p1);
         const p2 = this.createParagraph();
-        this.text([
+        this.indentedText([
             '5271 sayılı Ceza Muhakemesi Kanununun 253. ve 254. maddeleri gereğince ',
             competentAuthority.name,
             ' Cumhuriyet Başsavcılığı Uzlaştırma Bürosu’nun ',
@@ -51,7 +51,7 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
             ' uzlaştırma nolu yazısı ile talep edilen uzlaştırıcılık görevinde müşteki ',
             PersonService.FullName(person), ', ', this.printDate(extraData.callDate),
             ' tarihinde dosya içerisinde yer alan telefon numarasından aranarak '
-        ], p2).tab();
+        ], p2);
         this.text([
             competentAuthority.name,
             ' Uzlaştırma Bürosu Görüşme Odasına'
@@ -66,7 +66,7 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
             ['Uzlaştırmacı', PersonService.FullName(user)]
         ]);
         const p3 = this.createParagraph();
-        this.text('Müşteki', p3).bold().tab();
+        this.indentedText('Müşteki', p3).bold();
         this.text([
             ' ile yapılan görüşmede uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve ',
             'sonuçları anlatılmış; "'
@@ -90,16 +90,16 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
         this.text(' sorulmuş, ', p3);
         this.text('müşteki', p3).bold();
         this.text(' söz alarak;');
-        this.text([
+        this.indentedText([
             '"Konu ile ilgili olarak daha önceden ayrıntılı olarak ifade vermiştim, o ifadem doğrudur, aynen tekrar ederim. ',
             'Maddi-manevi hiçbir talebim olmaksızın uzlaşmak istiyorum."'
-        ]).tab();
-        this.text([
+        ]);
+        this.indentedText([
             'Şeklinde beyanda bulunmuş ve sözlü beyanı tarafımdan yazıya döküldükten sonra kendisine okunmuş ',
             've doğruluğu tasdik olunmuş, Ceza Muhakemesinde Uzlaştırma Yönetmeliği hükümleri gereği uzlaşmanın ',
             'hukukî sonuçları kendisine açıklanarak iş bu tutanak birlikte imza altına alınmıştır. ',
             this.printDate(extraData.officialReportDate)
-        ]).tab();
+        ]);
 
         const p4 = this.createParagraph();
         this.text(PersonService.FullName(person), p4).tab();

@@ -127,18 +127,18 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
             ['Uzlaştırma sonucu', 'UZLAŞMA SAĞLANDI']
         ]);
 
-        this.text([
+        this.indentedText([
             competentAuthority.name,
             ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
-        ]).tab();
+        ]);
 
         this.newLine();
 
-        this.text([
+        this.indentedText([
             `Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek,`,
             ` uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür`,
             ` iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`
-        ]).tab();
+        ]);
 
         this.newLine();
 
@@ -146,29 +146,29 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
 
         this.newLine();
 
-        this.text([
+        this.indentedText([
             `Müşteki`,
             ` ${PersonService.FullName(injured)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Maddi-manevi hiçbir talebim olmaksızın uzlaşmak istiyorum." dedi`
-        ]).tab();
+        ]);
 
-        this.text([
+        this.indentedText([
             `Şüpheli `,
             ` ${PersonService.FullName(suspected)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Müştekinin talebi doğrultusunda uzlaşmak istiyorum." dedi.`
-        ]).tab();
+        ]);
 
         this.newLine();
 
         const p = this.createParagraph();
 
-        this.text([
+        this.indentedText([
             `Taraflar özgür iradeleriyle uzlaştıklarını ve birbirlerinden başkaca`,
             ` herhangi bir talepleri olmadığını beyan etmişlerdir. Taraflar arasında`,
             ` CMK. 253. maddesi uyarınca `,
-        ], p).tab();
+        ], p);
         this.text('UZLAŞMA GERÇEKLEŞMİŞ', p).bold();
         this.text([
             ` olup, taraflara gerçekleşen uzlaşma nedeniyle "davanın düşmesine" karar`,
@@ -176,11 +176,11 @@ export class SorusturmaOlumluUzlastirmaRaporu extends BaseTemplate<SorusturmaOlu
             ` ve herhangi bir maddi ve manevi talebin de olamayacağı bilgisi verilmiştir.`
         ], p);
 
-        this.text([
+        this.indentedText([
             `Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak`,
             ` "uzlaşmanın hukuki sonuçlarını anladık", demişlerdir. İş bu uzlaştırma raporu hep`,
             ` birlikte imza altına alınmıştır.`
-        ]).tab();
+        ]);
 
         this.newLine();
 
