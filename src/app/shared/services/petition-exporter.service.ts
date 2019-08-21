@@ -6,12 +6,15 @@ import {
     ClientUser,
     CompetentAuthority,
     Party,
+    PartyType,
     Person,
     Petition,
     PetitionTemplate,
     TemplateDocument
 } from '../entity';
 import {
+    GorusmelerinYapilamadiginaDairTutanak,
+    GorusmelerinYapilamadiginaDairTutanakProps,
     GorusmeyeDavet,
     GorusmeyeDavetProps,
     Istinabe,
@@ -33,9 +36,11 @@ import {
     SorusturmaUzlastirmaciGorusmeTutanagi,
     SorusturmaUzlastirmaciGorusmeTutanagiProps,
     TalimatYazisiTalep,
-    TalimatYazisiTalepProps, TesimVeMasrafBelgesi, TesimVeMasrafBelgesiProps
+    TalimatYazisiTalepProps,
+    TesimVeMasrafBelgesi,
+    TesimVeMasrafBelgesiProps
 } from '../../templates';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {ServicesModule} from './services.module';
 import {
     AddressService,
@@ -225,6 +230,17 @@ export class PetitionExporterService {
                     user
                 };
                 break;
+            case TemplateDocument.GorusmelerinYapilamadiginaDairTutanak:
+                docxTemplate = GorusmelerinYapilamadiginaDairTutanak;
+                props = <GorusmelerinYapilamadiginaDairTutanakProps>{
+                    caseFile,
+                    competentAuthority,
+                    extraData,
+                    user,
+                    complainantPerson: await this._getCaseFilePersonByPartyType(caseFile.id, PartyType.Complainant),
+                    suspectedPerson: await this._getCaseFilePersonByPartyType(caseFile.id, PartyType.Suspected)
+                };
+                break;
         }
         this._docxFileService.export({
             fileName: petition.fileName,
@@ -278,6 +294,13 @@ export class PetitionExporterService {
             switchMap(parties => {
                 return forkJoin(parties.map(party => this._personService.get(party.personId)));
             }),
+        ).toPromise();
+    }
+
+    private _getCaseFilePersonByPartyType(caseFileId: string, partyType: PartyType) {
+        return this._partyService.getByCaseFile(caseFileId).pipe(
+            map(parties => parties.find(t => t.type === partyType)),
+            switchMap(party => this._personService.get(party.id))
         ).toPromise();
     }
 

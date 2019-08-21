@@ -60,5 +60,10 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         id: '908c92c9-8c99-430c-a3f7-d8a5c5f9944c',
         name: 'Tesim ve Masraf Belgesi',
         slugName: TemplateDocument.TesimVeMasrafBelgesi
+    },
+    {
+        id: '22c2b00f-cf18-409f-8c4b-5d175676ed10',
+        name: 'Görüşmelerin Yapılamadığına Dair Tutanak',
+        slugName: TemplateDocument.GorusmelerinYapilamadiginaDairTutanak
     }
 ];

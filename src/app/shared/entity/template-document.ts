@@ -1,4 +1,5 @@
 export enum TemplateDocument {
+    GorusmelerinYapilamadiginaDairTutanak = 'GorusmelerinYapilamadiginaDairTutanak',
     TesimVeMasrafBelgesi = 'TesimVeMasrafBelgesi',
     SorusturmaUzlastirmaciGorusmeTutanagi = 'SorusturmaUzlastirmaciGorusmeTutanagi',
     SorusturmaOlumsuzUzlastirmaRaporu = 'SorusturmaOlumsuzUzlastirmaRaporu',

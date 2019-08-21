@@ -12,3 +12,4 @@ export * from './sorusturma-olumsuz-uzlastirma-raporu';
 export * from './sorusturma-uzlastirmaci-gorusme-tutanagi';
 export * from './talimat-yazisi-talep';
 export * from './tesim-ve-masraf-belgesi';
+export * from './gorusmelerin-yapilamadigina-dair-tutanak';
