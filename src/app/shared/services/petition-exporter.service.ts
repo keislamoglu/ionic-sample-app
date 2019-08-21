@@ -17,8 +17,6 @@ import {
     GorusmelerinYapilamadiginaDairTutanakProps,
     GorusmeyeDavet,
     GorusmeyeDavetProps,
-    Istinabe,
-    IstinabeProps,
     KovusturmaOlumluUzlastirmaRaporu,
     KovusturmaOlumluUzlastirmaRaporuProps,
     KovusturmaOlumsuzUzlastirmaRaporu,
@@ -96,15 +94,6 @@ export class PetitionExporterService {
                     caseFile,
                     person,
                     competentAuthority,
-                    user
-                };
-                break;
-            case TemplateDocument.Istinabe:
-                docxTemplate = Istinabe;
-                props = <IstinabeProps>{
-                    caseFile,
-                    competentAuthority,
-                    person,
                     user
                 };
                 break;

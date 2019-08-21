@@ -13,7 +13,6 @@ import {GorusmelerinYapilamadiginaDairTutanakQuestions} from './gorusmelerin-yap
 
 export const TemplateQuestions = {
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
-    [TemplateDocument.Istinabe]: [],
     [TemplateDocument.UzlasmaGorusmesineDavet]: [],
     [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagiQuestions,
     [TemplateDocument.KovusturmaUzlasmaTeklif]: KovusturmaUzlasmaTelifQuestions,

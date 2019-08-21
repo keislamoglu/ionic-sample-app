@@ -7,11 +7,6 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         slugName: TemplateDocument.UzlasmaGorusmesineDavet
     },
     {
-        id: '68c0e11e-8292-4c95-bde5-de7d732aaea8',
-        name: 'İstinabe',
-        slugName: TemplateDocument.Istinabe
-    },
-    {
         id: '18572edd-3f4d-463c-826d-8c7806c97fc7',
         name: 'SEGBİS Görüşme Talebi',
         slugName: TemplateDocument.SegbisGorusmeTalep
