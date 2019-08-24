@@ -1,4 +1,4 @@
-import {Comparison, Question} from '../dynamic-form-question/models';
+import {Condition, Question} from '../dynamic-form-question/models';
 
 export class QuestionConditionValidator {
     constructor(private questions: Question[]) {
@@ -13,33 +13,33 @@ export class QuestionConditionValidator {
 
         return question.conditions.every(condition => {
             const compareQuestion = this._getQuestion(condition.question);
-            return this._compare(question.value, compareQuestion.value, condition.comparison);
+            return this._compare(question.value, compareQuestion.value, condition.condition);
         });
     }
 
-    private _compare(value: string, compareValue: string, comparison: Comparison): boolean {
+    private _compare(value: string, compareValue: string, comparison: Condition): boolean {
         let isValid = false;
 
         switch (comparison) {
-            case Comparison.IsEmpty:
+            case Condition.IsEmpty:
                 isValid = compareValue == null || compareValue === '';
                 break;
-            case Comparison.IsEqual:
+            case Condition.IsEqual:
                 isValid = compareValue === value;
                 break;
-            case Comparison.IsNotNull:
+            case Condition.IsNotNull:
                 isValid = compareValue != null && compareValue !== '';
                 break;
-            case Comparison.IsGreaterThan:
+            case Condition.IsGreaterThan:
                 isValid = compareValue < value;
                 break;
-            case Comparison.IsLowerThan:
+            case Condition.IsLowerThan:
                 isValid = compareValue > value;
                 break;
-            case Comparison.IsGreaterThanOrEqualTo:
+            case Condition.IsGreaterThanOrEqualTo:
                 isValid = compareValue <= value;
                 break;
-            case Comparison.IsLowerThanOrEqualTo:
+            case Condition.IsLowerThanOrEqualTo:
                 isValid = compareValue >= value;
                 break;
             default:

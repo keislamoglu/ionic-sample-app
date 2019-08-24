@@ -1,4 +1,4 @@
-export enum Comparison {
+export enum Condition {
     IsEmpty,
     IsEqual,
     IsNotNull,
@@ -15,7 +15,7 @@ export interface QuestionCondition {
     question: string;
 
     /**
-     * Comparison type
+     * Condition type
      */
-    comparison: Comparison;
+    condition: Condition;
 }

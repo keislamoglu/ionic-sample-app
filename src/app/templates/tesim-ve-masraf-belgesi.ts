@@ -1,6 +1,6 @@
 import {CaseFile, ClientUser, CompetentAuthority} from '../shared/entity';
 import {BaseTemplate, TextAlign} from './base';
-import {Comparison, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {Condition, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {PersonService} from '../shared/repositories';
 
 const defaultBank = 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01';
@@ -44,7 +44,7 @@ export const TesimVeMasrafBelgesiQuestions: Question[] = [
         label: 'Diğer Banka (Banka Adı / Hesap No / IBAN)',
         conditions: [{
             question: 'bank',
-            comparison: Comparison.IsEmpty
+            condition: Condition.IsEmpty
         }],
         required: false
     }),
