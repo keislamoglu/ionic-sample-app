@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {ExtensionTimeEditModalComponent} from './edit/extension-time-edit-modal.component';
 import {CaseFile, ExtensionTime} from '../shared/entity';
-import {getDateDiff} from '../shared/helpers';
+import {ExtensionTimeHelper, getDateDiff} from '../shared/helpers';
 import {CaseFileService, ExtensionTimeService} from '../shared/repositories';
 
 @Component({
@@ -47,7 +47,6 @@ export class ExtensionTimesComponent implements OnInit {
     }
 
     remaining(extensionTime: ExtensionTime) {
-        const now = new Date();
-        return getDateDiff(now, ExtensionTimeService.getDateWithDuration(extensionTime));
+        return getDateDiff(new Date(), ExtensionTimeHelper.getDurationAddedDate(extensionTime));
     }
 }

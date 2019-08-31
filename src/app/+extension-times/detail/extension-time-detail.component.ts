@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../shared/services';
 import {ExtensionTime} from '../../shared/entity';
 import {ExtensionTimeEditModalComponent} from '../edit/extension-time-edit-modal.component';
-import {getDateDiff} from '../../shared/helpers';
+import {ExtensionTimeHelper, getDateDiff} from '../../shared/helpers';
 import {NavController} from '@ionic/angular';
 import {ExtensionTimeService} from '../../shared/repositories';
 
@@ -39,7 +39,7 @@ export class ExtensionTimeDetailComponent implements OnInit {
         this._extensionTimeService.get(this.id)
             .subscribe(extensionTime => {
                 this.extensionTime = extensionTime;
-                const dateDiff = getDateDiff(new Date(), ExtensionTimeService.getDateWithDuration(extensionTime));
+                const dateDiff = getDateDiff(new Date(), ExtensionTimeHelper.getDurationAddedDate(extensionTime));
                 if (dateDiff > 0) {
                     this.remainingTime = dateDiff;
                 }

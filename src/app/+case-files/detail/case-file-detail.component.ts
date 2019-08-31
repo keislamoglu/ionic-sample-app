@@ -57,16 +57,6 @@ export class CaseFileDetailComponent implements OnInit {
         }
     }
 
-    private _loadData() {
-        this._caseFileService.get(this.id).pipe(
-            switchMap(caseFile => {
-                this.caseFile = caseFile;
-                this.calculateRemainingTime();
-                return this._competentAuthorityService.get(caseFile.competentAuthorityId);
-            }),
-        ).subscribe(competentAuthority => this.competentAuthority = competentAuthority);
-    }
-
     agreementReachedChange({detail: {checked}}) {
         this.caseFile.agreementReached = checked;
         this.processing = true;
@@ -77,5 +67,15 @@ export class CaseFileDetailComponent implements OnInit {
             }),
             complete: () => this.processing = false
         });
+    }
+
+    private _loadData() {
+        this._caseFileService.get(this.id).pipe(
+            switchMap(caseFile => {
+                this.caseFile = caseFile;
+                this.calculateRemainingTime();
+                return this._competentAuthorityService.get(caseFile.competentAuthorityId);
+            }),
+        ).subscribe(competentAuthority => this.competentAuthority = competentAuthority);
     }
 }

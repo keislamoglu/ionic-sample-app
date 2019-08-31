@@ -54,6 +54,7 @@ import {
 import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
 import {forkJoin} from 'rxjs';
+import {ExtensionTimeHelper} from '../helpers';
 
 
 @Injectable({providedIn: ServicesModule})
@@ -141,7 +142,7 @@ export class PetitionExporterService {
                     allPersons: await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
-                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extensionTime: ExtensionTimeHelper.getNotPassedOne(extensionTimes),
                     extraData,
                     user
                 };
@@ -155,7 +156,7 @@ export class PetitionExporterService {
                     allPersons: await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
-                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extensionTime: ExtensionTimeHelper.getNotPassedOne(extensionTimes),
                     extraData,
                     user
                 };
@@ -169,7 +170,7 @@ export class PetitionExporterService {
                     allPersons: await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
-                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extensionTime: ExtensionTimeHelper.getNotPassedOne(extensionTimes),
                     extraData,
                     user
                 };
@@ -183,7 +184,7 @@ export class PetitionExporterService {
                     allPersons: await this._getCaseFilePersons(caseFile.id),
                     caseFile,
                     competentAuthority,
-                    extensionTime: ExtensionTimeService.getNotPassedOne(extensionTimes),
+                    extensionTime: ExtensionTimeHelper.getNotPassedOne(extensionTimes),
                     extraData,
                     user
                 };
