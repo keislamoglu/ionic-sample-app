@@ -13,9 +13,37 @@ export interface TesimVeMasrafBelgesiProps {
         date: string,
         bank: string,
         otherBank: string,
-        recipient: string
+        recipient: string,
+        costLabel1: string,
+        costLabel2: string,
+        costLabel3: string,
+        costLabel4: string,
+        costLabel5: string,
+        cost1: string,
+        cost2: string,
+        cost3: string,
+        cost4: string,
+        cost5: string
     };
 }
+const costQuestions = [];
+
+new Array(5).fill(null).forEach((v, i) => {
+    const no = i + 1;
+    const conditions = no === 1 ? [] : [{question: `costLabel${no - 1}`, condition: Condition.IsNotNull}];
+    costQuestions.push(...[
+        new TextboxQuestion({
+            key: `costLabel${no}`,
+            label: `Masraf kalemi`,
+            conditions
+        }),
+        new TextboxQuestion({
+            key: `cost${no}`,
+            label: `Masraf bedeli`,
+            conditions
+        }),
+    ]);
+});
 
 export const TesimVeMasrafBelgesiQuestions: Question[] = [
     new DateQuestion({
@@ -52,7 +80,8 @@ export const TesimVeMasrafBelgesiQuestions: Question[] = [
         key: 'recipient',
         label: 'Dilekçeyi teslim alan',
         required: true
-    })
+    }),
+    ...costQuestions
 ];
 
 export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps> {
@@ -88,10 +117,32 @@ export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps
         this.newLine();
         this.text('MASRAFLAR').bold();
         const p1 = this.createParagraph();
+        const costs = [];
+        let totalCost = 0;
+        let costUnit = '';
+        const parseCostUnit = (cost: string) => {
+            const [, _unit] = cost.match(/\d\s*(\w+)$/);
+            return _unit || 'TL';
+        };
+        const parseCost = (cost: string, unit: string) => {
+            return +cost.replace(new RegExp(`\\s*${unit}`), '');
+        };
+        new Array(5).fill(null).forEach((v, i) => {
+            const no = i + 1;
+            const label = extraData[`costLabel${no}`];
+            const cost = extraData[`cost${no}`];
+            if (label) {
+                costs.push([label, cost]);
+                if (!costUnit) {
+                    costUnit = parseCostUnit(cost);
+                }
+                totalCost += parseCost(cost, costUnit);
+            }
+        });
         this.printLikeTable([
             ['Masraf Türü', 'Masraf Gideri'],
-            ['Yol Masrafı (Rayiç bedel) 3 Gidiş 3 Dönüş', '90,00 TL'],
-            ['TOPLAM', '90,00 TL']
+            ...costs,
+            ['TOPLAM', `${totalCost} ${costUnit}`]
         ]);
         this.newLine();
         this.text(`Teslim Alan: ${extraData.recipient}`);
