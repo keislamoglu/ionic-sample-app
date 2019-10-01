@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {forkJoin, of, zip} from 'rxjs';
-import {CaseFile, CompetentAuthority} from '../shared/entity';
+import {CaseFile, CaseFileType} from '../shared/entity';
 import {ModalService} from '../shared/services';
 import {getGrouped} from '../shared/helpers';
-import {CaseFileService, CompetentAuthorityService} from '../shared/repositories';
+import {AttorneyGeneralshipService, CaseFileService, CourtHouseService} from '../shared/repositories';
 import {CaseFileEditModalComponent} from './edit/case-file-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
 
@@ -19,14 +19,11 @@ export class CaseFilesComponent implements OnInit {
     columnSize = 12 / this.itemCountPerRow;
     groupedCaseFiles: Array<CaseFile[]> = [];
     caseFiles: CaseFile[] = [];
-    competentAuthorities: CompetentAuthority[] = [];
-    remainingTimes: {
-        caseFileId: string,
-        time: number
-    }[] = [];
+    remainingTimes: Array<{ caseFileId: string, time: number }> = [];
 
     constructor(private _caseFileService: CaseFileService,
-                private _competentAuthorityService: CompetentAuthorityService,
+                private _courtHouseService: CourtHouseService,
+                private _attorneyGeneralshipService: AttorneyGeneralshipService,
                 private _navController: NavController,
                 private _modalService: ModalService,
                 private _changeDetectorRef: ChangeDetectorRef) {
@@ -46,8 +43,14 @@ export class CaseFilesComponent implements OnInit {
         this._navController.navigateForward(`case-files/${id}`);
     }
 
-    getCompetentAuthority(competentAuthorityId: string) {
-        return this.competentAuthorities.find(t => t.id === competentAuthorityId);
+    getCompetentAuthority(caseFile: CaseFile) {
+        if (caseFile.type === CaseFileType.Prosecution) {
+            return this._courtHouseService.get(caseFile.courtHouseId);
+        }
+
+        if (caseFile.type === CaseFileType.Investigation) {
+            return this._attorneyGeneralshipService.get(caseFile.attorneyGeneralshipId);
+        }
     }
 
     getRemainingTime(caseFileId: string) {
@@ -55,28 +58,20 @@ export class CaseFilesComponent implements OnInit {
     }
 
     private _loadData(refreshEvent?) {
-        zip(
-            this._competentAuthorityService.getAll(),
-            this._caseFileService.getAll().pipe(
-                switchMap(caseFiles => {
-                    const remainingTimes = caseFiles.length > 0
-                        ? forkJoin(caseFiles.map(caseFile => this._caseFileService.getRemainingTime(caseFile.id)))
-                        : of([]);
-                    return zip(
-                        of(caseFiles),
-                        remainingTimes
-                    );
-                })
-            )
+        this._caseFileService.getAll().pipe(
+            switchMap(caseFiles => {
+                const remainingTimes = caseFiles.length > 0
+                    ? forkJoin(caseFiles.map(caseFile => this._caseFileService.getRemainingTime(caseFile.id)))
+                    : of([]);
+                return zip(
+                    of(caseFiles),
+                    remainingTimes
+                );
+            })
         ).subscribe(val => {
             let times: number[];
-            [this.competentAuthorities, [this.caseFiles, times]] = val;
-            this.remainingTimes = times.map((time, index) => {
-                return {
-                    caseFileId: this.caseFiles[index].id,
-                    time
-                };
-            });
+            [this.caseFiles, times] = val;
+            this.remainingTimes = times.map((time, index) => ({caseFileId: this.caseFiles[index].id, time}));
             const visualCaseFiles = [null, ...this.caseFiles];
             this.groupedCaseFiles = getGrouped(visualCaseFiles, this.itemCountPerRow);
             if (refreshEvent) {

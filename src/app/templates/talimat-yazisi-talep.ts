@@ -63,7 +63,7 @@ export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
         this.newLine();
         this.text(`KİMLİK BİLGİLERİ:`).bold().underline();
         this.printLabelValue([
-            ['T.C. Kimlik Numarası', person.nId],
+            ['T.C. Kimlik Numarası', person.identificationNo],
             ['Adı Soyadı', PersonService.FullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
@@ -75,6 +75,6 @@ export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
 
     printPersonAddress(): string {
         const {personCity: city, personAddress: address} = this.props;
-        return `${address.fullAddress}, ${address.district}, ${city.name}`;
+        return `${address.fullAddress}, ${address.districtName}, ${city.name}`;
     }
 }

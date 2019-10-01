@@ -22,34 +22,31 @@ export class UserService {
     static toBackendUser(clientUser: ClientUser): BackendUser {
         return {
             userId: clientUser.id,
-            name: [clientUser.name, clientUser.middlename].filter(t => t).join(' '),
-            surname: clientUser.lastname,
+            name: clientUser.name,
+            surname: clientUser.lastName,
             password: void 0,
             address: clientUser.address,
-            commissioningDate: clientUser.commissioningDate,
+            commissioningDate: '',
             email: clientUser.email,
             phone: clientUser.phone,
-            sicilNumber: clientUser.sicilNumber,
+            sicilNumber: clientUser.registrationNo,
             subscriptionDate: clientUser.subscriptionDate,
             subscriptionStatus: clientUser.subscriptionStatus
         };
     }
 
     static toClientUser(backendUser: BackendUser): ClientUser {
-        const [name, middlename] = backendUser.name.split(' ');
-
         return {
             id: backendUser.userId,
-            name,
-            middlename,
-            lastname: backendUser.surname,
+            name: backendUser.name,
+            lastName: backendUser.surname,
             email: backendUser.email,
             phone: backendUser.phone,
-            sicilNumber: backendUser.sicilNumber,
+            registrationNo: backendUser.sicilNumber,
             address: backendUser.address,
-            commissioningDate: backendUser.commissioningDate,
             subscriptionStatus: backendUser.subscriptionStatus,
-            subscriptionDate: backendUser.subscriptionDate
+            subscriptionDate: backendUser.subscriptionDate,
+            identificationNo: ''
         };
     }
 

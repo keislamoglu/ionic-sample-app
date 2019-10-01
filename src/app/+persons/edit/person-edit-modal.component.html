@@ -19,7 +19,7 @@
         </ion-item>
         <ion-item>
             <ion-label position="floating">Soyad</ion-label>
-            <ion-input name="lastname" [(ngModel)]="person.lastname" required></ion-input>
+            <ion-input name="lastname" [(ngModel)]="person.lastName" required></ion-input>
         </ion-item>
         <!--PARENT INFO-->
         <ion-item>
@@ -33,7 +33,7 @@
         <!--NATIONAL ID-->
         <ion-item>
             <ion-label position="floating">T.C. Kimlik No</ion-label>
-            <ion-input name="nId" [(ngModel)]="person.nId" required></ion-input>
+            <ion-input name="nId" [(ngModel)]="person.identificationNo" required></ion-input>
         </ion-item>
         <!--BIRTH DATE-->
         <ion-item>
@@ -64,11 +64,11 @@
             </ion-item>
             <ion-item>
                 <ion-label position="floating">İlçe</ion-label>
-                <ion-input name="address.district" required [(ngModel)]="address.district"></ion-input>
+                <ion-input name="address.district" required [(ngModel)]="address.districtName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Cadde-Sokak</ion-label>
-                <ion-input name="address.street" required [(ngModel)]="address.street"></ion-input>
+                <ion-input name="address.street" required [(ngModel)]="address.streetName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Açık Adres</ion-label>
@@ -88,11 +88,11 @@
             </ion-item>
             <ion-item>
                 <ion-label position="floating">İlçe</ion-label>
-                <ion-input name="mernisAddress.district" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.district"></ion-input>
+                <ion-input name="mernisAddress.district" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.districtName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Cadde-Sokak</ion-label>
-                <ion-input name="mernisAddress.street" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.street"></ion-input>
+                <ion-input name="mernisAddress.street" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.streetName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Açık Adres</ion-label>

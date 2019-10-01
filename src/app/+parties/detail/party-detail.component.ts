@@ -74,6 +74,6 @@ export class PartyDetailComponent implements OnInit {
     }
 
     personFullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(t => t).join(' ');
+        return [person.name, person.lastName].filter(t => t).join(' ');
     }
 }

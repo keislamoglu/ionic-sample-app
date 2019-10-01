@@ -18,7 +18,7 @@
     </ion-refresher>
     <ion-list>
         <ion-item *ngFor="let person of persons">
-            <ion-button fill="clear" (click)="navToDetail(person.id)">{{_fullName(person)}} - {{person.nId}}</ion-button>
+            <ion-button fill="clear" (click)="navToDetail(person.id)">{{_fullName(person)}} - {{person.identificationNo}}</ion-button>
         </ion-item>
     </ion-list>
 </ion-content>

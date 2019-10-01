@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {AlertService} from '../../shared/services';
-import {CaseFileService, CompetentAuthorityService, PersonService} from '../../shared/repositories';
-import {CaseFile, CaseFileType, CompetentAuthority, CompetentAuthorityType} from '../../shared/entity';
+import {AttorneyGeneralshipService, CaseFileService, CourtHouseService, PersonService} from '../../shared/repositories';
+import {AttorneyGeneralship, CaseFile, CaseFileType, CourtHouse} from '../../shared/entity';
 import {EnumList, enumList} from '../../shared/helpers';
 import {switchMap} from 'rxjs/operators';
 
@@ -14,16 +14,19 @@ export class CaseFileEditModalComponent implements OnInit {
     caseFile: CaseFile | null = null;
     // Data sets
     caseFileTypeDataset: EnumList<typeof CaseFileType> = enumList(CaseFileType);
-    competentAuthorities: CompetentAuthority[] = [];
+    courtHouses: CourtHouse[] = [];
+    attorneyGeneralships: AttorneyGeneralship[] = [];
 
     constructor(private _modalController: ModalController,
                 private _caseFileService: CaseFileService,
                 private _personService: PersonService,
-                private _competentAuthorityService: CompetentAuthorityService,
+                private _courtHouseService: CourtHouseService,
+                private _attorneyGeneralshipService: AttorneyGeneralshipService,
                 private _alertService: AlertService) {
     }
 
     ngOnInit(): void {
+        this.loadData();
         if (this.id) {
             this.edit(this.id);
             return;
@@ -40,14 +43,7 @@ export class CaseFileEditModalComponent implements OnInit {
     }
 
     edit(id: string) {
-        this._caseFileService.get(id).pipe(
-            switchMap(caseFile => {
-                this.caseFile = caseFile;
-                return this._loadCompetentAuthorities(caseFile.type);
-            })
-        ).subscribe(competentAuthorities => {
-            this.competentAuthorities = competentAuthorities;
-        });
+        this._caseFileService.get(id).subscribe(caseFile => this.caseFile = caseFile);
     }
 
     save() {
@@ -69,26 +65,22 @@ export class CaseFileEditModalComponent implements OnInit {
     }
 
     onTypeChange(type: CaseFileType) {
-        this.caseFile.competentAuthorityId = void 0;
-        this._loadCompetentAuthorities(type)
-            .subscribe(competentAuthorities => this.competentAuthorities = competentAuthorities);
+        if (type === CaseFileType.Prosecution) {
+            this.caseFile.courtHouseId = void 0;
+        }
+
+        if (type === CaseFileType.Investigation) {
+            this.caseFile.attorneyGeneralshipId = void 0;
+        }
     }
 
-    getCompetentAuthorityLabel(type: CaseFileType) {
-        return type === CaseFileType.Investigation
-            ? 'Cumhuriyet Başs.'
-            : 'Mahkeme';
+    loadData() {
+        this._courtHouseService.getAll().subscribe(courtHouses => this.courtHouses = courtHouses);
+        this._attorneyGeneralshipService.getAll().subscribe(attorneyGeneralships => this.attorneyGeneralships = attorneyGeneralships);
     }
 
     private _remove() {
         this._caseFileService.remove(this.caseFile.id)
             .subscribe(() => this.dismiss(true));
-    }
-
-    private _loadCompetentAuthorities(caseFileType: CaseFileType) {
-        const cType = caseFileType === CaseFileType.Investigation
-            ? CompetentAuthorityType.AttorneyGeneralship
-            : CompetentAuthorityType.CourtHouse;
-        return this._competentAuthorityService.getByType(cType);
     }
 }

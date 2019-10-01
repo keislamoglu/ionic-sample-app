@@ -46,8 +46,8 @@ export class PersonDetailComponent implements OnInit {
             return;
         }
         return [
-            address.address.street,
-            address.address.district,
+            address.address.streetName,
+            address.address.districtName,
             address.cityName
         ].filter(t => t).join(', ');
     }

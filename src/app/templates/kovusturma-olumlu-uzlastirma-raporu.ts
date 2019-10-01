@@ -68,7 +68,7 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
         this.printIndentedLabelValue([
             ['Adı ve Soyadı', PersonService.FullName(user)],
             ['Adresi', user.address],
-            ['Sicil Numarası', user.sicilNumber]
+            ['Sicil Numarası', user.registrationNo]
         ]);
         this.printLabelValue([
             ['Görevlendirme tarihi', this.printDate(caseFile.chargeDate)],
@@ -120,7 +120,7 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
             this.printLabelValue([[title]]);
             this.printIndentedLabelValue([
                 ['Adı ve Soyadı', PersonService.FullName(person)],
-                ['T.C. kimlik numarası', person.nId],
+                ['T.C. kimlik numarası', person.identificationNo],
                 ['Adresi', this.printAddress(person)]
             ]);
         }
@@ -240,7 +240,7 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
     formatAddress(address: Address): string {
         const city = this.getCityByAddress(address);
-        return `${address.fullAddress}, ${address.district}, ${city.name}`;
+        return `${address.fullAddress}, ${address.districtName}, ${city.name}`;
     }
 
     printAddress(person: Person): string {

@@ -1,4 +1,11 @@
 export enum CaseFileType {
-    Investigation = 'Soruşturma', // Soruşturma - Savcılık
-    Prosecution = 'Kovuşturma' // Kovuşturma - Mahkeme
+    /**
+     * The case where the handler is Attorney Generalship
+     */
+    Investigation = 'Soruşturma',
+
+    /**
+     * The case where the handler is Court House
+     */
+    Prosecution = 'Kovuşturma'
 }

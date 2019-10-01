@@ -71,6 +71,6 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
     }
 
     private fullName(person: Person | ClientUser) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
+        return [person.name, person.middlename, person.lastName].filter(x => x).join(' ');
     }
 }

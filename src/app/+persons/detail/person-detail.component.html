@@ -12,10 +12,10 @@
 <ion-content *ngIf="person">
     <ion-item><ion-label>Ad: </ion-label>{{person.name}}</ion-item>
     <ion-item><ion-label>İkinci Ad: </ion-label>{{person.middlename || '-'}}</ion-item>
-    <ion-item><ion-label>Soyad: </ion-label>{{person.lastname}}</ion-item>
+    <ion-item><ion-label>Soyad: </ion-label>{{person.lastName}}</ion-item>
     <ion-item><ion-label>Anne Adı: </ion-label>{{person.motherName}}</ion-item>
     <ion-item><ion-label>Baba Adı: </ion-label>{{person.fatherName}}</ion-item>
-    <ion-item><ion-label>T.C. No: </ion-label>{{person.nId}}</ion-item>
+    <ion-item><ion-label>T.C. No: </ion-label>{{person.identificationNo}}</ion-item>
     <ion-item><ion-label>Doğum Tarihi: </ion-label>
         <ion-datetime readonly
                       displayFormat="DD/MM/YYYY"

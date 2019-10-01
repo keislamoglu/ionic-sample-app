@@ -20,15 +20,24 @@
                                    [value]="caseFileType.value">{{caseFileType.value}}</ion-select-option>
             </ion-select>
         </ion-item>
-        <!--COMPETENT AUTHORITY-->
+        <!--ATTORNEY GENERALSHIP-->
         <ion-item *ngIf="caseFile.type">
-            <ion-label position="floating">{{getCompetentAuthorityLabel(caseFile.type)}}:</ion-label>
-            <ion-select required
-                        name="competentAuthority"
+            <ion-label position="floating">Cumhuriyet Başs.</ion-label>
+            <ion-select name="attorneyGeneralship"
                         placeholder="-- Seçiniz --"
-                        [(ngModel)]="caseFile.competentAuthorityId">
-                <ion-select-option *ngFor="let cAuthority of competentAuthorities"
-                                   [value]="cAuthority.id">{{cAuthority.name}}</ion-select-option>
+                        [(ngModel)]="caseFile.attorneyGeneralshipId">
+                <ion-select-option *ngFor="let attorneyGeneralship of attorneyGeneralships"
+                                    [value]="attorneyGeneralship.id">{{attorneyGeneralship.name}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!--COURT HOUSE-->
+        <ion-item>
+            <ion-label position="floating">Mahkeme</ion-label>
+            <ion-select name="courtHouse"
+                        placeholder="-- Seçiniz --"
+                        [(ngModel)]="caseFile.courtHouseId">
+                <ion-select-option *ngFor="let courtHouse of courtHouses"
+                                    [value]="courtHouse.id">{{courtHouse.name}}</ion-select-option>
             </ion-select>
         </ion-item>
         <!--FILE NO-->

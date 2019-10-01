@@ -90,7 +90,7 @@ export class PersonEditModalComponent implements OnInit {
     removeWithConfirm() {
         this._alertService.confirm({
             title: 'Kişi sil',
-            message: `<strong>${this._fullName(this.person)} (${this.person.nId})</strong> kişisini silme istediğinize emin misiniz?`,
+            message: `<strong>${this._fullName(this.person)} (${this.person.identificationNo})</strong> kişisini silme istediğinize emin misiniz?`,
             cancel: {text: 'Vazgeç'},
             ok: {text: 'Sil', handler: () => this._remove()}
         });

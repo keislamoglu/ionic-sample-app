@@ -4,6 +4,7 @@ import {Person} from '../shared/entity';
 import {ModalService} from '../shared/services';
 import {NavController} from '@ionic/angular';
 import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers/person';
 
 @Component({
     templateUrl: './persons.component.html',
@@ -37,7 +38,7 @@ export class PersonsComponent implements OnInit {
     }
 
     private _fullName(person: Person) {
-        return PersonService.FullName(person);
+        return fullName(person);
     }
 
     navToDetail(id: string) {

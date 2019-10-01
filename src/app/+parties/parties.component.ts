@@ -9,6 +9,7 @@ import {getGrouped} from '../shared/helpers';
 import {switchMap} from 'rxjs/operators';
 import {forkJoin, of} from 'rxjs';
 import {PartyService, PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers/person';
 
 @Component({
     templateUrl: './parties.component.html',
@@ -105,7 +106,7 @@ export class PartiesComponent implements OnInit {
     personName(party: Party) {
         const person = this.persons.find(t => t.id === party.personId);
         return person
-            ? PersonService.FullName(person)
+            ? fullName(person)
             : '';
     }
 }

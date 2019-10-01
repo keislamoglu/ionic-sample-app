@@ -199,7 +199,7 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
         this.newLine();
 
         this.text(PersonService.FullName(user), TextAlign.Right);
-        this.text(user.sicilNumber, TextAlign.Right);
+        this.text(user.registrationNo, TextAlign.Right);
         this.text(`Uzlaştırmacı`, TextAlign.Right);
 
         this.newLine();

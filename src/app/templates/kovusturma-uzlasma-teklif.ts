@@ -67,7 +67,7 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         this.text('Adı Soyadı', TextAlign.Right).bold();
         this.text(PersonService.FullName(user), TextAlign.Right);
         this.text('Sicil No', TextAlign.Right).bold();
-        this.text(user.sicilNumber, TextAlign.Right);
+        this.text(user.registrationNo, TextAlign.Right);
 
         this.newLine();
 
@@ -82,12 +82,12 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         // T.C. Kimlik No: 12345678901
         // ...
         this.printLabelValue([
-            ['T.C. Kimlik No', person.nId],
+            ['T.C. Kimlik No', person.identificationNo],
             ['Adı Soyadı', PersonService.FullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
             ['Doğum Yeri ve Tarihi', `${person.birthPlace} ${this.printDate(person.birthDate)}`],
-            ['Adres', `${personAddress.fullAddress}, ${personCity.name}/${personAddress.district}`],
+            ['Adres', `${personAddress.fullAddress}, ${personCity.name}/${personAddress.districtName}`],
             ['Telefon', person.phone]
         ]);
 

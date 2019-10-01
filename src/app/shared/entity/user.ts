@@ -1,13 +1,12 @@
 export class ClientUser {
     id: string;
     name: string;
-    middlename: string;
-    lastname: string;
+    lastName: string;
     email: string;
     phone: string;
     address: string;
-    sicilNumber: string;
-    commissioningDate: string;
+    identificationNo: string;
+    registrationNo: string;
     subscriptionStatus: SubscriptionStatus;
     subscriptionDate: string;
 }

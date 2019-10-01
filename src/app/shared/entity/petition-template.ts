@@ -1,4 +1,4 @@
-import {TemplateDocument} from './template-document';
+import {TemplateDocument} from '../constants/template-document';
 
 export class PetitionTemplate {
     id: string;

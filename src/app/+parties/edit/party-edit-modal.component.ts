@@ -5,6 +5,7 @@ import {Party, PartyType, Person} from '../../shared/entity';
 import {AlertService} from '../../shared/services';
 import {zip} from 'rxjs';
 import {PartyService, PersonService} from '../../shared/repositories';
+import {fullName} from '../../shared/helpers/person';
 
 @Component({
     templateUrl: './party-edit-modal.component.html'
@@ -81,6 +82,6 @@ export class PartyEditModalComponent implements OnInit {
     }
 
     private _personFullName(person: Person) {
-        return [person.name, person.middlename, person.lastname].filter(x => x).join(' ');
+        return fullName(person);
     }
 }

@@ -1,10 +1,9 @@
 import {NavController} from '@ionic/angular';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
 import {AlertService, ModalService} from '../../shared/services';
-import {CaseFile, CompetentAuthority} from '../../shared/entity';
-import {CaseFileService, CompetentAuthorityService, ExtensionTimeService} from '../../shared/repositories';
+import {CaseFile, CaseFileType} from '../../shared/entity';
+import {AttorneyGeneralshipService, CaseFileService, CourtHouseService, ExtensionTimeService} from '../../shared/repositories';
 import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component';
 
 @Component({
@@ -13,14 +12,13 @@ import {CaseFileEditModalComponent} from '../edit/case-file-edit-modal.component
 export class CaseFileDetailComponent implements OnInit {
     id: string;
     caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
     remainingTime = 0;
-    processing = false;
 
     constructor(
         private _route: ActivatedRoute,
         private _caseFileService: CaseFileService,
-        private _competentAuthorityService: CompetentAuthorityService,
+        private _courtHouseService: CourtHouseService,
+        private _attorneyGeneralshipService: AttorneyGeneralshipService,
         private _extensionTimeService: ExtensionTimeService,
         private _navController: NavController,
         private _alertService: AlertService,
@@ -57,25 +55,20 @@ export class CaseFileDetailComponent implements OnInit {
         }
     }
 
-    agreementReachedChange({detail: {checked}}) {
-        this.caseFile.agreementReached = checked;
-        this.processing = true;
-        this._caseFileService.update(this.caseFile.id, this.caseFile).subscribe({
-            error: () => this._alertService.message({
-                message: 'Bir sorun oluştu',
-                title: 'Hata'
-            }),
-            complete: () => this.processing = false
-        });
+    private _loadData() {
+        this._caseFileService.get(this.id).subscribe((caseFile => {
+            this.caseFile = caseFile;
+            this.calculateRemainingTime();
+        }));
     }
 
-    private _loadData() {
-        this._caseFileService.get(this.id).pipe(
-            switchMap(caseFile => {
-                this.caseFile = caseFile;
-                this.calculateRemainingTime();
-                return this._competentAuthorityService.get(caseFile.competentAuthorityId);
-            }),
-        ).subscribe(competentAuthority => this.competentAuthority = competentAuthority);
+    private getCompetentAuthority(caseFile: CaseFile) {
+        if (caseFile.type === CaseFileType.Prosecution) {
+            return this._courtHouseService.get(caseFile.courtHouseId);
+        }
+
+        if (caseFile.type === CaseFileType.Investigation) {
+            return this._attorneyGeneralshipService.get(caseFile.attorneyGeneralshipId);
+        }
     }
 }

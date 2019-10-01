@@ -29,7 +29,7 @@
                             {{ caseFile.fileNo }}
                         </app-card-title>
                         <app-card-subtitle>
-                            {{ getCompetentAuthority(caseFile.competentAuthorityId).name }}
+                            {{ (getCompetentAuthority(caseFile) | async)?.name }}
                         </app-card-subtitle>
                     </app-card-header>
                 </app-card>

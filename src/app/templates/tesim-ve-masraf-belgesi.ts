@@ -100,7 +100,7 @@ export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps
             this.printDate(extraData.date)
         ]);
         this.text(PersonService.FullName(user), TextAlign.Right);
-        this.text(user.sicilNumber, TextAlign.Right);
+        this.text(user.registrationNo, TextAlign.Right);
         this.text('Uzlaştırmacı', TextAlign.Right);
         this.newLine();
         this.text('Uzlaştırmacı Bilgileri:');
