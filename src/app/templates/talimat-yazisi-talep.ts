@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {Address, CaseFile, City, ClientUser, CompetentAuthority, Person} from '../shared/entity';
 import {DateQuestion, Question} from '../dynamic-form-question/models';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface TalimatYazisiTalepProps {
     user: ClientUser;
@@ -54,7 +54,7 @@ export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
             this.printDate(extraData.date)
         ], p2);
         this.newLine();
-        this.text(PersonService.FullName(user), TextAlign.Right);
+        this.text(fullName(user), TextAlign.Right);
         this.text(`Uzlaştırmacı`, TextAlign.Right);
         this.newLine(2);
         this.text(`Eki: Uzlaşma teklif formu (2 adet)`).bold();
@@ -64,7 +64,7 @@ export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
         this.text(`KİMLİK BİLGİLERİ:`).bold().underline();
         this.printLabelValue([
             ['T.C. Kimlik Numarası', person.identificationNo],
-            ['Adı Soyadı', PersonService.FullName(person)],
+            ['Adı Soyadı', fullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
             ['Doğum Yeri-Tarihi', `${person.birthPlace}-${this.printDate(person.birthDate)}`],

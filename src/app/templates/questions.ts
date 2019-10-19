@@ -1,4 +1,4 @@
-import {TemplateDocument} from '../shared/entity';
+import {TemplateDocument} from '../shared/constants';
 import {SegbisGorusmeTalepQuestions} from './segbis-gorusme-talep';
 import {KovusturmaUzlastirmaciGorusmeTutanagiQuestions} from './kovusturma-uzlastirmaci-gorusme-tutanagi';
 import {KovusturmaUzlasmaTelifQuestions} from './kovusturma-uzlasma-teklif';
@@ -11,8 +11,10 @@ import {TalimatYazisiTalepQuestions} from './talimat-yazisi-talep';
 import {TesimVeMasrafBelgesiQuestions} from './tesim-ve-masraf-belgesi';
 import {GorusmelerinYapilamadiginaDairTutanakQuestions} from './gorusmelerin-yapilamadigina-dair-tutanak';
 import {SorusturmaUzlasmaTeklifQuestions} from './sorusturma-uzlasma-teklif';
+import {GorusmeyeDavetQuestions} from './gorusmeye-davet';
 
 export const TemplateQuestions = {
+    [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavetQuestions,
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
     [TemplateDocument.UzlasmaGorusmesineDavet]: [],
     [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagiQuestions,

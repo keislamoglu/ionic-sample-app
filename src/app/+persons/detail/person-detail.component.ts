@@ -7,6 +7,7 @@ import {PersonEditModalComponent} from '../edit/person-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {AddressService, CityService, PersonService} from '../../shared/repositories';
+import {fullName} from '../../shared/helpers';
 
 @Component({
     templateUrl: './person-detail.component.html'
@@ -79,7 +80,7 @@ export class PersonDetailComponent implements OnInit {
     }
 
     private _fullName(person: Person) {
-        return PersonService.FullName(person);
+        return fullName(person);
     }
 
     private _emptyAddress() {

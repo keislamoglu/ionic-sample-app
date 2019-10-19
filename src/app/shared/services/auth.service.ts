@@ -30,20 +30,17 @@ export class AuthService {
         const headers = new HttpHeaders({'Auth-Token': AppConfig.authToken});
         return this._http.post(AppConfig.loginUrl, {email, password}, {headers}).pipe(
             map((resp: BackendUser) => {
-                const [name, middlename] = resp.name.split(' ');
-
                 const user: ClientUser = {
                     id: resp.userId,
-                    name,
-                    middlename,
+                    name: resp.name,
                     lastName: resp.surname,
                     email: resp.email,
                     phone: resp.phone,
                     registrationNo: resp.sicilNumber,
                     address: resp.address,
-                    commissioningDate: resp.commissioningDate,
                     subscriptionStatus: resp.subscriptionStatus,
-                    subscriptionDate: resp.subscriptionDate
+                    subscriptionDate: resp.subscriptionDate,
+                    identificationNo: resp.identificationNo
                 };
                 this._authenticated = this._hasServerGrant = true;
                 this._userService.currentUser = user;

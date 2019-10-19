@@ -1,4 +1,5 @@
-import {PetitionTemplate, TemplateDocument} from '../entity';
+import {PetitionTemplate} from '../entity';
+import {TemplateDocument} from './template-document';
 
 export const PETITION_TEMPLATES: PetitionTemplate[] = [
     {

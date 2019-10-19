@@ -1,20 +1,10 @@
 import {BaseTemplate, TextAlign} from './base';
-import {Address, CaseFile, City, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface KovusturmaUzlasmaTeklifProps {
-    caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
-    person: Person;
-    party: Party;
-    user: ClientUser;
-    personAddress: Address;
-    personCity: City;
-    extraData: {
-        crimes: string,
-        date: string,
-    };
+    crimes: string;
+    date: string;
 }
 
 export const KovusturmaUzlasmaTelifQuestions: Question[] = [
@@ -32,8 +22,8 @@ export const KovusturmaUzlasmaTelifQuestions: Question[] = [
 ];
 
 export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTeklifProps> {
-    protected prepareDocument(props: KovusturmaUzlasmaTeklifProps) {
-        const {person, party, user, extraData, competentAuthority, caseFile, personAddress, personCity} = props;
+    protected prepareDocument() {
+        const {person, party, user, extraData, competentAuthority, caseFile, personAddress, personCity} = this.props.;
 
         this.text('T.C.', TextAlign.Center).bold();
         this.text([
@@ -65,7 +55,7 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
 
         this.text('Teklifte Bulunan Uzlaştırmacının', TextAlign.Right).bold();
         this.text('Adı Soyadı', TextAlign.Right).bold();
-        this.text(PersonService.FullName(user), TextAlign.Right);
+        this.text(fullName(user), TextAlign.Right);
         this.text('Sicil No', TextAlign.Right).bold();
         this.text(user.registrationNo, TextAlign.Right);
 
@@ -83,7 +73,7 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
         // ...
         this.printLabelValue([
             ['T.C. Kimlik No', person.identificationNo],
-            ['Adı Soyadı', PersonService.FullName(person)],
+            ['Adı Soyadı', fullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
             ['Doğum Yeri ve Tarihi', `${person.birthPlace} ${this.printDate(person.birthDate)}`],

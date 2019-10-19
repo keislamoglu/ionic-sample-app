@@ -1,5 +1,5 @@
 export class AttorneyGeneralship {
     id: string;
-    name: string;
+    name: string; // XXX Cumhuriyet Başsavcılığı
     address: string;
 }

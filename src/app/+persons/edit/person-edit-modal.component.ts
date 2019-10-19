@@ -5,6 +5,7 @@ import {Address, City, Person} from '../../shared/entity';
 import {switchMap, tap} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
 import {AddressService, CityService, PersonService} from '../../shared/repositories';
+import {fullName} from '../../shared/helpers';
 
 @Component({
     templateUrl: './person-edit-modal.component.html',
@@ -90,7 +91,8 @@ export class PersonEditModalComponent implements OnInit {
     removeWithConfirm() {
         this._alertService.confirm({
             title: 'Kişi sil',
-            message: `<strong>${this._fullName(this.person)} (${this.person.identificationNo})</strong> kişisini silme istediğinize emin misiniz?`,
+            message:
+                `<strong>${fullName(this.person)} (${this.person.identificationNo})</strong> kişisini silme istediğinize emin misiniz?`,
             cancel: {text: 'Vazgeç'},
             ok: {text: 'Sil', handler: () => this._remove()}
         });
@@ -105,9 +107,5 @@ export class PersonEditModalComponent implements OnInit {
     private _remove() {
         this._personService.remove(this.person.id)
             .subscribe(() => this.dismiss({removed: true}));
-    }
-
-    private _fullName(person: Person) {
-        return PersonService.FullName(person);
     }
 }

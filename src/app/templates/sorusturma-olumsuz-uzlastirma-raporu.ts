@@ -1,7 +1,7 @@
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {BaseTemplate, TextAlign} from './base';
 import {Address, CaseFile, City, ClientUser, CompetentAuthority, ExtensionTime, Party, PartyType, Person} from '../shared/entity';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface SorusturmaOlumsuzUzlastirmaRaporuProps {
     user: ClientUser;
@@ -60,7 +60,7 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
             ['Uzlaştırmacının:']
         ]);
         this.printIndentedLabelValue([
-            ['Adı ve Soyadı', PersonService.FullName(user)],
+            ['Adı ve Soyadı', fullName(user)],
             ['Adresi', user.address],
             ['Sicil Numarası', user.registrationNo]
         ]);
@@ -113,7 +113,7 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
 
             this.printLabelValue([[title]]);
             this.printIndentedLabelValue([
-                ['Adı ve Soyadı', PersonService.FullName(person)],
+                ['Adı ve Soyadı', fullName(person)],
                 ['T.C. kimlik numarası', person.identificationNo],
                 ['Adresi', this.printAddress(person)]
             ]);
@@ -148,14 +148,14 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
 
         this.indentedText([
             `Müşteki`,
-            ` ${PersonService.FullName(injured)} 'a`,
+            ` ${fullName(injured)} 'a`,
             ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Şüphelinin 1.000 TL vermesi halinde kendisiyle uzlaşmak istiyorum." dedi`
         ]);
 
         this.indentedText([
             `Şüpheli `,
-            ` ${PersonService.FullName(suspected)} 'a`,
+            ` ${fullName(suspected)} 'a`,
             ` müştekinin uzlaşma talebi iletilmiş ve kendisinin de taleplerini belirtmesinin istenmesi üzerine;`,
             ` "Müştekinin, 1.000 TL vermem halinde uzlaşma isteğini kabul etmiyorum. Bunu ödeme gücüm yoktur. Uzlaşmak istemiyorum" dedi.`
         ]);

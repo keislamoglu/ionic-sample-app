@@ -4,11 +4,12 @@ import {ServicesModule} from './services.module';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {DocxFileTemplate} from '../../templates';
+import {BaseTemplateProps} from '../../templates/base';
 
 export interface DocxFileExportOptions<T = {}> {
     fileName: string;
     docxTemplate: (new (...args: any[]) => any);
-    props?: T;
+    props?: BaseTemplateProps<T>;
 }
 
 export const DIR_NAME = 'uzlastr';

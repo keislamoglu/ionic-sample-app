@@ -1,7 +1,7 @@
 import {DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {BaseTemplate, TextAlign} from './base';
 import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface GorusmelerinYapilamadiginaDairTutanakProps {
     caseFile: CaseFile;
@@ -103,8 +103,8 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
         ], p1);
         this.text(`${competentAuthority.name} ${caseFile.fileNo} numaralı soruşturma`, p1).bold();
 
-        const suspectedName = PersonService.FullName(suspected);
-        const complainantName = PersonService.FullName(complainant);
+        const suspectedName = fullName(suspected);
+        const complainantName = fullName(complainant);
 
         this.text([
             ` dosyasında şüpheli `,
@@ -198,7 +198,7 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
 
         this.newLine();
 
-        this.text(PersonService.FullName(user), TextAlign.Right);
+        this.text(fullName(user), TextAlign.Right);
         this.text(user.registrationNo, TextAlign.Right);
         this.text(`Uzlaştırmacı`, TextAlign.Right);
 

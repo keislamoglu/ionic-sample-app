@@ -1,3 +1,5 @@
+import {Address} from './address';
+
 export class Person {
     id: string;
     name: string;
@@ -10,4 +12,6 @@ export class Person {
     motherName: string;
     birthPlace: string;
     birthDate: string;
+    address: Address;
+    mernisAddress: Address;
 }

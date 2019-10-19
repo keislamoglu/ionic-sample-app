@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {CaseFile, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface KovusturmaUzlastirmaciGorusmeTutanagiProps {
     user: ClientUser;
@@ -49,7 +49,7 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
             ' Cumhuriyet Başsavcılığı Uzlaştırma Bürosu’nun ',
             this.printDate(caseFile.conciliationStartDate), ' ', caseFile.conciliationNo,
             ' uzlaştırma nolu yazısı ile talep edilen uzlaştırıcılık görevinde müşteki ',
-            PersonService.FullName(person), ', ', this.printDate(extraData.callDate),
+            fullName(person), ', ', this.printDate(extraData.callDate),
             ' tarihinde dosya içerisinde yer alan telefon numarasından aranarak '
         ], p2);
         this.text([
@@ -62,8 +62,8 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
         ], p2);
         this.newLine(2);
         this.printLabelValue([
-            ['Uzlaşmaya davet edilen taraf', PersonService.FullName(person)],
-            ['Uzlaştırmacı', PersonService.FullName(user)]
+            ['Uzlaşmaya davet edilen taraf', fullName(person)],
+            ['Uzlaştırmacı', fullName(user)]
         ]);
         const p3 = this.createParagraph();
         this.indentedText('Müşteki', p3).bold();
@@ -102,8 +102,8 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
         ]);
 
         const p4 = this.createParagraph();
-        this.text(PersonService.FullName(person), p4).tab();
-        this.text(PersonService.FullName(user), p4).tab().tab().tab().tab();
+        this.text(fullName(person), p4).tab();
+        this.text(fullName(user), p4).tab().tab().tab().tab();
         const p5 = this.createParagraph();
         this.text('Müşteki', p5).tab();
         this.text('Uzlaştırmacı', p5).tab().tab().tab().tab();

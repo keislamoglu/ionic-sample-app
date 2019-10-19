@@ -1,7 +1,14 @@
 import {DocxFileTemplate} from './docx-file-template';
+import {ClientUser, Petition} from '../../shared/entity';
+
+export interface BaseTemplateProps<T> {
+    petition: Petition;
+    conciliator: ClientUser;
+    extraData: T;
+}
 
 export abstract class BaseTemplate<T = {}> extends DocxFileTemplate {
-    constructor(protected props: T) {
+    constructor(protected props: BaseTemplateProps<T>) {
         super(props);
     }
 

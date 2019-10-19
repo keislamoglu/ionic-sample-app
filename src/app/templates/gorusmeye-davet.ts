@@ -1,27 +1,37 @@
-import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
 import {BaseTemplate, TextAlign} from './base';
+import {fullName} from '../shared/helpers';
+import {DateQuestion, Question} from '../dynamic-form-question/models';
 
 export interface GorusmeyeDavetProps {
-    caseFile: CaseFile;
-    person: Person;
-    competentAuthority: CompetentAuthority;
     date: string;
-    user: ClientUser;
 }
 
+export const GorusmeyeDavetQuestions: Question[] = [
+    new DateQuestion({
+        key: 'date',
+        label: 'Tarih',
+        required: true
+    }),
+];
+
 export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
-    protected prepareDocument(props: GorusmeyeDavetProps) {
+    protected prepareDocument() {
+        const {conciliator, petition, extraData} = this.props;
+        const {caseFile, parties} = petition;
+        const [party] = parties;
+        const {person} = party;
+
         this.text('UZLAŞMA GÖRÜŞMESİNE DAVET MEKTUBU', TextAlign.Center).bold().underline();
 
         this.newLine();
-        this.text(`Uzlaştırma No: ${props.caseFile.fileNo}`).bold();
+        this.text(`Uzlaştırma No: ${caseFile.fileNo}`).bold();
 
         this.newLine();
-        this.text(`Sayın ${this.fullName(props.person)}`, TextAlign.Center).bold();
-        this.text(`(Adres: ${props.person.address})`, TextAlign.Center);
+        this.text(`Sayın ${fullName(person)}`, TextAlign.Center).bold();
+        this.text(`(Adres: ${person.address})`, TextAlign.Center);
 
-        this.indentedText(props.competentAuthority.name +
-            ' Cumhuriyet Başsavcılığı tarafından yürütülen yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız.' +
+        this.indentedText(caseFile.attorneyGeneralship.name +
+            ' tarafından yürütülen yukarıda numarası belirtilen dosyada taraf olarak bulunmaktasınız.' +
             ' Soruşturma/kovuşturmaya konu suçun, 5271 sayılı CMK\'nın 253 ve 254’üncü maddeleri gereğince uzlaşma kapsamındaki' +
             ' suçlardan olması nedeniyle, uzlaşma işlemlerinin yürütülebilmesi için Cumhuriyet Başsavcılığı Uzlaştırma Bürosu' +
             ' tarafından uzlaştırmacı olarak görevlendirilmiş bulunmaktayım.', TextAlign.Justified);
@@ -43,10 +53,10 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
             ' irtibata geçmediğiniz takdirde uzlaşma teklifini reddetmiş sayılacağınızı hatırlatırım. Bu durumda soruşturma' +
             ' / kovuşturma işlemlerine kaldığı yerden devam edilecek ve bir daha uzlaşma usulü uygulanamayacaktır.', p3);
 
-        this.indentedText('Saygı ile bilgilerinize sunarım. ' + new Date(props.date).toLocaleDateString());
+        this.indentedText('Saygı ile bilgilerinize sunarım. ' + new Date(extraData.date).toLocaleDateString());
 
         this.newLine();
-        this.text(this.fullName(props.user), TextAlign.Right);
+        this.text(fullName(conciliator), TextAlign.Right);
         this.text('Uzlaştırmacı', TextAlign.Right);
 
         this.newLine();
@@ -62,15 +72,11 @@ export class GorusmeyeDavet extends BaseTemplate<GorusmeyeDavetProps> {
         const addressP = this.createParagraph();
         this.text('Adres', addressP).bold();
         this.text(': ', addressP).bold().tab().tab();
-        this.text(props.user.address, addressP);
+        this.text(conciliator.address, addressP);
 
         const phoneP = this.createParagraph();
         this.text('Telefon', phoneP).bold();
         this.text(': ', phoneP).bold().tab().tab();
-        this.text(props.user.phone, phoneP);
-    }
-
-    private fullName(person: Person | ClientUser) {
-        return [person.name, person.middlename, person.lastName].filter(x => x).join(' ');
+        this.text(conciliator.phone, phoneP);
     }
 }

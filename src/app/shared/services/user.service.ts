@@ -31,7 +31,8 @@ export class UserService {
             phone: clientUser.phone,
             sicilNumber: clientUser.registrationNo,
             subscriptionDate: clientUser.subscriptionDate,
-            subscriptionStatus: clientUser.subscriptionStatus
+            subscriptionStatus: clientUser.subscriptionStatus,
+            identificationNo: clientUser.identificationNo
         };
     }
 

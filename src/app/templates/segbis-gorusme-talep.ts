@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
-import {PersonService} from '../shared/repositories';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {fullName} from '../shared/helpers';
 
 export interface SegbisGorusmeTalepProps {
     user: ClientUser;
@@ -52,7 +52,7 @@ export class SegbisGorusmeTalep extends BaseTemplate<SegbisGorusmeTalepProps> {
     }
 
     private fullName(person: Person | ClientUser) {
-        return PersonService.FullName(person);
+        return fullName(person);
     }
 
     private getDate(dateString: string) {

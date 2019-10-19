@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {Address, CaseFile, City, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface SorusturmaUzlasmaTeklifProps {
     caseFile: CaseFile;
@@ -65,7 +65,7 @@ export class SorusturmaUzlasmaTeklif extends BaseTemplate<SorusturmaUzlasmaTekli
 
         this.text('Teklifte Bulunan Uzlaştırmacının', TextAlign.Right).bold();
         this.text('Adı Soyadı', TextAlign.Right).bold();
-        this.text(PersonService.FullName(user), TextAlign.Right);
+        this.text(fullName(user), TextAlign.Right);
         this.text('Sicil No', TextAlign.Right).bold();
         this.text(user.registrationNo, TextAlign.Right);
 
@@ -83,7 +83,7 @@ export class SorusturmaUzlasmaTeklif extends BaseTemplate<SorusturmaUzlasmaTekli
         // ...
         this.printLabelValue([
             ['T.C. Kimlik No', person.identificationNo],
-            ['Adı Soyadı', PersonService.FullName(person)],
+            ['Adı Soyadı', fullName(person)],
             ['Baba Adı', person.fatherName],
             ['Anne Adı', person.motherName],
             ['Doğum Yeri ve Tarihi', `${person.birthPlace} ${this.printDate(person.birthDate)}`],

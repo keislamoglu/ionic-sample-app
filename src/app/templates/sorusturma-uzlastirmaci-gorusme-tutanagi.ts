@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 export interface SorusturmaUzlastirmaciGorusmeTutanagiProps {
     caseFile: CaseFile;
@@ -61,7 +61,7 @@ export class SorusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate<Sorustur
             ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun `,
             `${this.printDate(caseFile.conciliationStartDate)} tarih ve ${caseFile.conciliationNo}`,
             ` uzlaştırma nolu yazısı ile talep edilen uzlaştırıcılık görevinde müşteki `,
-            `${PersonService.FullName(person)}, ${this.printDate(extraData.callDate)}`,
+            `${fullName(person)}, ${this.printDate(extraData.callDate)}`,
             ` tarihinde dosya içerisinde yer alan telefon numarasından aranarak `
         ], p2);
         this.text(`${extraData.courtHouse} Uzlaştırma Bürosu Görüşme Odasına`, p2);
@@ -69,8 +69,8 @@ export class SorusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate<Sorustur
 
         this.newLine();
 
-        this.text(`Uzlaşmaya davet edilen taraf: ${PersonService.FullName(person)}`);
-        this.text(`Uzlaştırmacı: ${PersonService.FullName(user)}`);
+        this.text(`Uzlaşmaya davet edilen taraf: ${fullName(person)}`);
+        this.text(`Uzlaştırmacı: ${fullName(user)}`);
 
         this.newLine();
 
@@ -102,12 +102,12 @@ export class SorusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate<Sorustur
 
         this.newLine();
 
-        this.text(PersonService.FullName(person));
+        this.text(fullName(person));
         this.text(`Müşteki`);
 
         this.newLine();
 
-        this.text(PersonService.FullName(user));
+        this.text(fullName(user));
         this.text(`Uzlaştırmacı`);
     }
 }

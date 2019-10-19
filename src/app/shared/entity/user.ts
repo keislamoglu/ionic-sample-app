@@ -23,6 +23,7 @@ export class BackendUser {
     commissioningDate: string;
     subscriptionStatus?: SubscriptionStatus;
     subscriptionDate?: string;
+    identificationNo: string; // TODO: should be implemented on backend
 }
 
 export enum SubscriptionStatus {

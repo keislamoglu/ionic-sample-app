@@ -1,7 +1,7 @@
 import {CaseFile, ClientUser, CompetentAuthority} from '../shared/entity';
 import {BaseTemplate, TextAlign} from './base';
 import {Condition, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {PersonService} from '../shared/repositories';
+import {fullName} from '../shared/helpers';
 
 const defaultBank = 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01';
 
@@ -99,7 +99,7 @@ export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps
             ` gereğinin takdiri saygılarımla arz olunur. `,
             this.printDate(extraData.date)
         ]);
-        this.text(PersonService.FullName(user), TextAlign.Right);
+        this.text(fullName(user), TextAlign.Right);
         this.text(user.registrationNo, TextAlign.Right);
         this.text('Uzlaştırmacı', TextAlign.Right);
         this.newLine();
@@ -107,7 +107,7 @@ export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps
 
         const [bankName, accountNo, iban] = (extraData.bank || extraData.otherBank).split('/').map(t => t.trim());
         this.printLabelValue([
-            ['Ad Soyad', PersonService.FullName(user)],
+            ['Ad Soyad', fullName(user)],
             ['Adres', user.address],
             ['Telefon', user.phone],
             ['Banka', bankName],
