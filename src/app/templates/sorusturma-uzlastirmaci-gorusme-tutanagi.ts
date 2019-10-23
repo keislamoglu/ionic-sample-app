@@ -1,19 +1,11 @@
 import {BaseTemplate, TextAlign} from './base';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
 import {fullName} from '../shared/helpers';
 
 export interface SorusturmaUzlastirmaciGorusmeTutanagiProps {
-    caseFile: CaseFile;
-    user: ClientUser;
-    person: Person;
-    competentAuthority: CompetentAuthority;
-    extraData: {
-        date: string;
-        callDate: string,
-        courtHouse: string,
-        crimes: string
-    };
+    date: string;
+    callDate: string,
+    courtHouse: string,
 }
 
 export const SorusturmaUzlastirmaciGorusmeTutanagiQuestions: Question[] = [
@@ -40,8 +32,8 @@ export const SorusturmaUzlastirmaciGorusmeTutanagiQuestions: Question[] = [
 ];
 
 export class SorusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate<SorusturmaUzlastirmaciGorusmeTutanagiProps> {
-    protected prepareDocument(props: SorusturmaUzlastirmaciGorusmeTutanagiProps) {
-        const {
+    protected prepareDocument() {
+        /*const {
             competentAuthority,
             caseFile,
             user,
@@ -108,6 +100,6 @@ export class SorusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate<Sorustur
         this.newLine();
 
         this.text(fullName(user));
-        this.text(`Uzlaştırmacı`);
+        this.text(`Uzlaştırmacı`);*/
     }
 }

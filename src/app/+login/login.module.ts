@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
         CommonModule,
         FormsModule,
         LoginRoutingModule

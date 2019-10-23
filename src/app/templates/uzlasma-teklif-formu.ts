@@ -30,31 +30,33 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
         this.text(competentAuthority, TextAlign.Center).bold();
         this.newLine();
 
-        this.startBlock();
-        this.text('Uzlaştırma No: ').bold();
-        this.text(caseFile.conciliationStartDate);
-        this.endBlock();
+        this.paragraph(() => {
+            this.text('Uzlaştırma No: ').bold();
+            this.text(caseFile.conciliationNo);
+        });
 
         this.newLine();
         this.text('UZLAŞMA TEKLİF FORMU', TextAlign.Center).bold();
 
-        this.startBlock();
         const translator = caseFile.parties.find(t => t.relatedPersonId === party.personId && t.type === PartyType.Translator);
-        this.text('A. ').bold();
-        this.text([
-            `5271 sayılı Ceza Muhakemesi Kanunu'nun 253 ve 254 üncü maddeleri çerçevesinde, ${caseFile.type.toLocaleLowerCase()} konusu `,
-            suspected.crimes,
-            this.hasMultiCrimes(suspected.crimes) ? 'suçunun' : 'suçlarının',
-            ' uzlaştırmaya tabi olması nedeniyle aşağıda',
-            ' açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı',
-            ` kabul veya reddetmenin hukuki sonuçları`,
-            translator ? fullName(translator.person) + ' vasıtasıyla ' : '',
-            ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
-            this.printDate(extraData.date),
-            'Saat: ',
-            this.printTime(extraData.date)
-        ]);
-        this.endBlock();
+
+        this.paragraph(() => {
+            this.text('A. ').bold();
+            this.text([
+                `5271 sayılı Ceza Muhakemesi Kanunu'nun 253 ve 254 üncü maddeleri çerçevesinde,`,
+                ` ${caseFile.type.toLocaleLowerCase()} konusu `,
+                suspected.crimes,
+                this.hasMultiCrimes(suspected.crimes) ? 'suçlarının' : 'suçunun',
+                ' uzlaştırmaya tabi olması nedeniyle aşağıda',
+                ' açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı',
+                ` kabul veya reddetmenin hukuki sonuçları`,
+                translator ? (fullName(translator.person) + ' vasıtasıyla ') : '',
+                ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
+                this.printDate(extraData.date),
+                'Saat: ',
+                this.printTime(extraData.date)
+            ]);
+        });
 
         this.newLine();
         this.text(`B. UZLAŞMA TEKLİFİ YAPILAN : ${party.type.toLocaleUpperCase()}`).bold();
@@ -150,24 +152,24 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
         this.text(`Şahsıma yapılan uzlaşma teklifini;`).bold();
         this.text(`....................................................................................................`);
 
-        this.startBlock();
-        this.text(`İnceleyip üç gün içinde beyanda bulunmak istiyorum.`);
-        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
-        this.endBlock();
+        this.paragraph(() => {
+            this.text(`İnceleyip üç gün içinde beyanda bulunmak istiyorum.`);
+            this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        });
 
         this.text(`....................................................................................................`);
 
-        this.startBlock();
-        this.text(`Kabul ediyorum.`);
-        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
-        this.endBlock();
+        this.paragraph(() => {
+            this.text(`Kabul ediyorum.`);
+            this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        });
 
         this.text(`....................................................................................................`);
 
-        this.startBlock();
-        this.text(`Kabul etmiyorum.`);
-        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
-        this.endBlock();
+        this.paragraph(() => {
+            this.text(`Kabul etmiyorum.`);
+            this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        });
 
         this.text(`....................................................................................................`);
         this.newLine();
@@ -177,7 +179,7 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
         }
     }
 
-    hasMultiCrimes(crimes: string) {
+    hasMultiCrimes(crimes: string = '') {
         return crimes.split(',').length > 1;
     }
 }

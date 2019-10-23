@@ -3,9 +3,7 @@ import {IonicModule} from '@ionic/angular';
 import {MenuComponent} from './menu.component';
 
 @NgModule({
-    imports: [
-        IonicModule.forRoot()
-    ],
+    imports: [IonicModule],
     declarations: [MenuComponent],
     exports: [MenuComponent]
 })

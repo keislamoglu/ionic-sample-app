@@ -8,7 +8,7 @@ import {IonicModule} from '@ionic/angular';
 
 @NgModule({
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
     ],
     declarations: [
         CardBodyComponent,

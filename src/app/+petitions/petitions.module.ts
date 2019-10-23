@@ -13,7 +13,7 @@ import {CardModule} from '../card';
 
 @NgModule({
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
         CommonModule,
         ServicesModule,
         RepositoriesModule,

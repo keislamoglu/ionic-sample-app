@@ -19,6 +19,12 @@ export abstract class DocxFileTemplate {
         return this.doc.createParagraph();
     }
 
+    protected paragraph(content: () => void, p?: Paragraph) {
+        this.startBlock(p);
+        content();
+        this.endBlock();
+    }
+
     protected startBlock(p?: Paragraph) {
         this.p = p || this.createParagraph();
     }

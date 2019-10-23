@@ -26,6 +26,11 @@
                                    [value]="person.id">{{_personFullName(person)}}</ion-select-option>
             </ion-select>
         </ion-item>
+        <!--PARTY TYPE SPECIFIC INPUTS-->
+        <ion-item *ngIf="party.type === 'Şüpheli'">
+            <ion-label position="floating">Suçlar</ion-label>
+            <ion-input name="crimes" [(ngModel)]="party.crimes"></ion-input>
+        </ion-item>
         <!--ACTIONS-->
         <ion-item lines="none">
             <ion-button slot="start" fill="clear" *ngIf="id" color="danger" (click)="removeWithConfirm()">Sil</ion-button>

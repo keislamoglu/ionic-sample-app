@@ -47,7 +47,7 @@ export class PetitionEditModalComponent implements OnInit {
         this.form = this._fb.group({
             template: [''],
             name: [''],
-            parties: [[]]
+            parties: ['']
         });
 
         if (this.id) {
@@ -129,7 +129,15 @@ export class PetitionEditModalComponent implements OnInit {
     }
 
     exportDocx(id: string, extraData: any) {
-        this._petitionExporterService.export(id, extraData);
+        try {
+            this._petitionExporterService.export(id, extraData).then(() => {
+                console.log('success');
+            }, (e) => {
+                console.log(e);
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     onTemplateChange(templateId: string) {

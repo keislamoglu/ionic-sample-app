@@ -1,24 +1,14 @@
 import {BaseTemplate, TextAlign} from './base';
-import {Address, CaseFile, City, ClientUser, ExtensionTime, Party, PartyType, Person} from '../shared/entity';
+import {Address, City, PartyType, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {fullName} from '../shared/helpers';
 
 export interface KovusturmaOlumluUzlastirmaRaporuProps {
-    caseFile: CaseFile;
-    user: ClientUser;
-    competentAuthority: CompetentAuthority;
-    allPersons: Person[];
-    allParties: Party[];
-    allAddresses: Address[];
-    allCities: City[];
-    extensionTime: ExtensionTime;
-    extraData: {
-        reportPlace: string;
-        reportDate: string;
-        conciliationDuration: string;
-        crimes: string;
-        courtHouse: string;
-    };
+    reportPlace: string;
+    reportDate: string;
+    conciliationDuration: string;
+    crimes: string;
+    courtHouse: string;
 }
 
 export const KovusturmaOlumluUzlastirmaRaporuQuestions: Question[] = [
@@ -50,14 +40,10 @@ export const KovusturmaOlumluUzlastirmaRaporuQuestions: Question[] = [
 ];
 
 export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlumluUzlastirmaRaporuProps> {
-    protected prepareDocument(props: KovusturmaOlumluUzlastirmaRaporuProps) {
-        const {
-            caseFile,
-            competentAuthority,
-            extraData,
-            user,
-            extensionTime,
-        } = props;
+    protected prepareDocument() {
+     /*   const {petition, conciliator, extraData} = this.props;
+        const {caseFile} = petition;
+
         this.text('UZLAŞTIRMA RAPORU').bold();
         this.newLine();
         this.printLabelValue([
@@ -66,9 +52,9 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
             ['Uzlaştırmacının:']
         ]);
         this.printIndentedLabelValue([
-            ['Adı ve Soyadı', fullName(user)],
-            ['Adresi', user.address],
-            ['Sicil Numarası', user.registrationNo]
+            ['Adı ve Soyadı', fullName(conciliator)],
+            ['Adresi', conciliator.address],
+            ['Sicil Numarası', conciliator.registrationNo]
         ]);
         this.printLabelValue([
             ['Görevlendirme tarihi', this.printDate(caseFile.chargeDate)],
@@ -134,8 +120,8 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
         ]);
 
         this.indentedText([
-            competentAuthority.name,
-            ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
+            caseFile.attorneyGeneralship.name,
+            ` Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
         ]);
 
         this.newLine();
@@ -216,35 +202,10 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);
-    }
-
-    getPerson(personId: string): Person {
-        return this.props.allPersons.find(t => t.id === personId);
-    }
-
-    getPersonByPartyType(partyType: PartyType): Person {
-        const party = this.props.allParties.find(t => t.type === partyType);
-        return this.getPerson(party.personId);
-    }
-
-    getAddressByPerson(person: Person): Address {
-        const {allAddresses} = this.props;
-        return allAddresses.find(t => t.id === person.addressId);
-    }
-
-    getCityByAddress(address: Address): City {
-        const {allCities} = this.props;
-        return allCities.find(t => t.id === address.cityId);
+        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);*/
     }
 
     formatAddress(address: Address): string {
-        const city = this.getCityByAddress(address);
-        return `${address.fullAddress}, ${address.districtName}, ${city.name}`;
-    }
-
-    printAddress(person: Person): string {
-        const address = this.getAddressByPerson(person);
-        return this.formatAddress(address);
+        return `${address.fullAddress}, ${address.districtName}, ${address.city.name}`;
     }
 }

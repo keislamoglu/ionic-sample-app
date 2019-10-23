@@ -1,23 +1,11 @@
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {BaseTemplate, TextAlign} from './base';
-import {Address, CaseFile, City, ClientUser, CompetentAuthority, ExtensionTime, Party, PartyType, Person} from '../shared/entity';
-import {fullName} from '../shared/helpers';
+import {BaseTemplate} from './base';
+import {Address} from '../shared/entity';
 
 export interface SorusturmaOlumsuzUzlastirmaRaporuProps {
-    user: ClientUser;
-    caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
-    extraData: {
-        reportPlace: string;
-        reportDate: string;
-        conciliationDuration: string;
-        crimes: string;
-    };
-    allParties: Party[];
-    allPersons: Person[];
-    allAddresses: Address[];
-    allCities: City[];
-    extensionTime: ExtensionTime;
+    reportPlace: string;
+    reportDate: string;
+    conciliationDuration: string;
 }
 
 export const SorusturmaOlumsuzUzlastirmaRaporuQuestions: Question[] = [
@@ -44,14 +32,14 @@ export const SorusturmaOlumsuzUzlastirmaRaporuQuestions: Question[] = [
 ];
 
 export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOlumsuzUzlastirmaRaporuProps> {
-    protected prepareDocument(props: SorusturmaOlumsuzUzlastirmaRaporuProps) {
-        const {
+    protected prepareDocument() {
+        /*const {
             caseFile,
             competentAuthority,
             extraData,
             user,
             extensionTime,
-        } = props;
+        } = this.props;
         this.text('UZLAŞTIRMA RAPORU').bold();
         this.newLine();
         this.printLabelValue([
@@ -211,35 +199,10 @@ export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOl
 
         this.newLine();
 
-        ['Tarih', 'Cumhuriyet Savcısı'].forEach(lbl => this.text(lbl).bold);
-    }
-
-    getPerson(personId: string): Person {
-        return this.props.allPersons.find(t => t.id === personId);
-    }
-
-    getPersonByPartyType(partyType: PartyType): Person {
-        const party = this.props.allParties.find(t => t.type === partyType);
-        return this.getPerson(party.personId);
-    }
-
-    getAddressByPerson(person: Person): Address {
-        const {allAddresses} = this.props;
-        return allAddresses.find(t => t.id === person.addressId);
-    }
-
-    getCityByAddress(address: Address): City {
-        const {allCities} = this.props;
-        return allCities.find(t => t.id === address.cityId);
+        ['Tarih', 'Cumhuriyet Savcısı'].forEach(lbl => this.text(lbl).bold);*/
     }
 
     formatAddress(address: Address): string {
-        const city = this.getCityByAddress(address);
-        return `${address.fullAddress}, ${address.districtName}, ${city.name}`;
-    }
-
-    printAddress(person: Person): string {
-        const address = this.getAddressByPerson(person);
-        return this.formatAddress(address);
+        return `${address.fullAddress}, ${address.districtName}, ${address.city.name}`;
     }
 }

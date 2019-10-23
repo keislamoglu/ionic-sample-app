@@ -8,7 +8,7 @@ import {IonicModule} from '@ionic/angular';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonicModule.forRoot()
+        IonicModule
     ],
     declarations: [DynamicFormQuestionComponent],
     exports: [DynamicFormQuestionComponent]

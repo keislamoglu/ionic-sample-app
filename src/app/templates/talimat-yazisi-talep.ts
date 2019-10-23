@@ -1,18 +1,9 @@
-import {BaseTemplate, TextAlign} from './base';
-import {Address, CaseFile, City, ClientUser, CompetentAuthority, Person} from '../shared/entity';
+import {BaseTemplate} from './base';
 import {DateQuestion, Question} from '../dynamic-form-question/models';
-import {fullName} from '../shared/helpers';
+import {Address} from '../shared/entity';
 
 export interface TalimatYazisiTalepProps {
-    user: ClientUser;
-    person: Person;
-    caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
-    personAddress: Address;
-    personCity: City;
-    extraData: {
-        date: string
-    };
+    date: string;
 }
 
 export const TalimatYazisiTalepQuestions: Question[] = [
@@ -24,16 +15,16 @@ export const TalimatYazisiTalepQuestions: Question[] = [
 ];
 
 export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
-    protected prepareDocument(props: TalimatYazisiTalepProps) {
-        const {
-            user,
-            person,
-            caseFile,
-            competentAuthority,
+    protected prepareDocument() {
+        /*const {
+            petition,
+            conciliator,
             extraData,
-        } = props;
+        } = this.props;
 
-        this.text(`${competentAuthority.name} CUMHURİYET BAŞSAVCILIĞINA`, TextAlign.Center).bold();
+        const {caseFile} = petition;
+
+        this.text(`${caseFile.attorneyGeneralship.name.toLocaleUpperCase()}`, TextAlign.Center).bold();
         this.text(`(Uzlaştırma Bürosu)`, TextAlign.Center).bold();
         this.newLine();
         const p1 = this.createParagraph();
@@ -70,11 +61,10 @@ export class TalimatYazisiTalep extends BaseTemplate<TalimatYazisiTalepProps> {
             ['Doğum Yeri-Tarihi', `${person.birthPlace}-${this.printDate(person.birthDate)}`],
             [`Adres`, this.printPersonAddress()],
             ['Telefon', person.phone]
-        ]);
+        ]);*/
     }
 
-    printPersonAddress(): string {
-        const {personCity: city, personAddress: address} = this.props;
-        return `${address.fullAddress}, ${address.districtName}, ${city.name}`;
+    formatAddress(address: Address): string {
+        return `${address.fullAddress}, ${address.districtName}, ${address.city.name}`;
     }
 }

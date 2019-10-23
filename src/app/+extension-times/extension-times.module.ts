@@ -11,7 +11,7 @@ import {RepositoriesModule} from '../shared/repositories';
 
 @NgModule({
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
         CommonModule,
         ServicesModule,
         RepositoriesModule,

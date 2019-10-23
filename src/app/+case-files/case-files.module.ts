@@ -19,7 +19,7 @@ import {PetitionsModule} from '../+petitions/petitions.module';
         CaseFileDetailComponent,
     ],
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
         CommonModule,
         ServicesModule,
         RepositoriesModule,

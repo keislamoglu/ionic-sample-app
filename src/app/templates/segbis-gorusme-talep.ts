@@ -1,18 +1,11 @@
 import {BaseTemplate, TextAlign} from './base';
-import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
+import {CaseFile, ClientUser, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {fullName} from '../shared/helpers';
 
 export interface SegbisGorusmeTalepProps {
-    user: ClientUser;
-    caseFile: CaseFile;
-    person: Person;
-    competentAuthority: CompetentAuthority;
-    date: string;
-    extraData: {
-        jailType: string,
-        requestDate: string
-    };
+    jailType: string;
+    requestDate: string;
 }
 
 export const SegbisGorusmeTalepQuestions: Question[] = [

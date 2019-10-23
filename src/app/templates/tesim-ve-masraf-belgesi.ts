@@ -1,4 +1,3 @@
-import {CaseFile, ClientUser, CompetentAuthority} from '../shared/entity';
 import {BaseTemplate, TextAlign} from './base';
 import {Condition, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {fullName} from '../shared/helpers';
@@ -6,25 +5,20 @@ import {fullName} from '../shared/helpers';
 const defaultBank = 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01';
 
 export interface TesimVeMasrafBelgesiProps {
-    competentAuthority: CompetentAuthority;
-    caseFile: CaseFile;
-    user: ClientUser;
-    extraData: {
-        date: string,
-        bank: string,
-        otherBank: string,
-        recipient: string,
-        costLabel1: string,
-        costLabel2: string,
-        costLabel3: string,
-        costLabel4: string,
-        costLabel5: string,
-        cost1: string,
-        cost2: string,
-        cost3: string,
-        cost4: string,
-        cost5: string
-    };
+    date: string;
+    bank: string;
+    otherBank: string;
+    recipient: string;
+    costLabel1: string;
+    costLabel2: string;
+    costLabel3: string;
+    costLabel4: string;
+    costLabel5: string;
+    cost1: string;
+    cost2: string;
+    cost3: string;
+    cost4: string;
+    cost5: string;
 }
 const costQuestions = [];
 
@@ -85,8 +79,8 @@ export const TesimVeMasrafBelgesiQuestions: Question[] = [
 ];
 
 export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps> {
-    protected prepareDocument(props: TesimVeMasrafBelgesiProps) {
-        const {caseFile, user, competentAuthority, extraData} = props;
+    protected prepareDocument() {
+        /*const {caseFile, user, competentAuthority, extraData} = props;
         this.text('TESİM VE MASRAF BELGESİ', TextAlign.Center).bold().underline();
         this.text(competentAuthority.name + ' CUMHURİYET BAŞSAVCILIĞI', TextAlign.Center).bold();
         this.text('(Uzlaştırma Bürosu)').bold();
@@ -145,7 +139,7 @@ export class TesimVeMasrafBelgesi extends BaseTemplate<TesimVeMasrafBelgesiProps
             ['TOPLAM', `${totalCost} ${costUnit}`]
         ]);
         this.newLine();
-        this.text(`Teslim Alan: ${extraData.recipient}`);
+        this.text(`Teslim Alan: ${extraData.recipient}`);*/
     }
 }
 

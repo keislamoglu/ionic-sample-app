@@ -5,7 +5,7 @@ import {Party, PartyType, Person} from '../../shared/entity';
 import {AlertService} from '../../shared/services';
 import {zip} from 'rxjs';
 import {PartyService, PersonService} from '../../shared/repositories';
-import {fullName} from '../../shared/helpers/person';
+import {fullName} from '../../shared/helpers';
 
 @Component({
     templateUrl: './party-edit-modal.component.html'

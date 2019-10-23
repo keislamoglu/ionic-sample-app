@@ -30,6 +30,11 @@ export class InstantiatorService {
 
     async instantiatePetition(petitionId: string): Promise<Petition> {
         const petition = await this.petitionService.get(petitionId).toPromise();
+
+        if (!petition) {
+            return;
+        }
+
         petition.caseFile = await this.instantiateCaseFile(petition.caseFileId);
         [
             petition.parties,
@@ -44,6 +49,11 @@ export class InstantiatorService {
 
     async instantiateCaseFile(caseFileId: string) {
         const caseFile = await this.caseFileService.get(caseFileId).toPromise();
+
+        if (!caseFile) {
+            return;
+        }
+
         [
             caseFile.courtHouse,
             caseFile.attorneyGeneralship,
@@ -61,6 +71,11 @@ export class InstantiatorService {
 
     async instantiateParty(partyId: string) {
         const party = await this.partyService.get(partyId).toPromise();
+
+        if (!party) {
+            return;
+        }
+
         [
             party.person,
             party.relatedPerson
@@ -74,6 +89,11 @@ export class InstantiatorService {
 
     async instantiatePerson(personId: string) {
         const person = await this.personService.get(personId).toPromise();
+
+        if (!person) {
+            return;
+        }
+
         [person.address, person.mernisAddress] = await Promise.all([
             this.instantiateAddress(person.addressId),
             this.instantiateAddress(person.mernisAddressId)
@@ -84,6 +104,11 @@ export class InstantiatorService {
 
     async instantiateAddress(addressId: string) {
         const address = await this.addressService.get(addressId).toPromise();
+
+        if (!address) {
+            return;
+        }
+
         address.city = await this.cityService.get(address.cityId).toPromise();
 
         return address;

@@ -16,7 +16,7 @@ import {RepositoriesModule} from '../shared/repositories';
         PersonEditModalComponent,
     ],
     imports: [
-        IonicModule.forRoot(),
+        IonicModule,
         CommonModule,
         ServicesModule,
         RepositoriesModule,

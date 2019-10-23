@@ -1,19 +1,10 @@
 import {BaseTemplate, TextAlign} from './base';
-import {CaseFile, ClientUser, CompetentAuthority, Party, Person} from '../shared/entity';
 import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
 import {fullName} from '../shared/helpers';
 
 export interface KovusturmaUzlastirmaciGorusmeTutanagiProps {
-    user: ClientUser;
-    person: Person;
-    party: Party;
-    caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
-    extraData: {
-        callDate: string,
-        crimes: string,
-        officialReportDate: string,
-    };
+    callDate: string;
+    officialReportDate: string;
 }
 
 export const KovusturmaUzlastirmaciGorusmeTutanagiQuestions: Question[] = [
@@ -36,7 +27,7 @@ export const KovusturmaUzlastirmaciGorusmeTutanagiQuestions: Question[] = [
 
 export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
     protected prepareDocument(props: KovusturmaUzlastirmaciGorusmeTutanagiProps) {
-        const {caseFile, user, person, competentAuthority, extraData, party} = props;
+        /*const {caseFile, user, person, competentAuthority, extraData, party} = this.props;
         this.text('UZLAŞTIRMACI GÖRÜŞME TUTANAĞI', TextAlign.Center).bold().underline();
         this.newLine();
         const p1 = this.createParagraph();
@@ -106,6 +97,6 @@ export class KovusturmaUzlastirmaciGorusmeTutanagi extends BaseTemplate {
         this.text(fullName(user), p4).tab().tab().tab().tab();
         const p5 = this.createParagraph();
         this.text('Müşteki', p5).tab();
-        this.text('Uzlaştırmacı', p5).tab().tab().tab().tab();
+        this.text('Uzlaştırmacı', p5).tab().tab().tab().tab();*/
     }
 }
