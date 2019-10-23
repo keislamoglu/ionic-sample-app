@@ -10,28 +10,43 @@
     </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="caseFile">
-    <ion-item>
-        <ion-label>Dosya türü: </ion-label>{{caseFile.type}}
-    </ion-item>
-    <ion-item>
-        <ion-label>Uzlaştırma nu.: </ion-label>{{caseFile.conciliationNo}}
-    </ion-item>
-    <ion-item>
-        <ion-label>Dosya kabul tar.: </ion-label>
-        <ion-datetime readonly
-                      [value]="caseFile.conciliationStartDate" displayFormat="DD/MM/YYYY"></ion-datetime>
-    </ion-item>
-    <ion-item>
-        <ion-label>Görevlendirme tar.: </ion-label>
-        <ion-datetime readonly
-                      [value]="caseFile.chargeDate" displayFormat="DD/MM/YYYY"></ion-datetime>
-    </ion-item>
-    <ion-item>
-        <ion-label>Merci: </ion-label>{{(getCompetentAuthority(caseFile) | async).name}}
-    </ion-item>
-    <ion-item>
-        <ion-label>Kalan süre: </ion-label>{{remainingTime}} gün
-        <ion-button slot="end" color="secondary" size="small" fill="outline" (click)="navToExtensionTimes()">Ek süre</ion-button>
-    </ion-item>
-    <ion-button expand="block" (click)="navToParties()">Taraflar</ion-button>
+    <ion-list>
+        <ion-item>
+            <ion-label>Dosya türü: </ion-label>{{caseFile.type}}
+        </ion-item>
+        <ion-item>
+            <ion-label>Uzlaştırma nu.: </ion-label>{{caseFile.conciliationNo}}
+        </ion-item>
+        <ion-item>
+            <ion-label>Dosya kabul tar.: </ion-label>
+            <ion-datetime readonly
+                          [value]="caseFile.conciliationStartDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Görevlendirme tar.: </ion-label>
+            <ion-datetime readonly
+                          [value]="caseFile.chargeDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Merci: </ion-label>{{(getCompetentAuthority(caseFile) | async).name}}
+        </ion-item>
+        <ion-item>
+            <ion-label>Kalan süre: </ion-label>{{remainingTime}} gün
+            <ion-button slot="end" color="secondary" size="small" fill="outline" (click)="navToExtensionTimes()">Ek süre</ion-button>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-segment [(ngModel)]="activeSegment">
+            <ion-segment-button value="parties">
+                <ion-icon name="people"></ion-icon>
+                <ion-label>Taraflar</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="petitions">
+                <ion-icon name="document"></ion-icon>
+                <ion-label>Dilekçeler</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <app-parties *ngIf="activeSegment === 'parties'" [caseFileId]="caseFile.id"></app-parties>
+        <app-petitions *ngIf="activeSegment === 'petitions'" [caseFileId]="caseFile.id"></app-petitions>
+    </ion-list>
 </ion-content>

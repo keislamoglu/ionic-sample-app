@@ -10,24 +10,42 @@
 <ion-content>
     <!--FORM-->
     <form (ngSubmit)="save()" [formGroup]="form">
-        <!--TEMPLATE-->
-        <ion-item>
-            <ion-label position="floating">Şablon</ion-label>
-            <ion-select required name="template"
-                        [formControlName]="'template'"
-                        (ngModelChange)="onTemplateChange($event)"
-                        placeholder="-- Seçiniz --">
-                <ion-select-option *ngFor="let _template of templates"
-                                   [value]="_template.id">{{_template.name}}</ion-select-option>
-            </ion-select>
-        </ion-item>
-        <!--NAME-->
-        <ion-item>
-            <ion-label position="floating">Dilekçe Adı</ion-label>
-            <ion-input required name="name"
-                       [formControlName]="'name'"
-                       placeholder="Dilekçe adı giriniz"></ion-input>
-        </ion-item>
+        <ion-list>
+            <!--TEMPLATE-->
+            <ion-item>
+                <ion-label position="floating">Şablon</ion-label>
+                <ion-select required name="template"
+                            [formControlName]="'template'"
+                            (ngModelChange)="onTemplateChange($event)"
+                            placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let template of allTemplates"
+                                       [value]="template.id">{{template.name}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <!--NAME-->
+            <ion-item>
+                <ion-label position="floating">Dilekçe Adı</ion-label>
+                <ion-input required name="name"
+                           [formControlName]="'name'"
+                           placeholder="Dilekçe adı giriniz"></ion-input>
+            </ion-item>
+            <!--PARTY-->
+            <ion-item>
+                <ion-label position="floating">Taraf</ion-label>
+                <ion-select required name="parties"
+                            [formControlName]="'parties'"
+                            multiple
+                            placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let party of parties"
+                                        [value]="party.id">{{party.personId}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-list-header>
+                <ion-label>Şablona özel seçenekler</ion-label>
+            </ion-list-header>
+        </ion-list>
         <!--TEMPLATE SPECIFIC QUESTIONS-->
         <app-dynamic-form *ngIf="dynamicQuestions"
                           (formGroupUpdated)="onDynamicFormUpdated()"

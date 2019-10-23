@@ -1,6 +1,6 @@
 import {QuestionCondition} from './questionCondition';
 
-export type ControlType = 'dropdown' | 'textbox' | 'checkbox' | 'radio' | 'date';
+export type ControlType = 'dropdown' | 'textbox' | 'date' | 'checkbox';
 
 export interface QuestionBaseOptions<T = any> {
     value?: T;

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../shared/services';
 import {NavController} from '@ionic/angular';
-import {Party, Person, Petition} from '../../shared/entity';
+import {Party, Person} from '../../shared/entity';
 import {switchMap} from 'rxjs/operators';
 import {PartyEditModalComponent} from '../edit/party-edit-modal.component';
 import {zip} from 'rxjs';
@@ -16,7 +16,6 @@ export class PartyDetailComponent implements OnInit {
     id: string;
     party: Party = new Party();
     person: Person = new Person();
-    petitions: Petition[] = [];
 
     constructor(private _route: ActivatedRoute,
                 private _partyService: PartyService,
@@ -29,23 +28,6 @@ export class PartyDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
         this._loadData();
-    }
-
-
-    async addPetition() {
-        const modal = await this._modalService.present(PetitionEditModalComponent, {
-            partyId: this.id,
-        });
-        await modal.onWillDismiss();
-        this._loadData();
-    }
-
-    navToPetition(petitionId: string) {
-        this._navController.navigateForward(`/petitions/${petitionId}`);
-    }
-
-    navToPetitions() {
-        this._navController.navigateForward(`/parties/${this.id}/petitions`);
     }
 
     async edit() {
@@ -63,10 +45,9 @@ export class PartyDetailComponent implements OnInit {
                 this.party = party;
                 return zip(
                     this._personService.get(party.personId),
-                    this._petitionService.getByParty(party.id)
                 );
             })
-        ).subscribe(val => [this.person, this.petitions] = val);
+        ).subscribe(val => [this.person] = val);
     }
 
     navToPersonDetail(personId: string) {

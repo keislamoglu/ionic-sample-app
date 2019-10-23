@@ -33,7 +33,7 @@ export class PetitionDetailComponent implements OnInit {
     }
 
     async edit() {
-        const modal = await this._modalService.present(PetitionEditModalComponent, {id: this.id});
+        const modal = await this._modalService.present(PetitionEditModalComponent, {id: this.id, caseFileId: this.petition.caseFileId});
         const res = await modal.onWillDismiss();
         if (res.data.removed) {
             return this._navController.back();

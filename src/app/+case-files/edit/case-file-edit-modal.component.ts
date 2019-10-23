@@ -4,7 +4,6 @@ import {AlertService} from '../../shared/services';
 import {AttorneyGeneralshipService, CaseFileService, CourtHouseService, PersonService} from '../../shared/repositories';
 import {AttorneyGeneralship, CaseFile, CaseFileType, CourtHouse} from '../../shared/entity';
 import {EnumList, enumList} from '../../shared/helpers';
-import {switchMap} from 'rxjs/operators';
 
 @Component({
     templateUrl: './case-file-edit-modal.component.html'
@@ -62,16 +61,6 @@ export class CaseFileEditModalComponent implements OnInit {
             cancel: {text: 'Vazgeç'},
             ok: {text: 'Sil', handler: () => this._remove()}
         });
-    }
-
-    onTypeChange(type: CaseFileType) {
-        if (type === CaseFileType.Prosecution) {
-            this.caseFile.courtHouseId = void 0;
-        }
-
-        if (type === CaseFileType.Investigation) {
-            this.caseFile.attorneyGeneralshipId = void 0;
-        }
     }
 
     loadData() {

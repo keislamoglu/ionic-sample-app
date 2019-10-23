@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {AlertService, PetitionExporterService} from '../../shared/services';
-import {Petition, PetitionTemplate} from '../../shared/entity';
+import {Party, Petition, PetitionTemplate} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import {guid} from '../../shared/helpers';
-import {PetitionService, PetitionTemplateService} from '../../shared/repositories';
+import {PartyService, PetitionService, PetitionTemplateService} from '../../shared/repositories';
 import {Question} from '../../dynamic-form-question/models';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TemplateQuestions} from '../../templates';
@@ -16,11 +16,13 @@ import {TemplateQuestions} from '../../templates';
 })
 export class PetitionEditModalComponent implements OnInit {
     @Input() id: string;
-    @Input() partyId: string;
+    @Input() caseFileId: string;
+
     petition: Petition = new Petition();
-    templateModel: PetitionTemplate;
-    templates: PetitionTemplate[];
+    parties: Party[] = [];
     dynamicQuestions: Question[];
+    petitionTemplate: PetitionTemplate;
+    allTemplates: PetitionTemplate[];
     form: FormGroup;
 
     get dynamicQuestionAnswers() {
@@ -34,6 +36,7 @@ export class PetitionEditModalComponent implements OnInit {
     constructor(private _modalController: ModalController,
                 private _petitionService: PetitionService,
                 private _petitionTemplateService: PetitionTemplateService,
+                private _partyService: PartyService,
                 private _alertService: AlertService,
                 private _petitionExporterService: PetitionExporterService,
                 private _fb: FormBuilder,
@@ -43,8 +46,10 @@ export class PetitionEditModalComponent implements OnInit {
     ngOnInit() {
         this.form = this._fb.group({
             template: [''],
-            name: ['']
+            name: [''],
+            parties: [[]]
         });
+
         if (this.id) {
             this.edit(this.id);
             return;
@@ -57,40 +62,45 @@ export class PetitionEditModalComponent implements OnInit {
     }
 
     new() {
-        this._getDataSets().subscribe(templates => {
-            this.templates = templates;
+        this._getDataSets().subscribe(([templates, parties]) => {
+            this.allTemplates = templates;
+            this.parties = parties;
             this.petition = new Petition();
-            this.petition.partyId = this.partyId;
+            this.petition.caseFileId = this.caseFileId;
             this._markForCheck();
         });
     }
 
     edit(id: string) {
         this._getDataSets().pipe(
-            switchMap(templates => {
-                this.templates = templates;
+            switchMap(([templates, parties]) => {
+                this.allTemplates = templates;
+                this.parties = parties;
                 return this._petitionService.get(id);
             }),
             switchMap(petition => {
                 this.petition = petition;
                 return this._loadTemplate(petition.templateId);
-            })
+            }),
         ).subscribe(() => {
-            const {name, templateId: template} = this.petition;
-            this.form.patchValue({template, name});
+            const {name, templateId: template, partyIds: parties} = this.petition;
+            this.form.patchValue({template, name, parties});
             this._markForCheck();
         });
     }
 
     save(): void {
-        const {name, template: templateId} = this.form.value;
+        const {name, template: templateId, parties} = this.form.value;
+
         this.petition.templateId = templateId;
         this.petition.name = name;
+        this.petition.partyIds = parties;
+        this.petition.date = '' + new Date();
+        this.petition.fileName = `${guid()}.docx`;
+
         if (this.dynamicQuestionAnswers) {
             this.petition.extraData = JSON.stringify(this.dynamicQuestionAnswers);
         }
-        this.petition.date = '' + new Date();
-        this.petition.fileName = `${guid()}.docx`;
 
         if (this.petition.id) {
             // Existing Petition
@@ -134,18 +144,25 @@ export class PetitionEditModalComponent implements OnInit {
         }
     }
 
+    async getPersonNameByParty(partyId: string) {
+        return await this._partyService.getPersonName(partyId).toPromise();
+    }
+
     private _loadTemplate(templateId: string): Observable<void> {
         return this._petitionTemplateService.get(templateId).pipe(
             map(template => {
-                this.templateModel = template;
+                this.petitionTemplate = template;
                 this.form.patchValue({name: template.name});
                 this.dynamicQuestions = TemplateQuestions[template.slugName];
             })
         );
     }
 
-    private _getDataSets(): Observable<PetitionTemplate[]> {
-        return this._petitionTemplateService.getAll();
+    private _getDataSets(): Observable<[PetitionTemplate[], Party[]]> {
+        return zip(
+            this._petitionTemplateService.getAll(),
+            this._partyService.getByCaseFile(this.caseFileId)
+        );
     }
 
     private _remove() {

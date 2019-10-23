@@ -9,6 +9,8 @@ import {CaseFileDetailComponent} from './detail/case-file-detail.component';
 import {CaseFilesRoutingModule} from './case-files-routing.module';
 import {CardModule} from '../card';
 import {RepositoriesModule} from '../shared/repositories';
+import {PartiesModule} from '../+parties/parties.module';
+import {PetitionsModule} from '../+petitions/petitions.module';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,8 @@ import {RepositoriesModule} from '../shared/repositories';
         FormsModule,
         CaseFilesRoutingModule,
         CardModule,
+        PartiesModule,
+        PetitionsModule,
     ],
     exports: [
         CaseFilesComponent,

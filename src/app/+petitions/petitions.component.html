@@ -1,21 +1,20 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-buttons slot="end">
-            <ion-button fill="clear" (click)="create()">Yeni dilekçe</ion-button>
-        </ion-buttons>
-        <ion-title>
-            Dilekçeler
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
-<ion-content>
-    <ion-list>
-        <ion-item *ngFor="let petition of petitions">
-            <ion-button fill="clear" (click)="navToDetail(petition.id)">{{petition.name}}</ion-button>
-        </ion-item>
-    </ion-list>
-</ion-content>
+<ion-grid>
+    <ion-row *ngFor="let petitions of groupedPetitions">
+        <ion-col *ngFor="let petition of petitions" [size]="columnSize">
+            <app-card *ngIf="!petition" (click)="create()" class="add-new">
+                <app-card-body>
+                    <ion-button fill="clear" slot="start">
+                        <ion-icon size="large" name="add-circle-outline"></ion-icon>
+                    </ion-button>
+                </app-card-body>
+            </app-card>
+            <app-card *ngIf="petition" (click)="navToDetail(petition.id)">
+                <app-card-header>
+                    <app-card-title>
+                        {{ petition.name }}
+                    </app-card-title>
+                </app-card-header>
+            </app-card>
+        </ion-col>
+    </ion-row>
+</ion-grid>

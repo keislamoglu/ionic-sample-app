@@ -9,6 +9,7 @@ import {PetitionDetailComponent} from './detail/petition-detail.component';
 import {PetitionsRoutingModule} from './petitions-routing.module';
 import {RepositoriesModule} from '../shared/repositories';
 import {DynamicFormModule} from '../dynamic-form';
+import {CardModule} from '../card';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {DynamicFormModule} from '../dynamic-form';
         PetitionsRoutingModule,
         DynamicFormModule,
         ReactiveFormsModule,
+        CardModule,
     ],
     declarations: [
         PetitionsComponent,

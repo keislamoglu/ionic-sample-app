@@ -1,0 +1,11 @@
+app-card {
+  app-card-title {
+    font-size: .8rem;
+  }
+
+  &.add-new {
+    app-card-body {
+      text-align: center;
+    }
+  }
+}

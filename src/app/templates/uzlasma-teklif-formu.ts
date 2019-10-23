@@ -1,88 +1,75 @@
+import {DateQuestion, Question} from '../dynamic-form-question/models';
 import {BaseTemplate, TextAlign} from './base';
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {CaseFileType, PartyType} from '../shared/entity';
 import {fullName} from '../shared/helpers';
 
-export interface KovusturmaUzlasmaTeklifProps {
-    crimes: string;
+export interface UzlasmaTeklifFormuProps {
     date: string;
 }
 
-export const KovusturmaUzlasmaTelifQuestions: Question[] = [
-    new TextboxQuestion({
-        label: 'Suçlar',
-        key: 'crimes',
-        required: true,
-    }),
+export const UzlasmaTeklifFormuQuestions: Question[] = [
     new DateQuestion({
         label: 'Tarih - Saat',
         key: 'date',
         required: true,
         format: 'DD/MM/YYYY HH:mm'
-    })
+    }),
 ];
 
-export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTeklifProps> {
+export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
+
     protected prepareDocument() {
-        const {person, party, user, extraData, competentAuthority, caseFile, personAddress, personCity} = this.props.;
+        const {petition, extraData} = this.props;
+        const {caseFile} = petition;
+        const {attorneyGeneralship, courtHouse} = caseFile;
+        const competentAuthority = caseFile.type === CaseFileType.Investigation ? attorneyGeneralship.name : courtHouse.name;
+        const suspected = caseFile.parties.find(t => t.type === PartyType.Suspected);
+        const [party] = petition.parties;
 
         this.text('T.C.', TextAlign.Center).bold();
-        this.text([
-            competentAuthority.name,
-            ' CUMHURİYET BAŞSAVCILIĞI'
-        ], TextAlign.Center).bold();
-        this.newLine();
-        const p1 = this.createParagraph();
-        this.text('Uzlaştırma No: ', p1).bold();
-        this.text(caseFile.conciliationNo, p1);
-
+        this.text(competentAuthority, TextAlign.Center).bold();
         this.newLine();
 
+        this.startBlock();
+        this.text('Uzlaştırma No: ').bold();
+        this.text(caseFile.conciliationStartDate);
+        this.endBlock();
+
+        this.newLine();
         this.text('UZLAŞMA TEKLİF FORMU', TextAlign.Center).bold();
-        const p2 = this.createParagraph();
-        this.text('A. ', p2).bold();
+
+        this.startBlock();
+        const translator = caseFile.parties.find(t => t.relatedPersonId === party.personId && t.type === PartyType.Translator);
+        this.text('A. ').bold();
         this.text([
-            '5271 sayılı Ceza Muhakemesi Kanunu\'nun 253 ve 254 üncü maddeleri çerçevesinde, kovuşturma konusu ',
-            extraData.crimes,
-            ' suçun/suçların uzlaştırmaya tabi olması nedeniyle aşağıda ',
-            'açık kimliği belirtilen kişiye bu formun (D)bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı ',
-            'kabul veya reddetmenin hukuki sonuçları anlatılarak uzlaşma teklifinde bulunulmuştur. ',
+            `5271 sayılı Ceza Muhakemesi Kanunu'nun 253 ve 254 üncü maddeleri çerçevesinde, ${caseFile.type.toLocaleLowerCase()} konusu `,
+            suspected.crimes,
+            this.hasMultiCrimes(suspected.crimes) ? 'suçunun' : 'suçlarının',
+            ' uzlaştırmaya tabi olması nedeniyle aşağıda',
+            ' açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı',
+            ` kabul veya reddetmenin hukuki sonuçları`,
+            translator ? fullName(translator.person) + ' vasıtasıyla ' : '',
+            ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
             this.printDate(extraData.date),
             'Saat: ',
             this.printTime(extraData.date)
-        ], p2);
-
-        this.newLine();
-
-        this.text('Teklifte Bulunan Uzlaştırmacının', TextAlign.Right).bold();
-        this.text('Adı Soyadı', TextAlign.Right).bold();
-        this.text(fullName(user), TextAlign.Right);
-        this.text('Sicil No', TextAlign.Right).bold();
-        this.text(user.registrationNo, TextAlign.Right);
-
-        this.newLine();
-
-        this.text('B. UZLAŞMA TEKLİFİ YAPILAN').bold();
-        this.text(party.type);
-
-        this.newLine();
-
-        this.text('C. UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN').bold();
-
-        // The below statement will print like:
-        // T.C. Kimlik No: 12345678901
-        // ...
-        this.printLabelValue([
-            ['T.C. Kimlik No', person.identificationNo],
-            ['Adı Soyadı', fullName(person)],
-            ['Baba Adı', person.fatherName],
-            ['Anne Adı', person.motherName],
-            ['Doğum Yeri ve Tarihi', `${person.birthPlace} ${this.printDate(person.birthDate)}`],
-            ['Adres', `${personAddress.fullAddress}, ${personCity.name}/${personAddress.districtName}`],
-            ['Telefon', person.phone]
         ]);
+        this.endBlock();
 
         this.newLine();
-
+        this.text(`B. UZLAŞMA TEKLİFİ YAPILAN : ${party.type.toLocaleUpperCase()}`).bold();
+        this.newLine();
+        this.text(`C. UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN`).bold();
+        this.printLabelValue([
+            ['T.C. Kimlik No', party.person.identificationNo],
+            ['Adı Soyadı', fullName(party.person)],
+            ['Baba Adı', party.person.fatherName],
+            ['Anne Adı', party.person.motherName],
+            ['Doğum Yeri ve Tarihi', `${party.person.birthPlace} ${this.printDate(party.person.birthDate)}`],
+            ['Adres', `${party.person.address.fullAddress}, ${party.person.address.city.name}/${party.person.address.districtName}`],
+            ['Telefon', party.person.phone]
+        ]);
+        this.newLine();
         this.text('D. Uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları:').bold();
         this.text('1. Uzlaşma, tarafların özgür iradeleriyle belirleyeceği edim karşılığında veya edimsiz olarak anlaşmalarıdır.');
         this.text([
@@ -156,27 +143,41 @@ export class KovusturmaUzlasmaTeklif extends BaseTemplate<KovusturmaUzlasmaTekli
             'belgesi, 2004 sayılı İcra ve İflas Kanunu&#39;nun 38 inci maddesinde yazılı ilam mahiyetinde ',
             'belgelerden sayılır. Bu belge mahkeme kararı gibi İcra olunur.'
         ]);
+        this.newLine();
+        this.indentedText(`Uzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`);
+        this.indentedText(`Formun bir örneğini aldım.`);
+        this.newLine();
+        this.text(`Şahsıma yapılan uzlaşma teklifini;`).bold();
+        this.text(`....................................................................................................`);
 
+        this.startBlock();
+        this.text(`İnceleyip üç gün içinde beyanda bulunmak istiyorum.`);
+        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        this.endBlock();
+
+        this.text(`....................................................................................................`);
+
+        this.startBlock();
+        this.text(`Kabul ediyorum.`);
+        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        this.endBlock();
+
+        this.text(`....................................................................................................`);
+
+        this.startBlock();
+        this.text(`Kabul etmiyorum.`);
+        this.text(`.../ .../ 20... Saat: ...... İmza`).tab();
+        this.endBlock();
+
+        this.text(`....................................................................................................`);
         this.newLine();
 
-        this.text(
-            'UZLAŞTIRMANIN MAHİYETİ, UZLAŞMAYI KABUL VEYA REDDETMENİN HUKUKI SONUÇLARINI ANLADIM. FORMUN BİR ÖRNEGİNİ ALDIM.'
-        ).bold();
+        if (translator) {
+            this.text(`Tercüman: ${fullName(translator.person)}`);
+        }
+    }
 
-        this.newLine();
-
-        this.text('Şahsıma yapılan uzlaşma teklifini;').bold();
-
-        const p10 = this.createParagraph();
-        this.text('İnceleyip üç gün içinde beyanda bulunmak istiyorum.', p10);
-        this.text('.../ .../ 20... Saat: ...... İmza', p10).tab();
-
-        const p11 = this.createParagraph();
-        this.text('Kabul ediyorum.', p11);
-        this.text('.../ .../ 20... Saat: ...... İmza', p11).tab();
-
-        const p12 = this.createParagraph();
-        this.text('Kabul etmiyorum.', p12);
-        this.text('.../ .../ 20... Saat: ...... İmza', p12).tab();
+    hasMultiCrimes(crimes: string) {
+        return crimes.split(',').length > 1;
     }
 }

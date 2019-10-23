@@ -18,6 +18,7 @@
                       [displayFormat]="question.format"></ion-datetime>
 
         <ion-select *ngSwitchCase="'dropdown'"
+                    [multiple]="question.multiple"
                     [formControlName]="question.key"
                     [id]="question.key"
                     [name]="question.key"

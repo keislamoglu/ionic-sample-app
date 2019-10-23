@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ModalService} from '../shared/services';
 import {Party, Person} from '../shared/entity';
-import {ActivatedRoute} from '@angular/router';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {PartyEditModalComponent} from './edit/party-edit-modal.component';
 import {PersonEditModalComponent} from '../+persons/edit/person-edit-modal.component';
@@ -9,23 +8,23 @@ import {getGrouped} from '../shared/helpers';
 import {switchMap} from 'rxjs/operators';
 import {forkJoin, of} from 'rxjs';
 import {PartyService, PersonService} from '../shared/repositories';
-import {fullName} from '../shared/helpers/person';
+import {fullName} from '../shared/helpers';
 
 @Component({
+    selector: 'app-parties',
     templateUrl: './parties.component.html',
     styleUrls: ['./parties.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PartiesComponent implements OnInit {
-    caseFileId: string;
+    @Input() caseFileId: string;
     parties: Party[] = [];
     persons: Person[] = [];
     groupedParties: Array<Party[]> = [];
     itemCountPerRow = 2;
     columnSize = 12 / this.itemCountPerRow;
 
-    constructor(private _route: ActivatedRoute,
-                private _modalService: ModalService,
+    constructor(private _modalService: ModalService,
                 private _partyService: PartyService,
                 private _personService: PersonService,
                 private _actionSheetController: ActionSheetController,
@@ -34,7 +33,6 @@ export class PartiesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.caseFileId = this._route.snapshot.paramMap.get('caseFileId');
         this._loadData();
     }
 

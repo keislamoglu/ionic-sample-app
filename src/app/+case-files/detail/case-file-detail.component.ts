@@ -13,6 +13,7 @@ export class CaseFileDetailComponent implements OnInit {
     id: string;
     caseFile: CaseFile;
     remainingTime = 0;
+    activeSegment: 'petitions' | 'parties' = 'parties';
 
     constructor(
         private _route: ActivatedRoute,
@@ -28,10 +29,6 @@ export class CaseFileDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
         this._loadData();
-    }
-
-    navToParties(): void {
-        this._navController.navigateForward(`/case-files/${this.id}/parties`);
     }
 
     navToExtensionTimes() {

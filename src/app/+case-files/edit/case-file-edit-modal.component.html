@@ -14,14 +14,13 @@
             <ion-select required
                         name="caseFileType"
                         placeholder="-- Seçiniz --"
-                        (ngModelChange)="onTypeChange($event)"
                         [(ngModel)]="caseFile.type">
                 <ion-select-option *ngFor="let caseFileType of caseFileTypeDataset"
                                    [value]="caseFileType.value">{{caseFileType.value}}</ion-select-option>
             </ion-select>
         </ion-item>
         <!--ATTORNEY GENERALSHIP-->
-        <ion-item *ngIf="caseFile.type">
+        <ion-item>
             <ion-label position="floating">Cumhuriyet Başs.</ion-label>
             <ion-select name="attorneyGeneralship"
                         placeholder="-- Seçiniz --"

@@ -9,9 +9,9 @@ import {map} from 'rxjs/operators';
 export class PetitionService extends BaseCrud<Petition> {
     protected dataSetName = 'petitions';
 
-    getByParty(partyId: string): Observable<Petition[]> {
+    getByCaseFile(caseFileId: string): Observable<Petition[]> {
         return this.getAll().pipe(
-            map(dataSet => dataSet.filter(t => t.partyId === partyId))
+            map(dataSet => dataSet.filter(t => t.caseFileId === caseFileId))
         );
     }
 }

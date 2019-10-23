@@ -1,26 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from './edit/petition-edit-modal.component';
 import {Petition} from '../shared/entity';
 import {ModalService} from '../shared/services';
-import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {PetitionService} from '../shared/repositories';
+import {getGrouped} from '../shared/helpers';
 
 @Component({
+    selector: 'app-petitions',
     templateUrl: './petitions.component.html',
+    styleUrls: ['./petitions.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PetitionsComponent implements OnInit {
+    @Input() caseFileId: string;
+
     partyId: string;
     petitions: Petition[] = [];
+    groupedPetitions: Array<Petition[]> = [];
+    itemCountPerRow = 2;
+    columnSize = 12 / this.itemCountPerRow;
 
-    constructor(private _route: ActivatedRoute,
-                private _modalService: ModalService,
+    constructor(private _modalService: ModalService,
                 private _petitionService: PetitionService,
-                private _navController: NavController) {
+                private _navController: NavController,
+                private _changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
-        this.partyId = this._route.snapshot.paramMap.get('partyId');
         this._loadData();
     }
 
@@ -29,9 +36,7 @@ export class PetitionsComponent implements OnInit {
     }
 
     async create() {
-        const modal = await this._modalService.present(PetitionEditModalComponent, {
-            partyId: this.partyId,
-        });
+        const modal = await this._modalService.present(PetitionEditModalComponent, {caseFileId: this.caseFileId});
         const res = await modal.onWillDismiss();
         if (res.data.removed) {
             return this._navController.back();
@@ -40,13 +45,17 @@ export class PetitionsComponent implements OnInit {
     }
 
     async edit(id: string) {
-        const modal = await this._modalService.present(PetitionEditModalComponent, {id});
+        const modal = await this._modalService.present(PetitionEditModalComponent, {id, caseFileId: this.caseFileId});
         await modal.onWillDismiss();
         this._loadData();
     }
 
     private _loadData() {
-        this._petitionService.getByParty(this.partyId)
-            .subscribe(petitions => this.petitions = petitions);
+        this._petitionService.getByCaseFile(this.caseFileId).subscribe(petitions => {
+            this.petitions = petitions;
+            const visualPetitions = [null, ...petitions];
+            this.groupedPetitions = getGrouped(visualPetitions, this.itemCountPerRow);
+            this._changeDetectorRef.markForCheck();
+        });
     }
 }

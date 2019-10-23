@@ -1,36 +1,23 @@
 import {DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {BaseTemplate, TextAlign} from './base';
-import {CaseFile, ClientUser, CompetentAuthority, Person} from '../shared/entity';
+import {BaseTemplate, BaseTemplateProps, TextAlign} from './base';
 import {fullName} from '../shared/helpers';
+import {PartyType} from '../shared/entity';
 
 export interface GorusmelerinYapilamadiginaDairTutanakProps {
-    caseFile: CaseFile;
-    competentAuthority: CompetentAuthority;
-    user: ClientUser;
-    suspectedPerson: Person;
-    complainantPerson: Person;
-    extraData: {
-        date: string,
-        crimes: string,
-        complainantInviteDate: string,
-        complainantApplyDate: string,
-        complainantResponse: string,
-        suspectedInviteDate: string,
-        suspectedApplyDate: string,
-        suspectedResponse: string,
-        courtHouse: string
-    };
+    date: string;
+    complainantInviteDate: string;
+    complainantApplyDate: string;
+    complainantResponse: string;
+    suspectedInviteDate: string;
+    suspectedApplyDate: string;
+    suspectedResponse: string;
+    courtHouse: string;
 }
 
 export const GorusmelerinYapilamadiginaDairTutanakQuestions: Question[] = [
     new DateQuestion({
         key: 'date',
         label: 'Dilekçe tarihi',
-        required: true
-    }),
-    new TextboxQuestion({
-        key: 'crimes',
-        label: 'Suçlar',
         required: true
     }),
     new TextboxQuestion({
@@ -79,15 +66,11 @@ export const GorusmelerinYapilamadiginaDairTutanakQuestions: Question[] = [
 ];
 
 export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<GorusmelerinYapilamadiginaDairTutanakProps> {
-    protected prepareDocument(props: GorusmelerinYapilamadiginaDairTutanakProps) {
-        const {
-            caseFile,
-            competentAuthority,
-            user,
-            suspectedPerson: suspected,
-            complainantPerson: complainant,
-            extraData
-        } = props;
+    protected prepareDocument(props: BaseTemplateProps<GorusmelerinYapilamadiginaDairTutanakProps>) {
+        const {petition, conciliator, extraData} = props;
+        const {caseFile} = petition;
+        const suspected = petition.parties.find(t => t.type === PartyType.Suspected);
+        const complainant = petition.parties.find(t => t.type === PartyType.Complainant);
 
         this.text(`UZLAŞTIRMA GÖRÜŞMELERİNİN`, TextAlign.Center).bold();
         this.text(`YAPILAMADIĞINA DAİR TUTANAK`, TextAlign.Center).bold();
@@ -101,10 +84,10 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
             this.printDate(caseFile.chargeDate),
             ` tarihli görevlendirme tutanağı ile tarafıma tevdi edilen `,
         ], p1);
-        this.text(`${competentAuthority.name} ${caseFile.fileNo} numaralı soruşturma`, p1).bold();
+        this.text(`${caseFile.attorneyGeneralship.name} ${caseFile.fileNo} numaralı soruşturma`, p1).bold();
 
-        const suspectedName = fullName(suspected);
-        const complainantName = fullName(complainant);
+        const suspectedName = fullName(suspected.person);
+        const complainantName = fullName(complainant.person);
 
         this.text([
             ` dosyasında şüpheli `,
@@ -112,7 +95,7 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
             ` müşteki `,
             complainantName,
             `'a yönelik `,
-            extraData.crimes,
+            suspected.crimes,
             ` suçu/suçları (5237 sayılı Türk Ceza Kanunu 125/1 maddesinde) 5271 sayılı CMK 253. maddesi kapsamında`,
             ` "uzlaşma" uzlaşma kapsamındaki suçlardan olması nedeni ile;`
         ], p1);
@@ -185,7 +168,7 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
             `${rejectedParty} ${rejectedName}`,
             ` tarafından uzlaşma teklifinin kabul edilmemiş olması nedeni ile uzlaşma görüşleri başlanamamış,`,
             ` tarafımca yapılacak başka bir işlem kalmadığından, tarafıma tevdi edilen `,
-            `${competentAuthority.name} ${caseFile.fileNo}`,
+            `${caseFile.attorneyGeneralship.name} ${caseFile.fileNo}`,
         ], p4).bold();
         this.text([
             ` soruşturma numaralı dosya sureti ile tarafımca düzenlenen işlemlere ilişkin belgeler iş bu tutanak ekinde`,
@@ -198,14 +181,14 @@ export class GorusmelerinYapilamadiginaDairTutanak extends BaseTemplate<Gorusmel
 
         this.newLine();
 
-        this.text(fullName(user), TextAlign.Right);
-        this.text(user.registrationNo, TextAlign.Right);
+        this.text(fullName(conciliator), TextAlign.Right);
+        this.text(conciliator.registrationNo, TextAlign.Right);
         this.text(`Uzlaştırmacı`, TextAlign.Right);
 
         this.newLine();
 
         this.text(`Ekler:`);
-        this.text(`1. ${competentAuthority.name} ${caseFile.fileNo} soruşturma numaralı dosya sureti`);
+        this.text(`1. ${caseFile.attorneyGeneralship.name} ${caseFile.fileNo} soruşturma numaralı dosya sureti`);
         this.text(`Uzlaştırma Teklif Formları (3 Adet)`);
         this.text(`Masraf Belgesi`);
     }

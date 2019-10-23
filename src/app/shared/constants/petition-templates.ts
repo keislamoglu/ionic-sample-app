@@ -18,11 +18,6 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
         slugName: TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi
     },
     {
-        id: '4425eb02-9ef4-41a7-b71a-2f7948cce69e',
-        name: 'Kov. Uzlaşma Teklif Formu',
-        slugName: TemplateDocument.KovusturmaUzlasmaTeklif
-    },
-    {
         id: '75735d45-174b-4033-b667-cafd7f0d315e',
         name: 'Kov. Dos. Olumlu Uzlaştırma Raporu',
         slugName: TemplateDocument.KovusturmaOlumluUzlastirmaRaporu
@@ -64,7 +59,7 @@ export const PETITION_TEMPLATES: PetitionTemplate[] = [
     },
     {
         id: '147e5cd3-6a36-474b-94f3-5ee91efa01ba',
-        name: 'Sor. Uzlaşma Teklif Formu',
-        slugName: TemplateDocument.SorusturmaUzlasmaTeklif
+        name: 'Uzlaşma Teklif Formu',
+        slugName: TemplateDocument.UzlasmaTeklifFormu
     }
 ];

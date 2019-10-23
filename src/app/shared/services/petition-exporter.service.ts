@@ -4,15 +4,13 @@ import {
     GorusmeyeDavet,
     KovusturmaOlumluUzlastirmaRaporu,
     KovusturmaOlumsuzUzlastirmaRaporu,
-    KovusturmaUzlasmaTeklif,
     KovusturmaUzlastirmaciGorusmeTutanagi,
     SegbisGorusmeTalep,
     SorusturmaOlumluUzlastirmaRaporu,
     SorusturmaOlumsuzUzlastirmaRaporu,
-    SorusturmaUzlasmaTeklif,
     SorusturmaUzlastirmaciGorusmeTutanagi,
     TalimatYazisiTalep,
-    TesimVeMasrafBelgesi
+    TesimVeMasrafBelgesi, UzlasmaTeklifFormu
 } from '../../templates';
 import {ServicesModule} from './services.module';
 import {DocxFileService} from './docx-file.service';
@@ -31,8 +29,8 @@ export class PetitionExporterService {
     async export(petitionId: string, extraData?: any) {
         const petition = await this._instantiator.instantiatePetition(petitionId);
         const docxTemplate = {
+            [TemplateDocument.UzlasmaTeklifFormu]: UzlasmaTeklifFormu,
             [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavet,
-            [TemplateDocument.KovusturmaUzlasmaTeklif]: KovusturmaUzlasmaTeklif,
             [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalep,
             [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagi,
             [TemplateDocument.KovusturmaOlumluUzlastirmaRaporu]: KovusturmaOlumluUzlastirmaRaporu,
@@ -43,7 +41,6 @@ export class PetitionExporterService {
             [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalep,
             [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesi,
             [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanak,
-            [TemplateDocument.SorusturmaUzlasmaTeklif]: SorusturmaUzlasmaTeklif
         }[petition.template.slugName];
 
         return this._docxFileService.export({

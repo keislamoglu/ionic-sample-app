@@ -1,5 +1,5 @@
 export enum TemplateDocument {
-    SorusturmaUzlasmaTeklif = 'SorusturmaUzlasmaTeklif',
+    UzlasmaTeklifFormu = 'UzlasmaTeklifFormu',
     GorusmelerinYapilamadiginaDairTutanak = 'GorusmelerinYapilamadiginaDairTutanak',
     TesimVeMasrafBelgesi = 'TesimVeMasrafBelgesi',
     SorusturmaUzlastirmaciGorusmeTutanagi = 'SorusturmaUzlastirmaciGorusmeTutanagi',
@@ -7,7 +7,6 @@ export enum TemplateDocument {
     SorusturmaOlumluUzlastirmaRaporu = 'SorusturmaOlumluUzlastirmaRaporu',
     KovusturmaOlumsuzUzlastirmaRaporu = 'KovusturmaOlumsuzUzlastirmaRaporu',
     KovusturmaOlumluUzlastirmaRaporu = 'KovusturmaOlumluUzlastirmaRaporu',
-    KovusturmaUzlasmaTeklif = 'KovusturmaUzlasmaTeklif',
     KovusturmaUzlastirmaciGorusmeTutanagi = 'KovusturmaUzlastirmaciGorusmeTutanagi',
     SegbisGorusmeTalep = 'SegbisGorusmeTalep',
     UzlasmaGorusmesineDavet = 'UzlasmaGorusmesineDavet',

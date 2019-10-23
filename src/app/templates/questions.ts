@@ -1,7 +1,6 @@
 import {TemplateDocument} from '../shared/constants';
 import {SegbisGorusmeTalepQuestions} from './segbis-gorusme-talep';
 import {KovusturmaUzlastirmaciGorusmeTutanagiQuestions} from './kovusturma-uzlastirmaci-gorusme-tutanagi';
-import {KovusturmaUzlasmaTelifQuestions} from './kovusturma-uzlasma-teklif';
 import {KovusturmaOlumluUzlastirmaRaporuQuestions} from './kovusturma-olumlu-uzlastirma-raporu';
 import {KovusturmaOlumsuzUzlastirmaRaporuQuestions} from './kovusturma-olumsuz-uzlastirma-raporu';
 import {SorusturmaOlumluUzlastirmaRaporuQuestions} from './sorusturma-olumlu-uzlastirma-raporu';
@@ -10,15 +9,14 @@ import {SorusturmaUzlastirmaciGorusmeTutanagiQuestions} from './sorusturma-uzlas
 import {TalimatYazisiTalepQuestions} from './talimat-yazisi-talep';
 import {TesimVeMasrafBelgesiQuestions} from './tesim-ve-masraf-belgesi';
 import {GorusmelerinYapilamadiginaDairTutanakQuestions} from './gorusmelerin-yapilamadigina-dair-tutanak';
-import {SorusturmaUzlasmaTeklifQuestions} from './sorusturma-uzlasma-teklif';
 import {GorusmeyeDavetQuestions} from './gorusmeye-davet';
+import {UzlasmaTeklifFormuQuestions} from './uzlasma-teklif-formu';
 
 export const TemplateQuestions = {
     [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavetQuestions,
     [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalepQuestions,
     [TemplateDocument.UzlasmaGorusmesineDavet]: [],
     [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagiQuestions,
-    [TemplateDocument.KovusturmaUzlasmaTeklif]: KovusturmaUzlasmaTelifQuestions,
     [TemplateDocument.KovusturmaOlumluUzlastirmaRaporu]: KovusturmaOlumluUzlastirmaRaporuQuestions,
     [TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu]: KovusturmaOlumsuzUzlastirmaRaporuQuestions,
     [TemplateDocument.SorusturmaOlumluUzlastirmaRaporu]: SorusturmaOlumluUzlastirmaRaporuQuestions,
@@ -27,5 +25,5 @@ export const TemplateQuestions = {
     [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalepQuestions,
     [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesiQuestions,
     [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanakQuestions,
-    [TemplateDocument.SorusturmaUzlasmaTeklif]: SorusturmaUzlasmaTeklifQuestions
+    [TemplateDocument.UzlasmaTeklifFormu]: UzlasmaTeklifFormuQuestions
 };

@@ -7,6 +7,7 @@ export enum TextAlign {
 
 export abstract class DocxFileTemplate {
     protected doc = new Document();
+    private p: Paragraph | null = null;
 
     constructor(protected props: any) {
         this.prepareDocument(props);
@@ -16,6 +17,14 @@ export abstract class DocxFileTemplate {
 
     protected createParagraph(): Paragraph {
         return this.doc.createParagraph();
+    }
+
+    protected startBlock(p?: Paragraph) {
+        this.p = p || this.createParagraph();
+    }
+
+    protected endBlock() {
+        this.p = null;
     }
 
     protected indentedText(text: string | string[], textAlignOrParagraph?: TextAlign | Paragraph): Run {
@@ -32,7 +41,7 @@ export abstract class DocxFileTemplate {
             align = textAlignOrParagraph;
         }
 
-        const p = paragraph || this.doc.createParagraph();
+        const p = paragraph || this.p || this.doc.createParagraph();
 
         switch (align) {
             case TextAlign.Left:
