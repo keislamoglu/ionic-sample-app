@@ -37,7 +37,7 @@
                             multiple
                             placeholder="-- Seçiniz --">
                     <ion-select-option *ngFor="let party of parties"
-                                        [value]="party.id">{{party.personId}}</ion-select-option>
+                                        [value]="party.id">{{party.person.name + ' ' + party.person.lastName}}</ion-select-option>
                 </ion-select>
             </ion-item>
         </ion-list>

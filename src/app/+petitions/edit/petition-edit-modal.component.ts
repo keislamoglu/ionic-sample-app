@@ -3,12 +3,14 @@ import {ModalController} from '@ionic/angular';
 import {AlertService, PetitionExporterService} from '../../shared/services';
 import {Party, Petition, PetitionTemplate} from '../../shared/entity';
 import {map, switchMap} from 'rxjs/operators';
-import {Observable, zip} from 'rxjs';
+import {forkJoin, Observable, zip} from 'rxjs';
 import {guid} from '../../shared/helpers';
 import {PartyService, PetitionService, PetitionTemplateService} from '../../shared/repositories';
 import {Question} from '../../dynamic-form-question/models';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TemplateQuestions} from '../../templates';
+import {InstantiatorService} from '../../shared/services/instantiator.service';
+import {fromPromise} from 'rxjs/internal-compatibility';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',
@@ -39,6 +41,7 @@ export class PetitionEditModalComponent implements OnInit {
                 private _partyService: PartyService,
                 private _alertService: AlertService,
                 private _petitionExporterService: PetitionExporterService,
+                private _instantiator: InstantiatorService,
                 private _fb: FormBuilder,
                 private _changeDetector: ChangeDetectorRef) {
     }
@@ -169,7 +172,12 @@ export class PetitionEditModalComponent implements OnInit {
     private _getDataSets(): Observable<[PetitionTemplate[], Party[]]> {
         return zip(
             this._petitionTemplateService.getAll(),
-            this._partyService.getByCaseFile(this.caseFileId)
+            this._partyService.getByCaseFile(this.caseFileId).pipe(
+                switchMap(parties => {
+                    const partyIds = parties.map(party => party.id);
+                    return forkJoin(partyIds.map(partyId => fromPromise(this._instantiator.instantiateParty(partyId))));
+                })
+            )
         );
     }
 
