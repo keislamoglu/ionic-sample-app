@@ -1,52 +1,87 @@
 import {Injectable} from '@angular/core';
-import {
-    GorusmelerinYapilamadiginaDairTutanak,
-    GorusmeyeDavet,
-    KovusturmaOlumluUzlastirmaRaporu,
-    KovusturmaOlumsuzUzlastirmaRaporu,
-    KovusturmaUzlastirmaciGorusmeTutanagi,
-    SegbisGorusmeTalep,
-    SorusturmaOlumluUzlastirmaRaporu,
-    SorusturmaOlumsuzUzlastirmaRaporu,
-    SorusturmaUzlastirmaciGorusmeTutanagi,
-    TalimatYazisiTalep,
-    TesimVeMasrafBelgesi, UzlasmaTeklifFormu
-} from '../../templates';
 import {ServicesModule} from './services.module';
-import {DocxFileService} from './docx-file.service';
 import {UserService} from './user.service';
 import {TemplateDocument} from '../constants';
 import {InstantiatorService} from './instantiator.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import {BaseTemplate, UzlasmaTeklifFormu} from '../../templates/pdf';
+import {File} from '@ionic-native/file/ngx';
+
+export const DIR_NAME = 'uzlastr';
 
 @Injectable({providedIn: ServicesModule})
 export class PetitionExporterService {
 
-    constructor(private _userService: UserService,
-                private _instantiator: InstantiatorService,
-                private _docxFileService: DocxFileService) {
+    private get _savePath() {
+        return this._file.documentsDirectory + DIR_NAME;
     }
 
-    async export(petitionId: string, extraData?: any) {
+    constructor(private _userService: UserService,
+                private _instantiator: InstantiatorService,
+                private _file: File) {
+    }
+
+    async export(petitionId: string) {
         const petition = await this._instantiator.instantiatePetition(petitionId);
-        const docxTemplate = {
+
+        const template = {
             [TemplateDocument.UzlasmaTeklifFormu]: UzlasmaTeklifFormu,
-            [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavet,
-            [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalep,
-            [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagi,
-            [TemplateDocument.KovusturmaOlumluUzlastirmaRaporu]: KovusturmaOlumluUzlastirmaRaporu,
-            [TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu]: KovusturmaOlumsuzUzlastirmaRaporu,
-            [TemplateDocument.SorusturmaOlumluUzlastirmaRaporu]: SorusturmaOlumluUzlastirmaRaporu,
-            [TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu]: SorusturmaOlumsuzUzlastirmaRaporu,
-            [TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi]: SorusturmaUzlastirmaciGorusmeTutanagi,
-            [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalep,
-            [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesi,
-            [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanak,
+            // [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavet,
+            // [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalep,
+            // [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagi,
+            // [TemplateDocument.KovusturmaOlumluUzlastirmaRaporu]: KovusturmaOlumluUzlastirmaRaporu,
+            // [TemplateDocument.KovusturmaOlumsuzUzlastirmaRaporu]: KovusturmaOlumsuzUzlastirmaRaporu,
+            // [TemplateDocument.SorusturmaOlumluUzlastirmaRaporu]: SorusturmaOlumluUzlastirmaRaporu,
+            // [TemplateDocument.SorusturmaOlumsuzUzlastirmaRaporu]: SorusturmaOlumsuzUzlastirmaRaporu,
+            // [TemplateDocument.SorusturmaUzlastirmaciGorusmeTutanagi]: SorusturmaUzlastirmaciGorusmeTutanagi,
+            // [TemplateDocument.TalimatYazisiTalep]: TalimatYazisiTalep,
+            // [TemplateDocument.TesimVeMasrafBelgesi]: TesimVeMasrafBelgesi,
+            // [TemplateDocument.GorusmelerinYapilamadiginaDairTutanak]: GorusmelerinYapilamadiginaDairTutanak,
         }[petition.template.slugName];
 
-        return this._docxFileService.export({
-            fileName: petition.fileName,
-            docxTemplate,
-            props: {petition, extraData, conciliator: this._userService.currentUser}
+        const props = {
+            petition,
+            extraData: JSON.parse(petition.extraData),
+            conciliator: this._userService.currentUser
+        };
+        const blob = await this._createBlob(this._getDocumentDefinition(template, props));
+
+        return this.saveFile(petition.fileName, blob);
+    }
+
+    async saveFile(fileName: string, blob: Blob) {
+        await this._createDocsDirIfNotExists();
+
+        return this._file.writeFile(
+            this._savePath,
+            fileName,
+            blob,
+            {replace: true}
+        );
+    }
+
+    private _createDocsDirIfNotExists() {
+        return this._file.createDir(this._file.documentsDirectory, DIR_NAME, false);
+    }
+
+    private _getDocumentDefinition(template: (new (...args: any[]) => any), props?: {}) {
+        const instance: BaseTemplate<any> = Object.create(template.prototype);
+        instance.constructor.apply(instance, [props]);
+        return instance.documentDefinition;
+    }
+
+    private _createBlob(documentDefinition: any): Promise<Blob> {
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+        return new Promise((resolve, reject) => {
+            try {
+                pdfMake.createPdf(documentDefinition).getBlob(blob => {
+                    resolve(blob);
+                });
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 }

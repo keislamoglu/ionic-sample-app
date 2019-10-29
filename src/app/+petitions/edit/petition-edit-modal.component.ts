@@ -8,9 +8,9 @@ import {guid} from '../../shared/helpers';
 import {PartyService, PetitionService, PetitionTemplateService} from '../../shared/repositories';
 import {Question} from '../../dynamic-form-question/models';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {TemplateQuestions} from '../../templates';
 import {InstantiatorService} from '../../shared/services/instantiator.service';
 import {fromPromise} from 'rxjs/internal-compatibility';
+import {TemplateQuestions} from '../../templates/questions';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',
@@ -109,14 +109,14 @@ export class PetitionEditModalComponent implements OnInit {
             // Existing Petition
             this._petitionService.update(this.petition.id, this.petition)
                 .subscribe(() => {
-                    this.exportDocx(this.petition.id, this.dynamicQuestionAnswers);
+                    this.export(this.petition.id);
                     this.dismiss();
                 });
         } else {
             // New Petition
             this._petitionService.add(this.petition)
                 .subscribe(petition => {
-                    this.exportDocx(petition.id, this.dynamicQuestionAnswers);
+                    this.export(petition.id);
                     this.dismiss();
                 });
         }
@@ -131,12 +131,12 @@ export class PetitionEditModalComponent implements OnInit {
         });
     }
 
-    exportDocx(id: string, extraData: any) {
+    export(id: string) {
         try {
-            this._petitionExporterService.export(id, extraData).then(() => {
-                console.log('success');
-            }, (e) => {
-                console.log(e);
+            this._petitionExporterService.export(id).then(() => {
+                console.log('Success');
+            }, (e = 'Failed') => {
+                console.error(e);
             });
         } catch (e) {
             console.log(e);
@@ -153,10 +153,6 @@ export class PetitionEditModalComponent implements OnInit {
         if (this.petition.extraData) {
             this.dynamicQuestionAnswers = JSON.parse(this.petition.extraData);
         }
-    }
-
-    async getPersonNameByParty(partyId: string) {
-        return await this._partyService.getPersonName(partyId).toPromise();
     }
 
     private _loadTemplate(templateId: string): Observable<void> {
