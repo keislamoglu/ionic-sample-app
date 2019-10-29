@@ -7,14 +7,13 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {BaseTemplate, UzlasmaTeklifFormu} from '../../templates/pdf';
 import {File} from '@ionic-native/file/ngx';
-
-export const DIR_NAME = 'uzlastr';
+import {AppConfig} from '../app-config';
 
 @Injectable({providedIn: ServicesModule})
 export class PetitionExporterService {
 
     private get _savePath() {
-        return this._file.documentsDirectory + DIR_NAME;
+        return this._file.documentsDirectory + AppConfig.DocumentsDirectory;
     }
 
     constructor(private _userService: UserService,
@@ -62,7 +61,7 @@ export class PetitionExporterService {
     }
 
     private _createDocsDirIfNotExists() {
-        return this._file.createDir(this._file.documentsDirectory, DIR_NAME, false);
+        return this._file.createDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory, false);
     }
 
     private _getDocumentDefinition(template: (new (...args: any[]) => any), props?: {}) {

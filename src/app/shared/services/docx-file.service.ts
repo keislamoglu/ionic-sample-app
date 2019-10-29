@@ -5,14 +5,13 @@ import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {DocxFileTemplate} from '../../templates/docx';
 import {BaseTemplateProps} from '../../templates/docx/base';
+import {AppConfig} from '../app-config';
 
 export interface DocxFileExportOptions<T = {}> {
     fileName: string;
     docxTemplate: (new (...args: any[]) => any);
     props?: BaseTemplateProps<T>;
 }
-
-export const DIR_NAME = 'uzlastr';
 
 @Injectable({providedIn: ServicesModule})
 export class DocxFileService {
@@ -36,11 +35,11 @@ export class DocxFileService {
     }
 
     private _createDocsDirIfNotExists() {
-        this._file.createDir(this._file.documentsDirectory, DIR_NAME, false);
+        this._file.createDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory, false);
     }
 
     private _getPath() {
-        return this._file.documentsDirectory + DIR_NAME;
+        return this._file.documentsDirectory + AppConfig.DocumentsDirectory;
     }
 
     private _createBlob(templateDocument: (new (...args: any[]) => any), props?: {}) {

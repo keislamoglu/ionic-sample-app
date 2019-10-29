@@ -27,8 +27,8 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<ClientUser> {
-        const headers = new HttpHeaders({'Auth-Token': AppConfig.authToken});
-        return this._http.post(AppConfig.loginUrl, {email, password}, {headers}).pipe(
+        const headers = new HttpHeaders({'Auth-Token': AppConfig.AuthToken});
+        return this._http.post(AppConfig.LoginUrl, {email, password}, {headers}).pipe(
             map((resp: BackendUser) => {
                 const user: ClientUser = {
                     id: resp.userId,

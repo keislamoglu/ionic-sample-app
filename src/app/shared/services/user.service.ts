@@ -52,8 +52,8 @@ export class UserService {
     }
 
     create(data: BackendUser): Observable<ClientUser> {
-        const headers = new HttpHeaders({'Auth-Token': AppConfig.authToken});
-        return this._http.post(AppConfig.registerUrl, data, {headers}).pipe(
+        const headers = new HttpHeaders({'Auth-Token': AppConfig.AuthToken});
+        return this._http.post(AppConfig.RegisterUrl, data, {headers}).pipe(
             map((resp: RegisterResp) => {
                 const user = UserService.toClientUser(data);
                 user.id = resp.userId;
