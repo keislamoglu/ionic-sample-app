@@ -99,7 +99,7 @@ export class PetitionEditModalComponent implements OnInit {
         this.petition.name = name;
         this.petition.partyIds = parties;
         this.petition.date = '' + new Date();
-        this.petition.fileName = `${guid()}.docx`;
+        this.petition.fileName = `${guid()}`;
 
         if (this.dynamicQuestionAnswers) {
             this.petition.extraData = JSON.stringify(this.dynamicQuestionAnswers);
