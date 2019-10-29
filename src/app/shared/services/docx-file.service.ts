@@ -3,8 +3,8 @@ import {Injectable} from '@angular/core';
 import {ServicesModule} from './services.module';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
-import {DocxFileTemplate} from '../../templates';
-import {BaseTemplateProps} from '../../templates/base';
+import {DocxFileTemplate} from '../../templates/docx';
+import {BaseTemplateProps} from '../../templates/docx/base';
 
 export interface DocxFileExportOptions<T = {}> {
     fileName: string;
