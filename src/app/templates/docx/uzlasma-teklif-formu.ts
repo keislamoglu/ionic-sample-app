@@ -1,7 +1,7 @@
-import {DateQuestion, Question} from '../dynamic-form-question/models';
+import {DateQuestion, Question} from '../../dynamic-form-question/models';
 import {BaseTemplate, TextAlign} from './base';
-import {CaseFileType, PartyType} from '../shared/entity';
-import {fullName} from '../shared/helpers';
+import {CaseFileType, PartyType} from '../../shared/entity';
+import {fullName} from '../../shared/helpers';
 
 export interface UzlasmaTeklifFormuProps {
     date: string;

@@ -1,6 +1,6 @@
 import {BaseTemplate} from './base';
-import {Address} from '../shared/entity';
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {Address} from '../../shared/entity';
+import {DateQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
 
 export interface KovusturmaOlumsuzUzlastirmaRaporuProps {
     reportPlace: string;

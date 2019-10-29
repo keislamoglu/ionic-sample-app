@@ -1,7 +1,7 @@
-import {DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
 import {BaseTemplate, BaseTemplateProps, TextAlign} from './base';
-import {fullName} from '../shared/helpers';
-import {PartyType} from '../shared/entity';
+import {fullName} from '../../shared/helpers';
+import {PartyType} from '../../shared/entity';
 
 export interface GorusmelerinYapilamadiginaDairTutanakProps {
     date: string;

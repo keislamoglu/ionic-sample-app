@@ -1,7 +1,7 @@
 import {BaseTemplate, TextAlign} from './base';
-import {CaseFile, ClientUser, Person} from '../shared/entity';
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {fullName} from '../shared/helpers';
+import {CaseFile, ClientUser, Person} from '../../shared/entity';
+import {DateQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
+import {fullName} from '../../shared/helpers';
 
 export interface SegbisGorusmeTalepProps {
     jailType: string;

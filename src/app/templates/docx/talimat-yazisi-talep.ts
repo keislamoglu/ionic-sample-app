@@ -1,6 +1,6 @@
 import {BaseTemplate} from './base';
-import {DateQuestion, Question} from '../dynamic-form-question/models';
-import {Address} from '../shared/entity';
+import {DateQuestion, Question} from '../../dynamic-form-question/models';
+import {Address} from '../../shared/entity';
 
 export interface TalimatYazisiTalepProps {
     date: string;

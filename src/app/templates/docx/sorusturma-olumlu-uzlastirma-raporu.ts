@@ -1,7 +1,7 @@
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
+import {DateQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
 import {BaseTemplate, TextAlign} from './base';
-import {Address, City, PartyType, Person} from '../shared/entity';
-import {fullName} from '../shared/helpers';
+import {Address, City, PartyType, Person} from '../../shared/entity';
+import {fullName} from '../../shared/helpers';
 
 export interface SorusturmaOlumluUzlastirmaRaporuProps {
     reportPlace: string;

@@ -1,6 +1,6 @@
 import {BaseTemplate, TextAlign} from './base';
-import {fullName} from '../shared/helpers';
-import {DateQuestion, Question} from '../dynamic-form-question/models';
+import {fullName} from '../../shared/helpers';
+import {DateQuestion, Question} from '../../dynamic-form-question/models';
 
 export interface GorusmeyeDavetProps {
     date: string;

@@ -1,22 +1,14 @@
-import {BaseTemplate, TextAlign} from './base';
-import {Address, City, PartyType, Person} from '../shared/entity';
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {fullName} from '../shared/helpers';
+import {DateQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
+import {BaseTemplate} from './base';
+import {Address} from '../../shared/entity';
 
-export interface KovusturmaOlumluUzlastirmaRaporuProps {
+export interface SorusturmaOlumsuzUzlastirmaRaporuProps {
     reportPlace: string;
     reportDate: string;
     conciliationDuration: string;
-    crimes: string;
-    courtHouse: string;
 }
 
-export const KovusturmaOlumluUzlastirmaRaporuQuestions: Question[] = [
-    new TextboxQuestion({
-        key: 'courtHouse',
-        label: 'Mahkeme adı',
-        required: false,
-    }),
+export const SorusturmaOlumsuzUzlastirmaRaporuQuestions: Question[] = [
     new TextboxQuestion({
         key: 'reportPlace',
         label: 'Raporun düzenlendiği yer',
@@ -39,22 +31,26 @@ export const KovusturmaOlumluUzlastirmaRaporuQuestions: Question[] = [
     }),
 ];
 
-export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlumluUzlastirmaRaporuProps> {
+export class SorusturmaOlumsuzUzlastirmaRaporu extends BaseTemplate<SorusturmaOlumsuzUzlastirmaRaporuProps> {
     protected prepareDocument() {
-     /*   const {petition, conciliator, extraData} = this.props;
-        const {caseFile} = petition;
-
+        /*const {
+            caseFile,
+            competentAuthority,
+            extraData,
+            user,
+            extensionTime,
+        } = this.props;
         this.text('UZLAŞTIRMA RAPORU').bold();
         this.newLine();
         this.printLabelValue([
-            ['Mahkeme Adı ve Dosya No', `${extraData.courtHouse} / ${caseFile.fileNo}`],
+            ['Soruşturma No', caseFile.fileNo],
             ['Cumhuriyet Başsavcılığı Uzlaştırma No', caseFile.conciliationNo],
             ['Uzlaştırmacının:']
         ]);
         this.printIndentedLabelValue([
-            ['Adı ve Soyadı', fullName(conciliator)],
-            ['Adresi', conciliator.address],
-            ['Sicil Numarası', conciliator.registrationNo]
+            ['Adı ve Soyadı', fullName(user)],
+            ['Adresi', user.address],
+            ['Sicil Numarası', user.registrationNo]
         ]);
         this.printLabelValue([
             ['Görevlendirme tarihi', this.printDate(caseFile.chargeDate)],
@@ -116,12 +112,12 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
             ['Raporun düzenlenme tarihi', this.printDate(extraData.reportDate)],
             ['Uzlaştırma süresi', `${extraData.conciliationDuration} gün`],
             ['Uzlaşma konusu suç / suçlar', extraData.crimes],
-            ['Uzlaştırma sonucu', 'UZLAŞMA SAĞLANDI']
+            ['Uzlaştırma sonucu', 'UZLAŞMA SAĞLANAMADI']
         ]);
 
         this.indentedText([
-            caseFile.attorneyGeneralship.name,
-            ` Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
+            competentAuthority.name,
+            ` Cumhuriyet Başsavcılığı Uzlaştırma Bürosu'nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`
         ]);
 
         this.newLine();
@@ -141,32 +137,30 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
         this.indentedText([
             `Müşteki`,
             ` ${fullName(injured)} 'a`,
-            ` uzlaşmak için taleplerini belirtmesinin istenmesi üzeirne;`,
-            ` "Maddi-manevi hiçbir talebim olmaksızın uzlaşmak istiyorum." dedi`
+            ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
+            ` "Şüphelinin 1.000 TL vermesi halinde kendisiyle uzlaşmak istiyorum." dedi`
         ]);
 
         this.indentedText([
-            `Sanık `,
+            `Şüpheli `,
             ` ${fullName(suspected)} 'a`,
-            ` uzlaşmak için taleplerini belirtmesinin istenmesi üzerine;`,
-            ` "Müştekinin talebi doğrultusunda uzlaşmak istiyorum." dedi`
+            ` müştekinin uzlaşma talebi iletilmiş ve kendisinin de taleplerini belirtmesinin istenmesi üzerine;`,
+            ` "Müştekinin, 1.000 TL vermem halinde uzlaşma isteğini kabul etmiyorum. Bunu ödeme gücüm yoktur. Uzlaşmak istemiyorum" dedi.`
         ]);
 
         this.newLine();
 
-        const p = this.createParagraph();
+        const p1 = this.createParagraph();
 
         this.indentedText([
             `Taraflar özgür iradeleriyle uzlaştıklarını ve birbirlerinden başkaca`,
             ` herhangi bir talepleri olmadığını beyan etmişlerdir. Taraflar arasında`,
-            ` CMK. 253. ve 254. maddeleri uyarınca `,
-        ], p);
-        this.text('UZLAŞMA GERÇEKLEŞMİŞ', p).bold();
+            ` CMK. 253. maddesi uyarınca `,
+        ], p1);
+        this.text('UZLAŞMA GERÇEKLEŞMEMİŞ', p1).bold();
         this.text([
-            ` olup, taraflara gerçekleşen uzlaşma nedeniyle "davanın düşmesine" karar`,
-            ` verileceği ve tarafların yaşanan bu olay nedeniyle bir daha şikayetçi olamayacakları`,
-            ` ve herhangi bir maddi ve manevi talebin de olamayacağı bilgisi verilmiştir.`
-        ], p);
+            ` olup, CMK. 253. maddesi gereği "kamu davası" açılacağı hususunda taraflara bilgi verilmiştir`
+        ], p1);
 
         this.indentedText([
             `Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak`,
@@ -176,7 +170,10 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        this.text(`Tarafların üzerinde anlaştıkları edimin yerine getirilme şekli ve zamanı: -`).bold();
+        const p2 = this.createParagraph();
+
+        this.text(`Uzlaştırma sağlanamadıysa nedenleri:`, p2).bold();
+        this.text(` Müştekinin talebi şüpheli tarafından kabul edilmemiştir.`, p2);
 
         this.newLine();
 
@@ -196,13 +193,13 @@ export class KovusturmaOlumluUzlastirmaRaporu extends BaseTemplate<KovusturmaOlu
 
         this.newLine();
 
-        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);
+        ['Tarih', 'Cumhuriyet Savcısı'].forEach(lbl => this.text(lbl).bold);
 
         this.text('ONAYLAMAMA GEREKÇESİ:').bold().underline();
 
         this.newLine();
 
-        ['Tarih', 'Hâkim'].forEach(lbl => this.text(lbl).bold);*/
+        ['Tarih', 'Cumhuriyet Savcısı'].forEach(lbl => this.text(lbl).bold);*/
     }
 
     formatAddress(address: Address): string {

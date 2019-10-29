@@ -1,6 +1,6 @@
 import {BaseTemplate, TextAlign} from './base';
-import {DateQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {fullName} from '../shared/helpers';
+import {DateQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
+import {fullName} from '../../shared/helpers';
 
 export interface KovusturmaUzlastirmaciGorusmeTutanagiProps {
     callDate: string;

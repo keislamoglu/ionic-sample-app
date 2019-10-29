@@ -1,6 +1,6 @@
 import {BaseTemplate, TextAlign} from './base';
-import {Condition, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../dynamic-form-question/models';
-import {fullName} from '../shared/helpers';
+import {Condition, DateQuestion, DropdownQuestion, Question, TextboxQuestion} from '../../dynamic-form-question/models';
+import {fullName} from '../../shared/helpers';
 
 const defaultBank = 'Ziraat Bankası / 42-502417-1 / TR69 0020 9000 0050 2417 0000 01';
 

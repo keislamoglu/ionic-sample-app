@@ -1,5 +1,5 @@
 import {DocxFileTemplate} from './docx-file-template';
-import {ClientUser, Petition} from '../../shared/entity';
+import {ClientUser, Petition} from '../../../shared/entity';
 
 export interface BaseTemplateProps<T> {
     petition: Petition;
