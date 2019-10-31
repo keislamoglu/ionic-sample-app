@@ -1,6 +1,8 @@
 /* tslint:disable:max-line-length */
 import {BaseTemplate} from './base/base-template';
 import {DateQuestion, Question} from '../../dynamic-form-question/models';
+import {CaseFileType, PartyType} from '../../shared/entity';
+import {printAddress, printDate, printTime} from '../../shared/helpers';
 
 export interface UzlasmaTeklifFormuProps {
     date: string;
@@ -17,44 +19,60 @@ export const UzlasmaTeklifFormuQuestions: Question[] = [
 
 export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
     get documentDefinition() {
+        const {petition, extraData, conciliator} = this.props;
+        const {caseFile} = petition;
+        const [party] = petition.parties;
+        const competentAuthority = caseFile.type === CaseFileType.Investigation
+            ? caseFile.attorneyGeneralship
+            : caseFile.courtHouse;
+        const partyTypeHavingCrimes = {
+            [CaseFileType.Investigation]: PartyType.Suspected,
+            [CaseFileType.Prosecution]: PartyType.Defendant
+        }[caseFile.type];
+        const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
+
         return {
             content: [
                 this.nl(2),
                 {text: 'T.C.', style: 'headingCenter'},
                 this.nl(),
-                {text: '[.... CUMHURİYET BAŞSAVCILIĞI]', style: 'headingCenter'},
+                {text: competentAuthority.name, style: 'headingCenter'},
                 this.nl(),
                 {
                     text: [
                         {text: 'Uzlaştırma No: ', bold: true},
-                        {text: '[uzlaştırmaNo]'}
+                        {text: caseFile.conciliationNo}
                     ]
 
                 },
                 this.nl(),
                 {text: 'UZLAŞMA TEKLİF FORMU', style: 'headingCenter'},
                 this.nl(),
-                {text: [
+                {
+                    text: [
                         {text: 'A.', bold: true},
                         `5271 sayılı Ceza Muhakemesi Kanunu'nun 253 ve 254 üncü maddeleri çerçevesinde, `,
-                        `[soruşturma/kovuşturma]`,
+                        caseFile.type,
                         ` konusu `,
-                        `[crimes]`,
+                        crimes,
                         ` suçunun/suçlarının uzlaştırmaya tabi olması nedeniyle aşağıda açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları `,
                         `[translator] vasıtasıyla`,
                         ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
-                    ], alignment: 'justify'},
-                `.../.../....... Saat: .........`,
+                    ], alignment: 'justify'
+                },
+                `${printDate(extraData.date)} Saat: ${printTime(extraData.date)}`,
                 this.nl(),
                 this.lineSeparator(),
                 this.nl(),
                 {
                     columns: [
                         {text: `B.UZLAŞMA TEKLİFİ YAPILAN`, style: 'heading'},
-                        {text: [
+                        {
+                            text: [
                                 {text: ':', bold: true},
-                                ` [MÜŞTEKİ/MAĞDUR]`
-                            ]}
+                                ` ${party.type}`
+                            ]
+                        }
                     ]
                 },
                 this.nl(),
@@ -69,7 +87,8 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 this.nl(),
                 {
                     columns: [
-                        {stack: [
+                        {
+                            stack: [
                                 {text: `1. T.C. Kimlik Numarası`},
                                 {text: `2. Adı Soyadı`},
                                 {text: `3. Baba Adı`},
@@ -77,17 +96,20 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                                 {text: `5. Doğum Yeri ve Tarihi`},
                                 {text: `6. Adres`},
                                 {text: `7. Telefon`},
-                            ], width: 145},
+                            ], width: 145
+                        },
                         {stack: new Array(7).fill(':'), width: 5},
-                        {stack: [
-                                '[tc kimlik no]',
-                                '[adı soyadı]',
-                                '[baba adı]',
-                                '[anne adı]',
-                                '[dogum yeri ve tarihi]',
-                                '[adres]',
-                                '[telefon]'
-                            ]}
+                        {
+                            stack: [
+                                party.person.identificationNo,
+                                `${party.person.name} ${party.person.lastName}`,
+                                party.person.fatherName,
+                                party.person.motherName,
+                                `${printDate(party.person.birthDate)}, ${party.person.birthPlace}`,
+                                printAddress(party.person.address),
+                                party.person.phone
+                            ]
+                        }
                     ]
                 },
                 this.nl(),
@@ -120,7 +142,11 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 this.nl(),
                 this.lineSeparator(),
                 this.nl(),
-                {text: `\tUzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`, bold: true, preserveLeadingSpaces: true},
+                {
+                    text: `\tUzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`,
+                    bold: true,
+                    preserveLeadingSpaces: true
+                },
                 {text: `\tFormun bir örneğini aldım.`, bold: true, preserveLeadingSpaces: true},
                 this.nl(),
                 this.lineSeparator(),
