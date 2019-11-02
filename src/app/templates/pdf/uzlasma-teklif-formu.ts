@@ -2,7 +2,7 @@
 import {BaseTemplate} from './base/base-template';
 import {DateQuestion, Question} from '../../dynamic-form-question/models';
 import {CaseFileType, PartyType} from '../../shared/entity';
-import {printAddress, printDate, printTime} from '../../shared/helpers';
+import {fullName, printAddress, printDate, printTime} from '../../shared/helpers';
 
 export interface UzlasmaTeklifFormuProps {
     date: string;
@@ -30,14 +30,15 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
             [CaseFileType.Prosecution]: PartyType.Defendant
         }[caseFile.type];
         const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
+        const translator = caseFile.parties.find(t => t.type === PartyType.Translator && t.relatedPersonId === party.personId);
 
         return {
             content: [
-                this.nl(2),
+                this.newLine + this.newLine,
                 {text: 'T.C.', style: 'headingCenter'},
-                this.nl(),
+                this.newLine,
                 {text: competentAuthority.name, style: 'headingCenter'},
-                this.nl(),
+                this.newLine,
                 {
                     text: [
                         {text: 'Uzlaştırma No: ', bold: true},
@@ -45,9 +46,9 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                     ]
 
                 },
-                this.nl(),
+                this.newLine,
                 {text: 'UZLAŞMA TEKLİF FORMU', style: 'headingCenter'},
-                this.nl(),
+                this.newLine,
                 {
                     text: [
                         {text: 'A.', bold: true},
@@ -55,15 +56,16 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                         caseFile.type,
                         ` konusu `,
                         crimes,
-                        ` suçunun/suçlarının uzlaştırmaya tabi olması nedeniyle aşağıda açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları `,
-                        `[translator] vasıtasıyla`,
+                        ` ${this.hasMultiCrimes(crimes) ? 'suçlarının' : 'suçunun'}`,
+                        ` uzlaştırmaya tabi olması nedeniyle aşağıda açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları `,
+                        translator ? ` ${fullName(translator.person)} vasıtasıyla` : ``,
                         ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
                     ], alignment: 'justify'
                 },
                 `${printDate(extraData.date)} Saat: ${printTime(extraData.date)}`,
-                this.nl(),
-                this.lineSeparator(),
-                this.nl(),
+                this.newLine,
+                this.lineSeparator,
+                this.newLine,
                 {
                     columns: [
                         {text: `B.UZLAŞMA TEKLİFİ YAPILAN`, style: 'heading'},
@@ -75,27 +77,27 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                         }
                     ]
                 },
-                this.nl(),
-                this.lineSeparator(),
-                this.nl(),
+                this.newLine,
+                this.lineSeparator,
+                this.newLine,
                 {
                     columns: [
                         {text: `C.UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN`, style: 'heading'},
                         {text: `:`, bold: true}
                     ]
                 },
-                this.nl(),
+                this.newLine,
                 {
                     columns: [
                         {
-                            stack: [
-                                {text: `1. T.C. Kimlik Numarası`},
-                                {text: `2. Adı Soyadı`},
-                                {text: `3. Baba Adı`},
-                                {text: `4. Anne Adı`},
-                                {text: `5. Doğum Yeri ve Tarihi`},
-                                {text: `6. Adres`},
-                                {text: `7. Telefon`},
+                            ol: [
+                                `T.C. Kimlik Numarası`,
+                                `Adı Soyadı`,
+                                `Baba Adı`,
+                                `Anne Adı`,
+                                `Doğum Yeri ve Tarihi`,
+                                `Adres`,
+                                `Telefon`,
                             ], width: 145
                         },
                         {stack: new Array(7).fill(':'), width: 5},
@@ -112,9 +114,9 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                         }
                     ]
                 },
-                this.nl(),
-                this.lineSeparator(),
-                this.nl(),
+                this.newLine,
+                this.lineSeparator,
+                this.newLine,
                 {text: `D.Uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları :`, bold: true},
                 {
                     ol: [
@@ -139,57 +141,57 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                         `Şüpheli ya da sanığın edimini yerine getirmemesi hâlinde uzlaştırma raporu veya uzlaşma belgesi, 2004 sayılı İcra ve İflas Kanunu’nun 38 inci maddesinde yazılı ilâm mahiyetinde belgelerden sayılır. Bu belge mahkeme kararı gibi icra olunur.`
                     ]
                 },
-                this.nl(),
-                this.lineSeparator(),
-                this.nl(),
+                this.newLine,
+                this.lineSeparator,
+                this.newLine,
                 {
                     text: `\tUzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`,
                     bold: true,
                     preserveLeadingSpaces: true
                 },
                 {text: `\tFormun bir örneğini aldım.`, bold: true, preserveLeadingSpaces: true},
-                this.nl(),
-                this.lineSeparator(),
-                this.nl(),
+                this.newLine,
+                this.lineSeparator,
+                this.newLine,
                 {text: `Şahsıma yapılan uzlaşma teklifini;`, bold: true},
-                this.nl(),
-                this.dashLine(),
-                this.nl(),
+                this.newLine,
+                this.dashedLine,
+                this.newLine,
                 {
                     columns: [
                         {text: `İnceleyip üç gün içinde beyanda bulunmak istiyorum.`, width: 360},
                         `.../.../20... Saat: .... İmza`
                     ]
                 },
-                this.nl(),
-                this.dashLine(),
-                this.nl(),
+                this.newLine,
+                this.dashedLine,
+                this.newLine,
                 {
                     columns: [
                         {text: `Kabul ediyorum`, width: 360},
                         `.../.../20... Saat: .... İmza`
                     ]
                 },
-                this.nl(),
-                this.dashLine(),
-                this.nl(),
+                this.newLine,
+                this.dashedLine,
+                this.newLine,
                 {
                     columns: [
                         {text: `Kabul etmiyorum`, width: 360},
                         `.../.../20... Saat: .... İmza`
                     ]
                 },
-                this.nl(),
-                this.dashLine(),
-                this.nl(2),
-                this.lineSeparator(),
-                this.nl(),
-                {
+                this.newLine,
+                this.dashedLine,
+                this.newLine + this.newLine,
+                this.lineSeparator,
+                this.newLine,
+                translator ? {
                     text: [
                         `Tercüman: `,
-                        `[tercüman]`
+                        fullName(translator.person)
                     ]
-                }
+                } : ''
 
             ],
             styles: {
