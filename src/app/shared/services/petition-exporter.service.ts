@@ -7,6 +7,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {BaseTemplate, UzlasmaTeklifFormu} from '../../templates/pdf';
 import {File} from '@ionic-native/file/ngx';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {AppConfig} from '../app-config';
 
 @Injectable({providedIn: ServicesModule})
@@ -18,6 +19,7 @@ export class PetitionExporterService {
 
     constructor(private _userService: UserService,
                 private _instantiator: InstantiatorService,
+                private _fileOpener: FileOpener,
                 private _file: File) {
     }
 
@@ -82,5 +84,12 @@ export class PetitionExporterService {
                 reject(e);
             }
         });
+    }
+
+    open(fileName: string) {
+        return this._fileOpener.open(
+            `${this._savePath}/${fileName}.pdf`,
+            'application/pdf'
+        );
     }
 }

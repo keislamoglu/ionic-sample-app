@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
 import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {DocxFileService, ModalService} from '../../shared/services';
+import {DocxFileService, ModalService, PetitionExporterService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
 import {PetitionService, PetitionTemplateService} from '../../shared/repositories';
@@ -17,6 +17,7 @@ export class PetitionDetailComponent implements OnInit {
 
     constructor(private _petitionService: PetitionService,
                 private _petitionTemplateService: PetitionTemplateService,
+                private _petitionExporterService: PetitionExporterService,
                 private _modalService: ModalService,
                 private _route: ActivatedRoute,
                 private _navController: NavController,
@@ -26,10 +27,6 @@ export class PetitionDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._route.snapshot.paramMap.get('id');
         this._loadData();
-    }
-
-    openDocx() {
-        this._docxFileService.open(this.petition.fileName);
     }
 
     async edit() {
@@ -48,5 +45,9 @@ export class PetitionDetailComponent implements OnInit {
                 return this._petitionTemplateService.get(petition.templateId);
             })
         ).subscribe(template => this.template = template);
+    }
+
+     openPdf() {
+        this._petitionExporterService.open(this.petition.fileName);
     }
 }

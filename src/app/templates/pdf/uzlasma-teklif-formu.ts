@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-import {BaseTemplate} from './base/base-template';
+import {BaseStyle, BaseTemplate} from './base/base-template';
 import {DateQuestion, Question} from '../../dynamic-form-question/models';
 import {CaseFileType, PartyType} from '../../shared/entity';
 import {fullName, printAddress, printDate, printTime} from '../../shared/helpers';
@@ -35,19 +35,18 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
         return {
             content: [
                 this.newLine + this.newLine,
-                {text: 'T.C.', style: 'headingCenter'},
+                {text: 'T.C.', style: [BaseStyle.Heading, BaseStyle.Center]},
                 this.newLine,
-                {text: competentAuthority.name, style: 'headingCenter'},
+                {text: competentAuthority.name, style: [BaseStyle.Heading, BaseStyle.Center]},
                 this.newLine,
                 {
                     text: [
                         {text: 'Uzlaştırma No: ', bold: true},
-                        {text: caseFile.conciliationNo}
+                        caseFile.conciliationNo
                     ]
-
                 },
                 this.newLine,
-                {text: 'UZLAŞMA TEKLİF FORMU', style: 'headingCenter'},
+                {text: 'UZLAŞMA TEKLİF FORMU', style: [BaseStyle.Heading, BaseStyle.Center]},
                 this.newLine,
                 {
                     text: [
@@ -68,11 +67,11 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 this.newLine,
                 {
                     columns: [
-                        {text: `B.UZLAŞMA TEKLİFİ YAPILAN`, style: 'heading'},
+                        {text: `B.UZLAŞMA TEKLİFİ YAPILAN`, style: BaseStyle.Heading},
                         {
                             text: [
                                 {text: ':', bold: true},
-                                ` ${party.type}`
+                                ` ${party.type.toLocaleUpperCase()}`
                             ]
                         }
                     ]
@@ -82,7 +81,7 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 this.newLine,
                 {
                     columns: [
-                        {text: `C.UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN`, style: 'heading'},
+                        {text: `C.UZLAŞMA TEKLİFİ YAPILAN KİŞİNİN`, style: BaseStyle.Heading},
                         {text: `:`, bold: true}
                     ]
                 },
@@ -144,12 +143,11 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 this.newLine,
                 this.lineSeparator,
                 this.newLine,
-                {
-                    text: `\tUzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`,
-                    bold: true,
-                    preserveLeadingSpaces: true
-                },
-                {text: `\tFormun bir örneğini aldım.`, bold: true, preserveLeadingSpaces: true},
+                this.indentedText({
+                    text: `Uzlaştırmanın mahiyeti, uzlaşmayı kabul veya reddetmenin hukuki sonuçlarını anladım.`,
+                    bold: true
+                }),
+                this.indentedText({text: `Formun bir örneğini aldım.`, bold: true}),
                 this.newLine,
                 this.lineSeparator,
                 this.newLine,
@@ -194,17 +192,7 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                 } : ''
 
             ],
-            styles: {
-                heading: {
-                    fontSize: 12,
-                    bold: true,
-                },
-                headingCenter: {
-                    fontSize: 12,
-                    bold: true,
-                    alignment: 'center'
-                }
-            }
+            styles: this.defaultStyles
         };
     }
 

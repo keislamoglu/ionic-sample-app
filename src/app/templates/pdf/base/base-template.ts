@@ -6,11 +6,28 @@ export interface BaseTemplateProps<T> {
     extraData: T;
 }
 
+export enum BaseStyle {
+    Heading = 'heading',
+    Center = 'center'
+}
+
 export abstract class BaseTemplate<T = {}> {
     constructor(protected props: BaseTemplateProps<T>) {
     }
 
     abstract documentDefinition: any;
+
+    protected get defaultStyles() {
+        return {
+            [BaseStyle.Heading]: {
+                fontSize: 12,
+                bold: true,
+            },
+            [BaseStyle.Center]: {
+                alignment: 'center'
+            }
+        };
+    }
 
     protected get newLine() {
         return '\n';
@@ -43,5 +60,15 @@ export abstract class BaseTemplate<T = {}> {
                 }
             ]
         };
+    }
+
+    protected indentedText(content: string | { text: string, [key: string]: any }) {
+        if (typeof content === 'string') {
+            content = {text: content};
+        }
+
+        content.text = `\t${content.text}`;
+
+        return {...content, preserveLeadingSpaces: true};
     }
 }
