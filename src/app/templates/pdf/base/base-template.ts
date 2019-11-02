@@ -12,17 +12,11 @@ export abstract class BaseTemplate<T = {}> {
 
     abstract documentDefinition: any;
 
-    protected nl(times = 1) {
-        let newLine = '';
-
-        for (let i = 0; i < times; i++) {
-            newLine += '\n';
-        }
-
-        return newLine;
+    protected get newLine() {
+        return '\n';
     }
 
-    protected lineSeparator() {
+    protected get lineSeparator() {
         return {
             canvas: [
                 {
@@ -36,7 +30,7 @@ export abstract class BaseTemplate<T = {}> {
         };
     }
 
-    protected dashLine() {
+    protected get dashedLine() {
         return {
             canvas: [
                 {
