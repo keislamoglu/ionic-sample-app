@@ -99,7 +99,7 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                                 `Telefon`,
                             ], width: 145
                         },
-                        {stack: new Array(7).fill(':'), width: 5},
+                        {stack: ':'.repeat(7).split(''), width: 5},
                         {
                             stack: [
                                 party.person.identificationNo,
