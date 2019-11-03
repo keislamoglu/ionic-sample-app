@@ -19,7 +19,7 @@ export const UzlasmaTeklifFormuQuestions: Question[] = [
 
 export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
     get documentDefinition() {
-        const {petition, extraData, conciliator} = this.props;
+        const {petition, extraData} = this.props;
         const {caseFile} = petition;
         const [party] = petition.parties;
         const competentAuthority = caseFile.type === CaseFileType.Investigation
@@ -56,8 +56,8 @@ export class UzlasmaTeklifFormu extends BaseTemplate<UzlasmaTeklifFormuProps> {
                         ` konusu `,
                         crimes,
                         ` ${this.hasMultiCrimes(crimes) ? 'suçlarının' : 'suçunun'}`,
-                        ` uzlaştırmaya tabi olması nedeniyle aşağıda açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları `,
-                        translator ? ` ${fullName(translator.person)} vasıtasıyla` : ``,
+                        ` uzlaştırmaya tabi olması nedeniyle aşağıda açık kimliği belirtilen kişiye bu formun (D) bölümünde yer alan uzlaştırmanın mahiyeti ile uzlaşmayı kabul veya reddetmenin hukuki sonuçları`,
+                        translator ? ` Tercüman ${fullName(translator.person)} vasıtasıyla` : ``,
                         ` anlatılarak uzlaşma teklifinde bulunulmuştur.`,
                     ], alignment: 'justify'
                 },
