@@ -8,5 +8,6 @@ export function printDate(dateStr: string) {
 }
 
 export function printTime(dateStr: string) {
-    return new Date(dateStr).toLocaleTimeString();
+    const date = new Date(dateStr);
+    return `${date.getHours()}:${date.getMinutes()}`;
 }
