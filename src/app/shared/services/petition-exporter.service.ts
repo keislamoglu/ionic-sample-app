@@ -62,6 +62,13 @@ export class PetitionExporterService {
         );
     }
 
+    open(fileName: string) {
+        return this._fileOpener.open(
+            `${this._savePath}/${fileName}.pdf`,
+            'application/pdf'
+        );
+    }
+
     private _createDocsDirIfNotExists() {
         return this._file.createDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory, false);
     }
@@ -84,12 +91,5 @@ export class PetitionExporterService {
                 reject(e);
             }
         });
-    }
-
-    open(fileName: string) {
-        return this._fileOpener.open(
-            `${this._savePath}/${fileName}.pdf`,
-            'application/pdf'
-        );
     }
 }
