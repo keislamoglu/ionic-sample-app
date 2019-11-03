@@ -99,7 +99,6 @@ export class PetitionEditModalComponent implements OnInit {
         this.petition.name = name;
         this.petition.partyIds = parties;
         this.petition.date = '' + new Date();
-        this.petition.fileName = `${guid()}`;
 
         if (this.dynamicQuestionAnswers) {
             this.petition.extraData = JSON.stringify(this.dynamicQuestionAnswers);
@@ -114,6 +113,7 @@ export class PetitionEditModalComponent implements OnInit {
                 });
         } else {
             // New Petition
+            this.petition.fileName = `${guid()}`;
             this._petitionService.add(this.petition)
                 .subscribe(petition => {
                     this.export(petition.id);
