@@ -15,151 +15,91 @@ export const UzlastirmaRaporuQuestions: Question[] = [
 ];
 
 export class UzlastirmaRaporu extends BaseTemplate {
+    get primaryUnderline() {
+        return {canvas: [{
+                type: 'line',
+                x1: 0, y1: -3,
+                x2: 250, y2: -3,
+                lineWidth: 1
+            }]};
+    }
 
-    private get emptyRow() {
-        return [{colSpan: 4, text: '\n'}];
+    get secondaryUnderline() {
+        return {
+            canvas: [{
+                type: 'line',
+                x1: 0, y1: -3,
+                x2: 210, y2: -3,
+                lineWidth: 1
+            }]
+        };
+    }
+
+    printColumns(labelValues, type) {
+        const isPrimary = type === 'primary';
+        const lineHeight = 1.2;
+        const isExceededMaxLength = (text) => text.length > 50;
+        const labels = labelValues.map(t => t[0]);
+        const values = labelValues.map(t => t[1]);
+        const labelStack = {
+            stack: [...Object.values(labels.map(t => [t, isPrimary ? this.primaryUnderline : this.secondaryUnderline]))],
+            lineHeight,
+            width: isPrimary ? 247 : 207,
+            bold: isPrimary
+        };
+        const colonStack = {
+            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(Math.floor(t.length / 50)) + ':' : ':'),
+            lineHeight,
+            width: 5
+        };
+        const valueStack = {
+            stack: values.map((t, index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(Math.floor(labels[index].length / 50)) + t : t),
+            lineHeight
+        };
+
+        return {
+            columns: [labelStack, colonStack, valueStack],
+            margin: isPrimary ? [] : [40, 0, 0, 0]
+        };
     }
 
     get documentDefinition() {
         return {
             content: [
-                this.newLine + this.newLine,
+                {text: 'UZLAŞTIRMA RAPORU', style: ['heading', 'center']},
+                this.newLine.repeat(2),
                 {
-                    text: 'UZLAŞTIRMA RAPORU', style: [BaseStyle.Heading, BaseStyle.Center],
+                    stack: [
+                        this.printColumns([
+                            ['Uzlaştırma No', '[Lorem Ipsum]'],
+                            ['Cumhuriyet Başsavcılığı Soruşturma No', '[Dosya No]'],
+                            ['Mahkeme Esas No', '[Mahkeme Esas No]'],
+                            ['Uzlaştırma Konusu Suç/Suçları', '[Suç/Suçlar]']
+                        ], 'primary'),
+                        this.newLine,
+                        this.printColumns([['Uzlaştırmacının']], 'primary'),
+                        this.printColumns([
+                            ['Adı ve Soyadı', '[Adı ve Soyadı]'],
+                            ['Sicil Numarası', '[Sicil Numarası]'],
+                            ['İletişim Adresi', '[İletişim Adresi]']
+                        ], 'secondary'),
+                        this.newLine,
+                        this.printColumns([
+                            ['Görevlendirme Tarihi', '[Görevlendirme Tarihi]'],
+                            ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', '[Uzl. Süresinin Başlama Tarihi]'],
+                            ['Ek Süre Verilme Tarihi ve Süresi', '[Ek Süre Verilme Tarihi ve Süresi]']
+                        ], 'primary'),
+                        this.printColumns([['Şüphelinin / Sanığın / Kanuni Temsilcisinin']], 'primary'),
+                        this.printColumns([
+                            ['Adı ve Soyadı', '[Adı ve Soyadı]'],
+                            ['T.C. Kimlik Numarası', '[T.C. Kimlik No]'],
+                            ['Adresi', '[Adres]'],
+                            ['Telefon Numarası', '[Tel No]'],
+                        ], 'secondary')
+                    ]
                 },
-                this.newLine,
-                {
-                    table: {
-                        widths: [30, 225, 1, 'auto'],
-                        body: [
-                            [
-                                ...this.printLabel('Uzlaştırma No', {bold: true}),
-                                '[Uzlaştırma No]'
-                            ],
-                            [
-                                ...this.printLabel('Cumhuriyet Başsavcılığı Soruşturma No', {bold: true}),
-                                '[Dosya No]'
-                            ],
-                            [
-                                ...this.printLabel('Mahkeme Esas No', {bold: true}),
-                                '[Mahkeme Esas No]'
-                            ],
-                            [
-                                ...this.printLabel('Uzlaştırma Konusu Suç / Suçlar', {bold: true}),
-                                '[Suç/Suçlar]'
-                            ],
-                            this.emptyRow,
-                            [
-                                ...this.printLabel('Uzlaştırmacının', {bold: true}),
-                                {}
-                            ],
-                            [
-                                ...this.printLabel('Adı ve Soyadı', {indented: true}),
-                                '[Adı ve Soyadı]'
-                            ],
-                            [
-                                ...this.printLabel('Sicil Numarası', {indented: true}),
-                                '[Sicil Numarası]'
-                            ],
-                            [
-                                ...this.printLabel('İletişim Adresi', {indented: true}),
-                                {text: '[İletişim Adresi]', rowSpan: 2}
-                            ],
-                            this.emptyRow,
-                            [
-                                ...this.printLabel('Görevlendirme Tarihi', {bold: true}),
-                                '[Görevlendirme Tarihi]'
-                            ],
-                            [
-                                ...this.printLabel('Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', {bold: true}),
-                                '\n[Tarih]'
-                            ],
-                            [
-                                ...this.printLabel('Ek Süre Verilme Tarihi ve Süresi', {bold: true}),
-                                '[Ek süre]'
-                            ],
-                            [
-                                ...this.printLabel('Şüphelinin / Sanığın / Kanuni Temsilcisinin', {bold: true}),
-                                {}
-                            ],
-                            [
-                                ...this.printLabel('Adı ve Soyadı', {indented: true}),
-                                '[Adı ve Soyadı]'
-                            ],
-                            [
-                                ...this.printLabel('T.C. Kimlik Numarası', {indented: true}),
-                                '[TC No]'
-                            ],
-                            [
-                                ...this.printLabel('Adresi', {indented: true}),
-                                {text: '[Adresi]', rowSpan: 2}
-                            ],
-                            this.emptyRow,
-                            [
-                                ...this.printLabel('Telefon Numarası', {indented: true}),
-                                '[Tel No]'
-                            ],
-                            [
-                                ...this.printLabel(`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, {bold: true}),
-                                {text: '[İkametgah]', rowSpan: 2}
-
-                            ],
-                            [
-                                ...this.printLabel(`Taraflardan Biri Yabancı ve Türkiye’de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, {bold: true}),
-                                {text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id erat non ', rowSpan: 3}
-                            ],
-                            this.emptyRow,
-                            [
-                                ...this.printLabel('Raporun Düzenlendiği Yer ve Tarih', {bold: true}),
-                                '[rapor tarihi ve yeri]'
-                            ],
-                            [
-                                ...this.printLabel('Uzlaştırma Süresi', {bold: true}),
-                                '[Uzlaştırma Süresi]'
-                            ],
-                            [
-                                ...this.printLabel('Uzlaştırma Sonucu', {bold: true}),
-                                '[EDİMSİZ OLARAK UZLAŞMA SAĞLANDI]'
-                            ]
-                        ],
-                    },
-                    layout: {
-                        defaultBorder: false
-                    }
-                }
             ],
             styles: this.defaultStyles
-
         };
-
-    }
-
-    printLabel(text, options: { bold?: boolean, indented?: boolean } = {}) {
-        const _options = {
-            bold: false,
-            indented: false,
-            ...options
-        };
-        const label = {
-            colSpan: _options.indented ? 1 : 2,
-            text: text,
-            border: [false, false, false, true],
-            marginLeft: -4,
-            bold: _options.bold
-        };
-        const colonText = (text.length / 50) > 1
-            ? `${'\n'.repeat(Math.floor(text.length / 50))}:`
-            : ':';
-        const colon = {
-            text: colonText,
-            border: [false, false, false, true],
-            marginRight: -4,
-            alignment: 'right',
-            bold: _options.bold,
-        };
-
-        return _options.indented
-            ? [{}, label, colon]
-            : [label, {}, colon];
     }
 }
