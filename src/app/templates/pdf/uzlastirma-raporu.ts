@@ -16,12 +16,14 @@ export const UzlastirmaRaporuQuestions: Question[] = [
 
 export class UzlastirmaRaporu extends BaseTemplate {
     get primaryUnderline() {
-        return {canvas: [{
+        return {
+            canvas: [{
                 type: 'line',
                 x1: 0, y1: -3,
                 x2: 250, y2: -3,
                 lineWidth: 1
-            }]};
+            }]
+        };
     }
 
     get secondaryUnderline() {
@@ -35,9 +37,11 @@ export class UzlastirmaRaporu extends BaseTemplate {
         };
     }
 
-    printColumns(labelValues, type) {
+    printColumns(labelValues: Array<[string, string?]>, type: 'primary' | 'secondary') {
         const isPrimary = type === 'primary';
         const lineHeight = 1.2;
+        const maxLineLength = 50;
+        const calcNewLineCount = (t: string) => Math.floor(new Blob([t]).size / maxLineLength);
         const isExceededMaxLength = (text) => text.length > 50;
         const labels = labelValues.map(t => t[0]);
         const values = labelValues.map(t => t[1]);
@@ -48,12 +52,12 @@ export class UzlastirmaRaporu extends BaseTemplate {
             bold: isPrimary
         };
         const colonStack = {
-            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(Math.floor(t.length / 50)) + ':' : ':'),
+            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(calcNewLineCount(t)) + ':' : ':'),
             lineHeight,
             width: 5
         };
         const valueStack = {
-            stack: values.map((t, index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(Math.floor(labels[index].length / 50)) + t : t),
+            stack: values.map((t = '', index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(calcNewLineCount(labels[index])) + t : t),
             lineHeight
         };
 
@@ -95,7 +99,23 @@ export class UzlastirmaRaporu extends BaseTemplate {
                             ['T.C. Kimlik Numarası', '[T.C. Kimlik No]'],
                             ['Adresi', '[Adres]'],
                             ['Telefon Numarası', '[Tel No]'],
-                        ], 'secondary')
+                        ], 'secondary'),
+                        this.printColumns([
+                            [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, '[Adres]'],
+                        ], 'primary'),
+                        this.newLine,
+                        this.printColumns([
+                            [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, '[Adres]']
+                        ], 'primary'),
+                        this.printColumns([
+                            ['Raporun Düzenlendiği Yer ve Tarih', '[Yer Tarih]']
+                        ], 'primary'),
+                        this.printColumns([
+                            ['Uzlaştırma Süresi', '[Uzlaştırma Süresi]']
+                        ], 'primary'),
+                        this.printColumns([
+                            ['Uzlaştırma Sonucu', '[EDİMSİZ OLARAK UZLAŞMA SAĞLANDI]']
+                        ], 'primary')
                     ]
                 },
             ],
