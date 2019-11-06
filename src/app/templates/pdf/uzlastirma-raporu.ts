@@ -37,36 +37,6 @@ export class UzlastirmaRaporu extends BaseTemplate {
         };
     }
 
-    printColumns(labelValues: Array<[string, string?]>, type: 'primary' | 'secondary') {
-        const isPrimary = type === 'primary';
-        const lineHeight = 1.2;
-        const maxLineLength = 50;
-        const calcNewLineCount = (t: string) => Math.floor(new Blob([t]).size / maxLineLength);
-        const isExceededMaxLength = (text) => text.length > 50;
-        const labels = labelValues.map(t => t[0]);
-        const values = labelValues.map(t => t[1]);
-        const labelStack = {
-            stack: [...Object.values(labels.map(t => [t, isPrimary ? this.primaryUnderline : this.secondaryUnderline]))],
-            lineHeight,
-            width: isPrimary ? 247 : 207,
-            bold: isPrimary
-        };
-        const colonStack = {
-            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(calcNewLineCount(t)) + ':' : ':'),
-            lineHeight,
-            width: 5
-        };
-        const valueStack = {
-            stack: values.map((t = '', index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(calcNewLineCount(labels[index])) + t : t),
-            lineHeight
-        };
-
-        return {
-            columns: [labelStack, colonStack, valueStack],
-            margin: isPrimary ? [] : [40, 0, 0, 0]
-        };
-    }
-
     get documentDefinition() {
         return {
             content: [
@@ -115,11 +85,54 @@ export class UzlastirmaRaporu extends BaseTemplate {
                         ], 'primary'),
                         this.printColumns([
                             ['Uzlaştırma Sonucu', '[EDİMSİZ OLARAK UZLAŞMA SAĞLANDI]']
-                        ], 'primary')
+                        ], 'primary'),
+                        this.newLine,
+                        this.indentedText(`[Cumh. Başs.] Uzlaştırma Bürosu’nun yukarıda numarası  yazılı uzlaştırma dosyası kapsamında;`),
+                        this.newLine,
+                        this.indentedText(`Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek, uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`),
+                        this.newLine,
+                        this.indentedText(`Yapılan görüşmelerde;`),
+                        this.newLine,
+                        this.indentedText(`[Lorem Ipsum Dolor Sit Amet]`),
+                        this.newLine,
+                        this.indentedText(`Taraflar [uzlaştıklarını / uzlaşamadıklarını] beyan etmişlerdir. Taraflar arasında UZLAŞMA [GERÇEKLEŞMİŞ / GERÇEKLEŞMEMİŞ] olup, CMK. 253. ve 254. maddeleri gereği “hükmün açıklanacağı” hususunda taraflara bilgi verilmiştir.`),
+                        this.newLine,
+                        this.indentedText(`Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak “uzlaştırmanın hukuki sonuçlarını anladık”, demişlerdir. İş bu uzlaştırma raporu hep birlikte imza altına alınmıştır.`),
+                        this.newLine,
                     ]
                 },
             ],
             styles: this.defaultStyles
+        };
+    }
+
+    printColumns(labelValues: Array<[string, string?]>, type: 'primary' | 'secondary') {
+        const isPrimary = type === 'primary';
+        const lineHeight = 1.2;
+        const maxLineLength = 50;
+        const calcNewLineCount = (t: string) => Math.floor(new Blob([t]).size / maxLineLength);
+        const isExceededMaxLength = (text) => text.length > 50;
+        const labels = labelValues.map(t => t[0]);
+        const values = labelValues.map(t => t[1]);
+        const labelStack = {
+            stack: [...Object.values(labels.map(t => [t, isPrimary ? this.primaryUnderline : this.secondaryUnderline]))],
+            lineHeight,
+            width: isPrimary ? 247 : 207,
+            bold: isPrimary
+        };
+        const colonStack = {
+            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(calcNewLineCount(t)) + ':' : ':'),
+            lineHeight,
+            width: 5
+        };
+        const valueStack = {
+            stack: values.map((t = '', index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(calcNewLineCount(labels[index])) + t : t),
+            lineHeight
+        };
+
+        return {
+            columns: [labelStack, colonStack, valueStack],
+            margin: isPrimary ? [] : [40, 0, 0, 0]
         };
     }
 }
