@@ -33,6 +33,7 @@ export class PetitionEditModalComponent implements OnInit {
 
     set dynamicQuestionAnswers(value) {
         this.form.patchValue({dynamic: value});
+        this._markForCheck();
     }
 
     constructor(private _modalController: ModalController,
@@ -79,10 +80,12 @@ export class PetitionEditModalComponent implements OnInit {
             switchMap(([templates, parties]) => {
                 this.allTemplates = templates;
                 this.parties = parties;
+                this._markForCheck();
                 return this._petitionService.get(id);
             }),
             switchMap(petition => {
                 this.petition = petition;
+                this._markForCheck();
                 return this._loadTemplate(petition.templateId);
             }),
         ).subscribe(() => {
