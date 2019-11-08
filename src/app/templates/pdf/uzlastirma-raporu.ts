@@ -1,20 +1,43 @@
 /* tslint:disable:max-line-length */
 import {BaseStyle, BaseTemplate} from './base/base-template';
-import {DateQuestion, Question} from '../../dynamic-form-question/models';
+import {DateQuestion, DropdownQuestion, Question} from '../../dynamic-form-question/models';
+import {CaseFileType, PartyType} from '../../shared/entity';
+import {fullName} from '../../shared/helpers';
 
 export interface UzlastirmaRaporuProps {
     date: string;
+    conciliationResult: string;
 }
+
+const conciliationResults = [
+    'UZLAŞMA SAĞLANAMADI',
+    'UZLAŞMA SAĞLANDI',
+    'EDİMLİ UZLAŞMA SAĞLANDI',
+    'EDİMSİZ OLARAK UZLAŞMA SAĞLANDI',
+    'KISMİ UZLAŞMA SAĞLANDI'
+];
 
 export const UzlastirmaRaporuQuestions: Question[] = [
     new DateQuestion({
         key: 'date',
         label: 'Tarih',
         required: true,
+    }),
+    new DropdownQuestion({
+        key: 'conciliationResult',
+        label: 'Uzlaştırma Sonucu',
+        required: true,
+        options: [
+            {key: 0, value: conciliationResults[0]},
+            {key: 1, value: conciliationResults[1]},
+            {key: 2, value: conciliationResults[2]},
+            {key: 3, value: conciliationResults[3]},
+            {key: 4, value: conciliationResults[4]}
+        ]
     })
 ];
 
-export class UzlastirmaRaporu extends BaseTemplate {
+export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
     get primaryUnderline() {
         return this.drawUnderline(250);
     }
@@ -24,6 +47,14 @@ export class UzlastirmaRaporu extends BaseTemplate {
     }
 
     get documentDefinition() {
+        const {petition, conciliator, extraData} = this.props;
+        const {caseFile} = petition;
+        const partyTypeHavingCrimes = {
+            [CaseFileType.Investigation]: PartyType.Suspected,
+            [CaseFileType.Prosecution]: PartyType.Defendant
+        }[caseFile.type];
+        const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
+
         return {
             content: [
                 {text: 'UZLAŞTIRMA RAPORU', style: [BaseStyle.Heading, BaseStyle.Center]},
@@ -31,24 +62,26 @@ export class UzlastirmaRaporu extends BaseTemplate {
                 {
                     stack: [
                         this.printColumns([
-                            ['Uzlaştırma No', this.placeholder()],
-                            ['Cumhuriyet Başsavcılığı Soruşturma No', this.placeholder()],
-                            ['Mahkeme Esas No', this.placeholder()],
-                            ['Uzlaştırma Konusu Suç/Suçları', this.placeholder()]
+                            ['Uzlaştırma No', caseFile.conciliationNo],
+                            // TODO: ask whether the below items are separated
+                            ['Cumhuriyet Başsavcılığı Soruşturma No', caseFile.fileNo],
+                            ['Mahkeme Esas No', caseFile.fileNo],
+                            ['Uzlaştırma Konusu Suç/Suçları', crimes]
                         ]),
                         this.newLine,
                         this.printColumns([['Uzlaştırmacının']]),
                         this.printColumns([
-                            ['Adı ve Soyadı', this.placeholder()],
-                            ['Sicil Numarası', this.placeholder()],
-                            ['İletişim Adresi', this.placeholder()]
+                            ['Adı ve Soyadı', fullName(conciliator)],
+                            ['Sicil Numarası', conciliator.registrationNo],
+                            ['İletişim Adresi', conciliator.address]
                         ], 'secondary'),
                         this.newLine,
                         this.printColumns([
-                            ['Görevlendirme Tarihi', this.placeholder()],
-                            ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', this.placeholder()],
+                            ['Görevlendirme Tarihi', caseFile.chargeDate],
+                            ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', caseFile.conciliationStartDate],
                             ['Ek Süre Verilme Tarihi ve Süresi', this.placeholder()]
                         ]),
+                        // TODO: repeat the following two items for each party of the case file
                         this.printColumns([['Şüphelinin / Sanığın / Kanuni Temsilcisinin']]),
                         this.printColumns([
                             ['Adı ve Soyadı', this.placeholder()],
@@ -70,7 +103,7 @@ export class UzlastirmaRaporu extends BaseTemplate {
                             ['Uzlaştırma Süresi', this.placeholder()]
                         ]),
                         this.printColumns([
-                            ['Uzlaştırma Sonucu', '[EDİMSİZ OLARAK UZLAŞMA SAĞLANDI]']
+                            ['Uzlaştırma Sonucu', conciliationResults[extraData.conciliationResult]]
                         ])
                     ]
                 },
