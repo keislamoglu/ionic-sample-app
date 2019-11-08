@@ -1,7 +1,7 @@
 import {ControlType, QuestionBase, QuestionBaseOptions} from './question-base';
 
 interface OptionItem {
-    key: string;
+    key: string | number;
     value: string;
 }
 
