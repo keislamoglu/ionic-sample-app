@@ -16,97 +16,161 @@ export const UzlastirmaRaporuQuestions: Question[] = [
 
 export class UzlastirmaRaporu extends BaseTemplate {
     get primaryUnderline() {
-        return {
-            canvas: [{
-                type: 'line',
-                x1: 0, y1: -3,
-                x2: 250, y2: -3,
-                lineWidth: 1
-            }]
-        };
+        return this.drawUnderline(250);
     }
 
     get secondaryUnderline() {
-        return {
-            canvas: [{
-                type: 'line',
-                x1: 0, y1: -3,
-                x2: 210, y2: -3,
-                lineWidth: 1
-            }]
-        };
+        return this.drawUnderline(210);
     }
 
     get documentDefinition() {
         return {
             content: [
-                {text: 'UZLAŞTIRMA RAPORU', style: ['heading', 'center']},
+                {text: 'UZLAŞTIRMA RAPORU', style: [BaseStyle.Heading, BaseStyle.Center]},
                 this.newLine.repeat(2),
                 {
                     stack: [
                         this.printColumns([
-                            ['Uzlaştırma No', '[Lorem Ipsum]'],
-                            ['Cumhuriyet Başsavcılığı Soruşturma No', '[Dosya No]'],
-                            ['Mahkeme Esas No', '[Mahkeme Esas No]'],
-                            ['Uzlaştırma Konusu Suç/Suçları', '[Suç/Suçlar]']
-                        ], 'primary'),
+                            ['Uzlaştırma No', this.placeholder()],
+                            ['Cumhuriyet Başsavcılığı Soruşturma No', this.placeholder()],
+                            ['Mahkeme Esas No', this.placeholder()],
+                            ['Uzlaştırma Konusu Suç/Suçları', this.placeholder()]
+                        ]),
                         this.newLine,
-                        this.printColumns([['Uzlaştırmacının']], 'primary'),
+                        this.printColumns([['Uzlaştırmacının']]),
                         this.printColumns([
-                            ['Adı ve Soyadı', '[Adı ve Soyadı]'],
-                            ['Sicil Numarası', '[Sicil Numarası]'],
-                            ['İletişim Adresi', '[İletişim Adresi]']
+                            ['Adı ve Soyadı', this.placeholder()],
+                            ['Sicil Numarası', this.placeholder()],
+                            ['İletişim Adresi', this.placeholder()]
                         ], 'secondary'),
                         this.newLine,
                         this.printColumns([
-                            ['Görevlendirme Tarihi', '[Görevlendirme Tarihi]'],
-                            ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', '[Uzl. Süresinin Başlama Tarihi]'],
-                            ['Ek Süre Verilme Tarihi ve Süresi', '[Ek Süre Verilme Tarihi ve Süresi]']
-                        ], 'primary'),
-                        this.printColumns([['Şüphelinin / Sanığın / Kanuni Temsilcisinin']], 'primary'),
+                            ['Görevlendirme Tarihi', this.placeholder()],
+                            ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', this.placeholder()],
+                            ['Ek Süre Verilme Tarihi ve Süresi', this.placeholder()]
+                        ]),
+                        this.printColumns([['Şüphelinin / Sanığın / Kanuni Temsilcisinin']]),
                         this.printColumns([
-                            ['Adı ve Soyadı', '[Adı ve Soyadı]'],
-                            ['T.C. Kimlik Numarası', '[T.C. Kimlik No]'],
-                            ['Adresi', '[Adres]'],
-                            ['Telefon Numarası', '[Tel No]'],
+                            ['Adı ve Soyadı', this.placeholder()],
+                            ['T.C. Kimlik Numarası', this.placeholder()],
+                            ['Adresi', this.placeholder()],
+                            ['Telefon Numarası', this.placeholder()],
                         ], 'secondary'),
                         this.printColumns([
-                            [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, '[Adres]'],
-                        ], 'primary'),
+                            [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, this.placeholder()],
+                        ]),
                         this.newLine,
                         this.printColumns([
-                            [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, '[Adres]']
-                        ], 'primary'),
+                            [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, this.placeholder()]
+                        ]),
                         this.printColumns([
-                            ['Raporun Düzenlendiği Yer ve Tarih', '[Yer Tarih]']
-                        ], 'primary'),
+                            ['Raporun Düzenlendiği Yer ve Tarih', this.placeholder()]
+                        ]),
                         this.printColumns([
-                            ['Uzlaştırma Süresi', '[Uzlaştırma Süresi]']
-                        ], 'primary'),
+                            ['Uzlaştırma Süresi', this.placeholder()]
+                        ]),
                         this.printColumns([
                             ['Uzlaştırma Sonucu', '[EDİMSİZ OLARAK UZLAŞMA SAĞLANDI]']
-                        ], 'primary'),
+                        ])
+                    ]
+                },
+                this.newLine,
+                this.indentedText(`[Cumh. Başs.] Uzlaştırma Bürosu’nun yukarıda numarası  yazılı uzlaştırma dosyası kapsamında;`),
+                this.newLine,
+                this.indentedText(`Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek, uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`),
+                this.newLine,
+                this.indentedText(`Yapılan görüşmelerde;`),
+                this.newLine,
+                this.indentedText(this.placeholder(500)),
+                this.newLine,
+                this.indentedText(`Taraflar [uzlaştıklarını / uzlaşamadıklarını] beyan etmişlerdir. Taraflar arasında UZLAŞMA [GERÇEKLEŞMİŞ / GERÇEKLEŞMEMİŞ] olup, CMK. 253. ve 254. maddeleri gereği “hükmün açıklanacağı” hususunda taraflara bilgi verilmiştir.`),
+                this.newLine,
+                this.indentedText(`Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak “uzlaştırmanın hukuki sonuçlarını anladık”, demişlerdir. İş bu uzlaştırma raporu hep birlikte imza altına alınmıştır.`),
+                this.newLine,
+                {
+                    columns: [
+                        {
+                            stack: [
+                                'Tarafların üzerindeki anlaştıkları edim, edimin yerine getirilme şekli ve zamanı',
+                                this.drawUnderline(450)
+                            ],
+                            lineHeight: 1.2,
+                            width: 447,
+                            bold: true
+                        },
+                        [{text: ':', bold: true, width: 5}]
+                    ]
+                },
+                this.newLine,
+                this.placeholder(500),
+                this.newLine,
+                {
+                    columns: [
+                        {
+                            stack: [
+                                'Uzlaştırma başarısızlıkla sonuçlanması halinde nedenleri',
+                                this.drawUnderline(450)
+                            ],
+                            lineHeight: 1.2,
+                            width: 447,
+                            bold: true
+                        },
+                        [{text: ':', bold: true, width: 5}]
+                    ]
+                },
+                this.newLine,
+                this.placeholder(500),
+                this.newLine,
+                this.printColumns([
+                    ['Yapılan Giderler']
+                ]),
+                this.newLine.repeat(3),
+                {
+                    text: 'İmzalar',
+                    bold: true,
+                    decoration: 'underline',
+                    alignment: 'right',
+                    margin: [0, 0, 75, 0]
+                },
+                this.newLine,
+                {
+                    stack: [
+                        this.printColumns([['Şüpheli / Sanık']]),
                         this.newLine,
-                        this.indentedText(`[Cumh. Başs.] Uzlaştırma Bürosu’nun yukarıda numarası  yazılı uzlaştırma dosyası kapsamında;`),
+                        this.printColumns([['Mağdur / Katılan']]),
                         this.newLine,
-                        this.indentedText(`Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek, uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`),
+                        this.printColumns([['Suçtan Zarar Gören']]),
                         this.newLine,
-                        this.indentedText(`Yapılan görüşmelerde;`),
+                        this.printColumns([['Müdafi']]),
                         this.newLine,
-                        this.indentedText(`[Lorem Ipsum Dolor Sit Amet]`),
+                        this.printColumns([['Vekil']]),
                         this.newLine,
-                        this.indentedText(`Taraflar [uzlaştıklarını / uzlaşamadıklarını] beyan etmişlerdir. Taraflar arasında UZLAŞMA [GERÇEKLEŞMİŞ / GERÇEKLEŞMEMİŞ] olup, CMK. 253. ve 254. maddeleri gereği “hükmün açıklanacağı” hususunda taraflara bilgi verilmiştir.`),
+                        this.printColumns([['Kanuni Temsilci']]),
                         this.newLine,
-                        this.indentedText(`Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak “uzlaştırmanın hukuki sonuçlarını anladık”, demişlerdir. İş bu uzlaştırma raporu hep birlikte imza altına alınmıştır.`),
+                        this.printColumns([['Uzlaştırmacı']]),
+                        this.newLine,
+                        this.printColumns([['Tercüman']]),
                         this.newLine,
                     ]
                 },
+                this.newLine.repeat(2),
+                {text: 'ONAY ŞERHİ', style: [BaseStyle.Heading, BaseStyle.Center]},
+                this.newLine,
+                {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
+                {text: '[Cumhuriyet Savcısı / Hakim]', style: [BaseStyle.Heading, BaseStyle.Center]},
+                {text: this.placeholder(), style: [BaseStyle.Center]},
+                this.newLine.repeat(3),
+                this.printColumns([['ONAYLAMA GEREKÇESİ']]),
+                this.newLine.repeat(3),
+                {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
+                {text: '[Cumhuriyet Savcısı / Hakim]', style: [BaseStyle.Heading, BaseStyle.Center]},
+                {text: this.placeholder(), style: [BaseStyle.Center]},
             ],
             styles: this.defaultStyles
         };
     }
 
-    printColumns(labelValues: Array<[string, string?]>, type: 'primary' | 'secondary') {
+    printColumns(labelValues: Array<[string, string?]>, type: 'primary' | 'secondary' = 'primary') {
         const isPrimary = type === 'primary';
         const lineHeight = 1.2;
         const maxLineLength = 50;
@@ -135,4 +199,20 @@ export class UzlastirmaRaporu extends BaseTemplate {
             margin: isPrimary ? [] : [40, 0, 0, 0]
         };
     }
+
+    drawUnderline(width: number) {
+        return {
+            canvas: [{
+                type: 'line',
+                x1: 0, y1: -3,
+                x2: width, y2: -3,
+                lineWidth: 1
+            }]
+        };
+    }
+
+    placeholder(length = 40) {
+        return '.'.repeat(length);
+    }
+
 }
