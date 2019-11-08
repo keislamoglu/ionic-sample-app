@@ -3,7 +3,7 @@
         <ion-col *ngFor="let petition of petitions" [size]="columnSize">
             <app-card *ngIf="!petition" (click)="create()" class="add-new">
                 <app-card-body>
-                    <ion-button fill="clear" slot="start">
+                    <ion-button fill="clear">
                         <ion-icon size="large" name="add-circle-outline"></ion-icon>
                     </ion-button>
                 </app-card-body>

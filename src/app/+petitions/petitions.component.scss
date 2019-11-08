@@ -5,7 +5,9 @@ app-card {
 
   &.add-new {
     app-card-body {
-      text-align: center;
+      ion-button {
+        margin: 0 auto;
+      }
     }
   }
 }
