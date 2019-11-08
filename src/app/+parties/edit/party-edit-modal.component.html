@@ -27,9 +27,19 @@
             </ion-select>
         </ion-item>
         <!--PARTY TYPE SPECIFIC INPUTS-->
+        <!--CRIMES-->
         <ion-item *ngIf="party.type === 'Şüpheli'">
             <ion-label position="floating">Suçlar</ion-label>
             <ion-input name="crimes" [(ngModel)]="party.crimes"></ion-input>
+        </ion-item>
+        <!--RELATED PERSON-->
+        <ion-item *ngIf="isRelatedPersonType">
+            <ion-label position="floating">İlgili Kişi</ion-label>
+            <ion-select required name="relatedPerson"
+                        [(ngModel)]="party.relatedPersonId" placeholder="-- Seçiniz --">
+                <ion-select-option *ngFor="let person of personDataset"
+                                    [value]="person.id">{{_personFullName(person)}}</ion-select-option>
+            </ion-select>
         </ion-item>
         <!--ACTIONS-->
         <ion-item lines="none">

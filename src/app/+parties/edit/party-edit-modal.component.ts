@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {enumList, EnumList} from '../../shared/helpers';
+import {enumList, EnumList, fullName} from '../../shared/helpers';
 import {Party, PartyType, Person} from '../../shared/entity';
 import {AlertService} from '../../shared/services';
 import {zip} from 'rxjs';
 import {PartyService, PersonService} from '../../shared/repositories';
-import {fullName} from '../../shared/helpers';
 
 @Component({
     templateUrl: './party-edit-modal.component.html'
@@ -18,6 +17,19 @@ export class PartyEditModalComponent implements OnInit {
     party: Party | null = null;
     personDataset: Person[] = [];
     partyTypeDataset: EnumList<typeof PartyType> = enumList(PartyType);
+
+    get relatedPersonTypes(): PartyType[] {
+        return [
+            PartyType.Translator,
+            PartyType.Representative,
+            PartyType.LegalDelegate,
+            PartyType.Advocate,
+        ];
+    }
+
+    get isRelatedPersonType() {
+        return this.relatedPersonTypes.includes(this.party.type);
+    }
 
     constructor(private _modalController: ModalController,
                 private _partyService: PartyService,
