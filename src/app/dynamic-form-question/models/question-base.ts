@@ -2,9 +2,9 @@ import {QuestionCondition} from './questionCondition';
 
 export type ControlType = 'dropdown' | 'textbox' | 'date' | 'checkbox' | 'textarea';
 
-export interface QuestionBaseOptions<T = any> {
-    value?: T;
-    key?: string;
+export interface QuestionBaseOptions<K> {
+    value?: string;
+    key?: K;
     label?: string;
     required?: boolean;
     order?: number;
@@ -12,18 +12,18 @@ export interface QuestionBaseOptions<T = any> {
     conditions?: QuestionCondition[];
 }
 
-export abstract class QuestionBase<T> {
-    value: T;
-    key: string;
-    label: string;
-    required: boolean;
-    order: number;
-    conditions: QuestionCondition[];
+export abstract class QuestionBase<K> {
+    value: QuestionBaseOptions<K>['value'];
+    key: QuestionBaseOptions<K>['key'];
+    label: QuestionBaseOptions<K>['label'];
+    required: QuestionBaseOptions<K>['required'];
+    order: QuestionBaseOptions<K>['order'];
+    conditions: QuestionBaseOptions<K>['conditions'];
     abstract controlType: ControlType;
 
-    protected constructor(options: QuestionBaseOptions<T> = {}) {
+    constructor(options: QuestionBaseOptions<K> = {}) {
         this.value = options.value;
-        this.key = options.key || '';
+        this.key = options.key;
         this.label = options.label || '';
         this.required = !!options.required;
         this.order = options.order === undefined ? 1 : options.order;

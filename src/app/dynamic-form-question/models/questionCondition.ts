@@ -8,14 +8,20 @@ export enum Condition {
     IsLowerThanOrEqualTo
 }
 
-export interface QuestionCondition {
+export interface QuestionCondition<K = string> {
     /**
      * The key of the question to be compared
      */
-    question: string;
+    question: K;
 
     /**
      * Condition type
      */
     condition: Condition;
+
+    /**
+     * The value to be compared with the relevant question's value.
+     * If this value is set, the value of the question which has this condition will be ignored.
+     */
+    compareValue?: string;
 }

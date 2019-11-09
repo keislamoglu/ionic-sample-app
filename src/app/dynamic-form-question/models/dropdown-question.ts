@@ -5,17 +5,17 @@ interface OptionItem {
     value: string;
 }
 
-export interface DropdownQuestionOptions extends QuestionBaseOptions<string> {
+export interface DropdownQuestionOptions<K> extends QuestionBaseOptions<K> {
     options?: OptionItem[];
     multiple?: boolean;
 }
 
-export class DropdownQuestion extends QuestionBase<string> {
+export class DropdownQuestion<K = string> extends QuestionBase<K> {
     controlType: ControlType = 'dropdown';
     options: OptionItem[] = [];
     multiple = false;
 
-    constructor(options: DropdownQuestionOptions = {}) {
+    constructor(options: DropdownQuestionOptions<K> = {}) {
         super(options);
         this.options = options['options'] || [];
         this.multiple = options['multiple'] || false;
