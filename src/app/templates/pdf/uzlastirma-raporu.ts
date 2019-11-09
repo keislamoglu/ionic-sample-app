@@ -1,12 +1,23 @@
 /* tslint:disable:max-line-length */
 import {BaseStyle, BaseTemplate} from './base/base-template';
-import {DateQuestion, DropdownQuestion, Question} from '../../dynamic-form-question/models';
+import {
+    DateQuestion,
+    DropdownQuestion,
+    Question,
+    TextareaQuestion,
+    TextboxQuestion
+} from '../../dynamic-form-question/models';
 import {CaseFileType, PartyType} from '../../shared/entity';
-import {fullName} from '../../shared/helpers';
+import {fullName, printDate} from '../../shared/helpers';
 
 export interface UzlastirmaRaporuProps {
     date: string;
-    conciliationResult: string;
+    place: string;
+    conciliationResult: number;
+    conciliationDuration: string;
+    reportText: string;
+    execution: string;
+    failedConciliationPurpose: string;
 }
 
 const conciliationResults = [
@@ -17,13 +28,26 @@ const conciliationResults = [
     'KISMİ UZLAŞMA SAĞLANDI'
 ];
 
+type propsType = keyof UzlastirmaRaporuProps;
+
 export const UzlastirmaRaporuQuestions: Question[] = [
-    new DateQuestion({
+    new DateQuestion<propsType>({
         key: 'date',
-        label: 'Tarih',
+        label: 'Raporun düzenlendiği tarih',
         required: true,
     }),
-    new DropdownQuestion({
+    new TextboxQuestion<propsType>({
+        key: 'conciliationDuration',
+        label: 'Uzlaştırma süresi (30 gün)',
+        type: 'number',
+        required: true
+    }),
+    new TextboxQuestion<propsType>({
+        key: 'place',
+        label: 'Raporun düzenlendiği yer',
+        required: true,
+    }),
+    new DropdownQuestion<propsType>({
         key: 'conciliationResult',
         label: 'Uzlaştırma Sonucu',
         required: true,
@@ -34,6 +58,19 @@ export const UzlastirmaRaporuQuestions: Question[] = [
             {key: 3, value: conciliationResults[3]},
             {key: 4, value: conciliationResults[4]}
         ]
+    }),
+    new TextareaQuestion<propsType>({
+        key: 'reportText',
+        label: 'Rapor yazısı',
+        required: true
+    }),
+    new TextareaQuestion<propsType>({
+        key: 'execution',
+        label: 'Edim, edimin yerine getirilme şekli ve zamanı',
+    }),
+    new TextareaQuestion<propsType>({
+        key: 'failedConciliationPurpose',
+        label: 'Başarısız olduysa nedenleri',
     })
 ];
 
@@ -54,6 +91,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
             [CaseFileType.Prosecution]: PartyType.Defendant
         }[caseFile.type];
         const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
+        const isPartiesConciliated = extraData.conciliationResult > 0;
 
         return {
             content: [
@@ -97,10 +135,10 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                             [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, this.placeholder()]
                         ]),
                         this.printColumns([
-                            ['Raporun Düzenlendiği Yer ve Tarih', this.placeholder()]
+                            ['Raporun Düzenlendiği Yer ve Tarih', `${extraData.place} ${printDate(extraData.date)}`]
                         ]),
                         this.printColumns([
-                            ['Uzlaştırma Süresi', this.placeholder()]
+                            ['Uzlaştırma Süresi', extraData.conciliationDuration]
                         ]),
                         this.printColumns([
                             ['Uzlaştırma Sonucu', conciliationResults[extraData.conciliationResult]]
@@ -114,9 +152,9 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                 this.newLine,
                 this.indentedText(`Yapılan görüşmelerde;`),
                 this.newLine,
-                this.indentedText(this.placeholder(500)),
+                this.indentedText(extraData.reportText),
                 this.newLine,
-                this.indentedText(`Taraflar [uzlaştıklarını / uzlaşamadıklarını] beyan etmişlerdir. Taraflar arasında UZLAŞMA [GERÇEKLEŞMİŞ / GERÇEKLEŞMEMİŞ] olup, CMK. 253. ve 254. maddeleri gereği “hükmün açıklanacağı” hususunda taraflara bilgi verilmiştir.`),
+                this.indentedText(`Taraflar ${isPartiesConciliated ? 'uzlaştıklarını' : 'uzlaşamadıklarını'} beyan etmişlerdir. Taraflar arasında UZLAŞMA ${isPartiesConciliated ? 'GERÇEKLEŞMİŞ' : 'GERÇEKLEŞMEMİŞ'} olup, CMK. 253. ve 254. maddeleri gereği “hükmün açıklanacağı” hususunda taraflara bilgi verilmiştir.`),
                 this.newLine,
                 this.indentedText(`Taraflara uzlaştırmanın hukuki sonuçları anlatıldıktan sonra taraflar söz alarak “uzlaştırmanın hukuki sonuçlarını anladık”, demişlerdir. İş bu uzlaştırma raporu hep birlikte imza altına alınmıştır.`),
                 this.newLine,
@@ -135,7 +173,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                     ]
                 },
                 this.newLine,
-                this.placeholder(500),
+                extraData.execution,
                 this.newLine,
                 {
                     columns: [
@@ -152,7 +190,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                     ]
                 },
                 this.newLine,
-                this.placeholder(500),
+                extraData.failedConciliationPurpose,
                 this.newLine,
                 this.printColumns([
                     ['Yapılan Giderler']
