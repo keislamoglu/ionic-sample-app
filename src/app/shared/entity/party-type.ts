@@ -8,7 +8,7 @@ export enum PartyType {
     JuvenilePushedToCrime = 'Suça sürüklenen çocuk',
     LegalDelegate = 'Kanuni Temsilci',
     Representative = 'Vekil',
-    Advocate = 'Müdafii',
+    Advocate = 'Müdafi',
     Translator = 'Tercüman',
     Other = 'Diğer'
 }
