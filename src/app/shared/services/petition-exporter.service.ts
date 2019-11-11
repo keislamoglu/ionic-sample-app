@@ -5,7 +5,7 @@ import {TemplateDocument} from '../constants';
 import {InstantiatorService} from './instantiator.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import {BaseTemplate, UzlasmaTeklifFormu} from '../../templates/pdf';
+import {BaseTemplate, UzlasmaTeklifFormu, UzlastirmaRaporu} from '../../templates/pdf';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {AppConfig} from '../app-config';
@@ -28,6 +28,7 @@ export class PetitionExporterService {
 
         const template = {
             [TemplateDocument.UzlasmaTeklifFormu]: UzlasmaTeklifFormu,
+            [TemplateDocument.UzlastirmaRaporu]: UzlastirmaRaporu,
             // [TemplateDocument.UzlasmaGorusmesineDavet]: GorusmeyeDavet,
             // [TemplateDocument.SegbisGorusmeTalep]: SegbisGorusmeTalep,
             // [TemplateDocument.KovusturmaUzlastirmaciGorusmeTutanagi]: KovusturmaUzlastirmaciGorusmeTutanagi,

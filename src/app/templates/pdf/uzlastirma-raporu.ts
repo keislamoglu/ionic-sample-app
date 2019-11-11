@@ -1,14 +1,8 @@
 /* tslint:disable:max-line-length */
 import {BaseStyle, BaseTemplate} from './base/base-template';
-import {
-    DateQuestion,
-    DropdownQuestion,
-    Question,
-    TextareaQuestion,
-    TextboxQuestion
-} from '../../dynamic-form-question/models';
+import {DateQuestion, DropdownQuestion, Question, TextareaQuestion, TextboxQuestion} from '../../dynamic-form-question/models';
 import {CaseFileType, PartyType} from '../../shared/entity';
-import {fullName, printDate} from '../../shared/helpers';
+import {fullName, printAddress, printDate} from '../../shared/helpers';
 
 export interface UzlastirmaRaporuProps {
     date: string;
@@ -18,6 +12,7 @@ export interface UzlastirmaRaporuProps {
     reportText: string;
     execution: string;
     failedConciliationPurpose: string;
+    expenses: string;
 }
 
 const conciliationResults = [
@@ -38,7 +33,7 @@ export const UzlastirmaRaporuQuestions: Question[] = [
     }),
     new TextboxQuestion<propsType>({
         key: 'conciliationDuration',
-        label: 'Uzlaştırma süresi (30 gün)',
+        label: 'Uzlaştırma süresi (gün)',
         type: 'number',
         required: true
     }),
@@ -71,6 +66,10 @@ export const UzlastirmaRaporuQuestions: Question[] = [
     new TextareaQuestion<propsType>({
         key: 'failedConciliationPurpose',
         label: 'Başarısız olduysa nedenleri',
+    }),
+    new TextareaQuestion<propsType>({
+        key: 'expenses',
+        label: 'Yapılan giderler'
     })
 ];
 
@@ -92,6 +91,21 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         }[caseFile.type];
         const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
         const isPartiesConciliated = extraData.conciliationResult > 0;
+        const isInvestigation = caseFile.type === CaseFileType.Investigation;
+        const partyTypeNameMapping: Partial<Record<PartyType, string>> = {
+            [PartyType.Advocate]: 'Müdafinin',
+            [PartyType.AffectedByCrime]: 'Suçtan Zarar Görenin',
+            [PartyType.Representative]: 'Vekilin',
+            [PartyType.Translator]: 'Tercümanın',
+            [PartyType.LegalDelegate]: 'Kanuni Temsilcisinin',
+            ...(isInvestigation ? {
+                [PartyType.Injured]: 'Mağdurun',
+                [PartyType.Suspected]: 'Şüphelinin',
+            } : {
+                [PartyType.Intervening]: 'Katılanın',
+                [PartyType.Defendant]: 'Sanığın'
+            })
+        };
 
         return {
             content: [
@@ -117,16 +131,29 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                         this.printColumns([
                             ['Görevlendirme Tarihi', caseFile.chargeDate],
                             ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', caseFile.conciliationStartDate],
+                            // TODO calculate the extension time
                             ['Ek Süre Verilme Tarihi ve Süresi', this.placeholder()]
                         ]),
-                        // TODO: repeat the following two items for each party of the case file
-                        this.printColumns([['Şüphelinin / Sanığın / Kanuni Temsilcisinin']]),
-                        this.printColumns([
-                            ['Adı ve Soyadı', this.placeholder()],
-                            ['T.C. Kimlik Numarası', this.placeholder()],
-                            ['Adresi', this.placeholder()],
-                            ['Telefon Numarası', this.placeholder()],
-                        ], 'secondary'),
+                        ...[].concat(...caseFile.parties.map(party => {
+                            let partyName = partyTypeNameMapping[party.type];
+
+                            if ([PartyType.LegalDelegate,
+                                PartyType.Representative,
+                                PartyType.Advocate,
+                                PartyType.Translator].includes(party.type)) {
+                                partyName += ` (${fullName(party.relatedPerson)})`;
+                            }
+
+                            return [
+                                this.printColumns([[partyName]]),
+                                this.printColumns([
+                                    ['Adı ve Soyadı', fullName(party.person)],
+                                    ['T.C. Kimlik Numarası', party.person.identificationNo],
+                                    ['Adresi', printAddress(party.person.address)],
+                                    ['Telefon Numarası', party.person.phone]
+                                ], 'secondary')
+                            ];
+                        })),
                         this.printColumns([
                             [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, this.placeholder()],
                         ]),
@@ -138,7 +165,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                             ['Raporun Düzenlendiği Yer ve Tarih', `${extraData.place} ${printDate(extraData.date)}`]
                         ]),
                         this.printColumns([
-                            ['Uzlaştırma Süresi', extraData.conciliationDuration]
+                            ['Uzlaştırma Süresi', `${extraData.conciliationDuration} gün`]
                         ]),
                         this.printColumns([
                             ['Uzlaştırma Sonucu', conciliationResults[extraData.conciliationResult]]
@@ -146,7 +173,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                     ]
                 },
                 this.newLine,
-                this.indentedText(`[Cumh. Başs.] Uzlaştırma Bürosu’nun yukarıda numarası  yazılı uzlaştırma dosyası kapsamında;`),
+                this.indentedText(`${caseFile.attorneyGeneralship.name} Uzlaştırma Bürosu’nun yukarıda numarası yazılı uzlaştırma dosyası kapsamında;`),
                 this.newLine,
                 this.indentedText(`Taraflar usulüne uygun olarak davet edilmiş ve taraflar bu davete icabet ederek, uzlaşma kurumunun hukuki niteliği, amaç, kapsam ve sonuçları hakkında bilgi aldıktan sonra özgür iradeleriyle uzlaşmayı kabul ettiklerini beyan etmişlerdir.`),
                 this.newLine,
@@ -195,6 +222,8 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                 this.printColumns([
                     ['Yapılan Giderler']
                 ]),
+                this.newLine,
+                extraData.expenses,
                 this.newLine.repeat(3),
                 {
                     text: 'İmzalar',
@@ -228,14 +257,18 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                 {text: 'ONAY ŞERHİ', style: [BaseStyle.Heading, BaseStyle.Center]},
                 this.newLine,
                 {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
-                {text: '[Cumhuriyet Savcısı / Hakim]', style: [BaseStyle.Heading, BaseStyle.Center]},
-                {text: this.placeholder(), style: [BaseStyle.Center]},
+                {
+                    text: isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
+                    style: [BaseStyle.Heading, BaseStyle.Center]
+                },
                 this.newLine.repeat(3),
                 this.printColumns([['ONAYLAMA GEREKÇESİ']]),
                 this.newLine.repeat(3),
                 {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
-                {text: '[Cumhuriyet Savcısı / Hakim]', style: [BaseStyle.Heading, BaseStyle.Center]},
-                {text: this.placeholder(), style: [BaseStyle.Center]},
+                {
+                    text: isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
+                    style: [BaseStyle.Heading, BaseStyle.Center]
+                },
             ],
             styles: this.defaultStyles
         };
