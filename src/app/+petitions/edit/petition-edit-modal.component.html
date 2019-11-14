@@ -30,14 +30,12 @@
                            placeholder="Dilekçe adı giriniz"></ion-input>
             </ion-item>
             <!--PARTY-->
-            <ion-item>
+            <ion-item *ngIf="isPartySelectionRequired">
                 <ion-label position="floating">Taraf</ion-label>
-                <ion-select required name="parties"
-                            formControlName="parties"
-                            multiple
-                            placeholder="-- Seçiniz --">
-                    <ion-select-option *ngFor="let party of parties"
-                                        [value]="party.id">{{party.person.name + ' ' + party.person.lastName}}</ion-select-option>
+                <ion-select required name="party" formControlName="party" placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let party of parties" [value]="party.id">
+                        {{party.person.name + ' ' + party.person.lastName}}
+                    </ion-select-option>
                 </ion-select>
             </ion-item>
         </ion-list>

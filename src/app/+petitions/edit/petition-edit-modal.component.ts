@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {InstantiatorService} from '../../shared/services/instantiator.service';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {TemplateQuestions} from '../../templates/questions';
+import {TemplateDocument} from '../../shared/constants';
 
 @Component({
     templateUrl: './petition-edit-modal.component.html',
@@ -26,6 +27,7 @@ export class PetitionEditModalComponent implements OnInit {
     petitionTemplate: PetitionTemplate;
     allTemplates: PetitionTemplate[];
     form: FormGroup;
+    isPartySelectionRequired = false;
 
     get dynamicQuestionAnswers() {
         return this.form.value['dynamic'];
@@ -47,11 +49,11 @@ export class PetitionEditModalComponent implements OnInit {
                 private _changeDetector: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.form = this._fb.group({
             template: [''],
             name: [''],
-            parties: ['']
+            party: [''],
         });
 
         if (this.id) {
@@ -90,17 +92,22 @@ export class PetitionEditModalComponent implements OnInit {
             }),
         ).subscribe(() => {
             const {name, templateId: template, partyIds: parties} = this.petition;
-            this.form.patchValue({template, name, parties});
+
+            this.form.patchValue({template, name, party: parties.length === 1 ? parties[0] : null});
             this._markForCheck();
         });
     }
 
     save(): void {
-        const {name, template: templateId, parties} = this.form.value;
+        const {name, template: templateId, party} = this.form.value;
 
         this.petition.templateId = templateId;
         this.petition.name = name;
-        this.petition.partyIds = parties;
+
+        if (party) {
+            this.petition.partyIds = [party];
+        }
+
         this.petition.date = '' + new Date();
 
         if (this.dynamicQuestionAnswers) {
@@ -148,7 +155,9 @@ export class PetitionEditModalComponent implements OnInit {
 
     onTemplateChange(templateId: string) {
         if (templateId) {
-            this._loadTemplate(templateId).subscribe(() => this._markForCheck());
+            this._loadTemplate(templateId).subscribe(() => {
+                this._markForCheck();
+            });
         }
     }
 
@@ -164,6 +173,9 @@ export class PetitionEditModalComponent implements OnInit {
                 this.petitionTemplate = template;
                 this.form.patchValue({name: template.name});
                 this.dynamicQuestions = TemplateQuestions[template.slugName];
+                this.isPartySelectionRequired = [
+                    TemplateDocument.UzlasmaTeklifFormu
+                ].includes(this.petitionTemplate.slugName);
             })
         );
     }
