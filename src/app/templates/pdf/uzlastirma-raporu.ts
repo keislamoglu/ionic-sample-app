@@ -1,7 +1,7 @@
 /* tslint:disable:max-line-length */
 import {BaseStyle, BaseTemplate} from './base/base-template';
 import {DateQuestion, DropdownQuestion, Question, TextareaQuestion, TextboxQuestion} from '../../dynamic-form-question/models';
-import {CaseFileType, PartyType} from '../../shared/entity';
+import {CaseFileType, ExtensionTime, PartyType} from '../../shared/entity';
 import {fullName, printAddress, printDate} from '../../shared/helpers';
 
 export interface UzlastirmaRaporuProps {
@@ -82,6 +82,33 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         return this.drawUnderline(210);
     }
 
+    get isInvestigation() {
+        return this.props.petition.caseFile.type === CaseFileType.Investigation;
+    }
+
+    get partyTypeNameMapping(): Partial<Record<PartyType, string>> {
+        return {
+            [PartyType.Advocate]: 'Müdafinin',
+            [PartyType.AffectedByCrime]: 'Suçtan Zarar Görenin',
+            [PartyType.Representative]: 'Vekilin',
+            [PartyType.Translator]: 'Tercümanın',
+            [PartyType.LegalDelegate]: 'Kanuni Temsilcisinin',
+            ...(this.isInvestigation ? {
+                [PartyType.Injured]: 'Mağdurun',
+                [PartyType.Suspected]: 'Şüphelinin',
+            } : {
+                [PartyType.Intervening]: 'Katılanın',
+                [PartyType.Defendant]: 'Sanığın'
+            })
+        };
+    }
+
+    get extensionTime(): ExtensionTime | null {
+        const {extensionTimes} = this.props.petition.caseFile;
+
+        return !!extensionTimes.length ? extensionTimes[0] : null;
+    }
+
     get documentDefinition() {
         const {petition, conciliator, extraData} = this.props;
         const {caseFile} = petition;
@@ -91,21 +118,6 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         }[caseFile.type];
         const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
         const isPartiesConciliated = extraData.conciliationResult > 0;
-        const isInvestigation = caseFile.type === CaseFileType.Investigation;
-        const partyTypeNameMapping: Partial<Record<PartyType, string>> = {
-            [PartyType.Advocate]: 'Müdafinin',
-            [PartyType.AffectedByCrime]: 'Suçtan Zarar Görenin',
-            [PartyType.Representative]: 'Vekilin',
-            [PartyType.Translator]: 'Tercümanın',
-            [PartyType.LegalDelegate]: 'Kanuni Temsilcisinin',
-            ...(isInvestigation ? {
-                [PartyType.Injured]: 'Mağdurun',
-                [PartyType.Suspected]: 'Şüphelinin',
-            } : {
-                [PartyType.Intervening]: 'Katılanın',
-                [PartyType.Defendant]: 'Sanığın'
-            })
-        };
 
         return {
             content: [
@@ -115,9 +127,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                     stack: [
                         this.printColumns([
                             ['Uzlaştırma No', caseFile.conciliationNo],
-                            // TODO: ask whether the below items are separated
-                            ['Cumhuriyet Başsavcılığı Soruşturma No', caseFile.fileNo],
-                            ['Mahkeme Esas No', caseFile.fileNo],
+                            [this.isInvestigation ? 'Cumhuriyet Başsavcılığı Soruşturma No' : 'Mahkeme Esas No', caseFile.fileNo],
                             ['Uzlaştırma Konusu Suç/Suçları', crimes]
                         ]),
                         this.newLine,
@@ -131,11 +141,10 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                         this.printColumns([
                             ['Görevlendirme Tarihi', caseFile.chargeDate],
                             ['Dosya İçindeki Belgelerin Örneğinin Verildiği Uzlaştırma Süresinin Başladığı Tarih', caseFile.conciliationStartDate],
-                            // TODO calculate the extension time
-                            ['Ek Süre Verilme Tarihi ve Süresi', this.placeholder()]
+                            ['Ek Süre Verilme Tarihi ve Süresi', this.extensionTime ? `${printDate(this.extensionTime.date)}, ${this.extensionTime.duration} gün` : '-']
                         ]),
                         ...[].concat(...caseFile.parties.map(party => {
-                            let partyName = partyTypeNameMapping[party.type];
+                            let partyName = this.partyTypeNameMapping[party.type];
 
                             if ([PartyType.LegalDelegate,
                                 PartyType.Representative,
@@ -258,7 +267,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                 this.newLine,
                 {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
                 {
-                    text: isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
+                    text: this.isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
                     style: [BaseStyle.Heading, BaseStyle.Center]
                 },
                 this.newLine.repeat(3),
@@ -266,7 +275,7 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                 this.newLine.repeat(3),
                 {text: 'Tarih, Mühür ve İmza', style: [BaseStyle.Heading, BaseStyle.Center]},
                 {
-                    text: isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
+                    text: this.isInvestigation ? 'Cumhuriyet Savcısı' : 'Hakim',
                     style: [BaseStyle.Heading, BaseStyle.Center]
                 },
             ],
