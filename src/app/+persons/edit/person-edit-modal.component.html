@@ -52,11 +52,15 @@
         <ion-item-group>
             <ion-item-divider>Beyan adresi</ion-item-divider>
             <ion-item>
-                <ion-label position="floating">Şehir</ion-label>
-                <ion-select name="address.city" [(ngModel)]="address.cityId" required placeholder="-- Seçiniz --">
-                    <ion-select-option *ngFor="let city of cities"
-                                       [value]="city.id">{{ city.name }}</ion-select-option>
+                <ion-label position="floating">Ülke</ion-label>
+                <ion-select name="address.country" [(ngModel)]="address.countryId" required placeholder="-- Seçiniz --">
+                    <ion-select-option *ngFor="let country of countries"
+                                       [value]="country.id">{{ country.name }}</ion-select-option>
                 </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">İl</ion-label>
+                <ion-input name="address.city" required [(ngModel)]="address.cityName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">İlçe</ion-label>
@@ -76,23 +80,19 @@
             <ion-item-divider>Mernis adresi (isteğe bağlı)</ion-item-divider>
             <ion-item>
                 <ion-label position="floating">Şehir</ion-label>
-                <ion-select name="mernisAddress.city" [(ngModel)]="mernisAddress.cityId" placeholder="-- Seçiniz --">
-                    <ion-select-option [value]="''">-- Seçiniz --</ion-select-option>
-                    <ion-select-option *ngFor="let city of cities"
-                                       [value]="city.id">{{ city.name }}</ion-select-option>
-                </ion-select>
+                <ion-input name="mernisAddress.city" [(ngModel)]="mernisAddress.cityName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">İlçe</ion-label>
-                <ion-input name="mernisAddress.district" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.districtName"></ion-input>
+                <ion-input name="mernisAddress.district" [required]="!!mernisAddress.cityName" [(ngModel)]="mernisAddress.districtName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Cadde-Sokak</ion-label>
-                <ion-input name="mernisAddress.street" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.streetName"></ion-input>
+                <ion-input name="mernisAddress.street" [required]="!!mernisAddress.cityName" [(ngModel)]="mernisAddress.streetName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Açık Adres</ion-label>
-                <ion-textarea name="mernisAddress.full" [required]="!!mernisAddress.cityId" [(ngModel)]="mernisAddress.fullAddress"></ion-textarea>
+                <ion-textarea name="mernisAddress.full" [required]="!!mernisAddress.cityName" [(ngModel)]="mernisAddress.fullAddress"></ion-textarea>
             </ion-item>
         </ion-item-group>
         <!--ACTIONS-->

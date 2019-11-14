@@ -1,10 +1,11 @@
-import {City} from './city';
+import {Country} from './country';
 
 export class Address {
     id: string;
-    cityId: string;
+    countryId: string;
     districtName: string;
     streetName: string;
     fullAddress: string;
-    city: City;
+    cityName: string;
+    country: Country;
 }

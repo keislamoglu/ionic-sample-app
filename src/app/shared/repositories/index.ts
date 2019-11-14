@@ -7,5 +7,5 @@ export * from './court-house.service';
 export * from './extension-time.service';
 export * from './party.service';
 export * from './address.service';
-export * from './city.service';
+export * from './country.service';
 export * from './repositories.module';

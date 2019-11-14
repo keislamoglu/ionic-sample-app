@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PersonEditModalComponent} from '../edit/person-edit-modal.component';
 import {switchMap} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
-import {AddressService, CityService, PersonService} from '../../shared/repositories';
+import {AddressService, CountryService, PersonService} from '../../shared/repositories';
 import {fullName} from '../../shared/helpers';
 
 @Component({
@@ -16,13 +16,13 @@ export class PersonDetailComponent implements OnInit {
     id: string;
     caseFileId: string;
     person: Person;
-    address: { address: Address, cityName: string } = this._emptyAddress();
-    mernisAddress: { address: Address, cityName: string } = this._emptyAddress();
+    address: { address: Address, countryName: string } = this._emptyAddress();
+    mernisAddress: { address: Address, countryName: string } = this._emptyAddress();
 
     constructor(private _route: ActivatedRoute,
                 private _personService: PersonService,
                 private _addressService: AddressService,
-                private _cityService: CityService,
+                private _countryService: CountryService,
                 private _modalService: ModalService,
                 private _navController: NavController) {
     }
@@ -42,14 +42,15 @@ export class PersonDetailComponent implements OnInit {
         this._loadData();
     }
 
-    getAddressInfo(address: { address: Address, cityName: string }) {
-        if (!address.address || !address.cityName) {
+    getAddressInfo(address: { address: Address, countryName: string }) {
+        if (!address.address || !address.countryName) {
             return;
         }
         return [
             address.address.streetName,
             address.address.districtName,
-            address.cityName
+            address.address.cityName,
+            address.countryName
         ].filter(t => t).join(', ');
     }
 
@@ -65,18 +66,11 @@ export class PersonDetailComponent implements OnInit {
             switchMap(([address, mernisAddress]) => {
                 this.address.address = address;
                 this.mernisAddress.address = mernisAddress;
-                return zip(
-                    this._cityService.get(address.cityId),
-                    mernisAddress ? this._cityService.get(mernisAddress.cityId) : of(void 0),
-                );
+                return this._countryService.get(address.countryId);
             })
-        )
-            .subscribe(([city, mernisCity]) => {
-                this.address.cityName = city.name;
-                if (mernisCity) {
-                    this.mernisAddress.cityName = mernisCity.name;
-                }
-            });
+        ).subscribe((country) => {
+            this.address.countryName = country.name;
+        });
     }
 
     private _fullName(person: Person) {
@@ -84,6 +78,6 @@ export class PersonDetailComponent implements OnInit {
     }
 
     private _emptyAddress() {
-        return {address: void 0, cityName: void 0};
+        return {address: void 0, countryName: void 0};
     }
 }

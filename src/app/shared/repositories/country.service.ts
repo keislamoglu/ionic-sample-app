@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {CITIES} from '../constants';
-import {City} from '../entity';
+import {COUNTRIES} from '../constants';
+import {Country} from '../entity';
 import {BaseCrud} from './base-crud';
 import {of} from 'rxjs';
 import {RepositoriesModule} from './repositories.module';
 
 @Injectable({providedIn: RepositoriesModule})
-export class CityService extends BaseCrud<City> {
+export class CountryService extends BaseCrud<Country> {
     protected dataSetName = 'cities';
-    protected dataSet$ = of(CITIES);
+    protected dataSet$ = of(COUNTRIES);
 }

@@ -3,7 +3,7 @@ import {
     AddressService,
     AttorneyGeneralshipService,
     CaseFileService,
-    CityService,
+    CountryService,
     CourtHouseService, ExtensionTimeService,
     PartyService,
     PersonService,
@@ -23,7 +23,7 @@ export class InstantiatorService {
         private attorneyGeneralshipService: AttorneyGeneralshipService,
         private courtHouseService: CourtHouseService,
         private addressService: AddressService,
-        private cityService: CityService,
+        private countryService: CountryService,
         private extensionTimeService: ExtensionTimeService,
     ) {
     }
@@ -109,7 +109,7 @@ export class InstantiatorService {
             return;
         }
 
-        address.city = await this.cityService.get(address.cityId).toPromise();
+        address.country = await this.countryService.get(address.countryId).toPromise();
 
         return address;
     }

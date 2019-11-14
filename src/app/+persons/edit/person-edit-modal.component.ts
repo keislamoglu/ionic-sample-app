@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {AlertService} from '../../shared/services';
-import {Address, City, Person} from '../../shared/entity';
+import {Address, Country, Person} from '../../shared/entity';
 import {switchMap, tap} from 'rxjs/operators';
 import {of, zip} from 'rxjs';
-import {AddressService, CityService, PersonService} from '../../shared/repositories';
+import {AddressService, CountryService, PersonService} from '../../shared/repositories';
 import {fullName} from '../../shared/helpers';
 
 @Component({
@@ -15,11 +15,11 @@ export class PersonEditModalComponent implements OnInit {
     person: Person = new Person();
     address: Address = new Address();
     mernisAddress: Address = new Address();
-    cities: City[] = [];
+    countries: Country[] = [];
 
     constructor(private _modalController: ModalController,
                 private _personService: PersonService,
-                private _cityService: CityService,
+                private _countryService: CountryService,
                 private _addressService: AddressService,
                 private _alertService: AlertService) {
     }
@@ -56,7 +56,7 @@ export class PersonEditModalComponent implements OnInit {
     }
 
     save() {
-        const hasMernisAddress = !!this.mernisAddress.cityId;
+        const hasMernisAddress = !!this.mernisAddress.cityName;
 
         if (this.person.id) {
             this._personService.update(this.person.id, this.person).pipe(
@@ -99,8 +99,8 @@ export class PersonEditModalComponent implements OnInit {
     }
 
     private _loadData() {
-        return this._cityService.getAll().pipe(
-            tap(cities => this.cities = cities)
+        return this._countryService.getAll().pipe(
+            tap(countries => this.countries = countries)
         );
     }
 
