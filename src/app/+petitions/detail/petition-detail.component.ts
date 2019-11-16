@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PetitionEditModalComponent} from '../edit/petition-edit-modal.component';
 import {Petition, PetitionTemplate} from '../../shared/entity';
 import {ActivatedRoute} from '@angular/router';
-import {DocxFileService, ModalService, PetitionExporterService} from '../../shared/services';
+import {ModalService, PetitionExporterService} from '../../shared/services';
 import {switchMap} from 'rxjs/operators';
 import {NavController} from '@ionic/angular';
 import {PetitionService, PetitionTemplateService} from '../../shared/repositories';
@@ -20,8 +20,7 @@ export class PetitionDetailComponent implements OnInit {
                 private _petitionExporterService: PetitionExporterService,
                 private _modalService: ModalService,
                 private _route: ActivatedRoute,
-                private _navController: NavController,
-                private _docxFileService: DocxFileService) {
+                private _navController: NavController) {
     }
 
     ngOnInit(): void {

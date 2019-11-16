@@ -103,11 +103,7 @@ export class PetitionEditModalComponent implements OnInit {
 
         this.petition.templateId = templateId;
         this.petition.name = name;
-
-        if (party) {
-            this.petition.partyIds = [party];
-        }
-
+        this.petition.partyIds = party ? [party] : this.parties.map(t => t.id);
         this.petition.date = '' + new Date();
 
         if (this.dynamicQuestionAnswers) {
