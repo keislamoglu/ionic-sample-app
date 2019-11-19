@@ -293,23 +293,26 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         const isPrimary = type === 'primary';
         const lineHeight = 1.2;
         const maxLineLength = 50;
-        const calcNewLineCount = (t: string) => Math.floor(new Blob([t]).size / maxLineLength);
-        const isExceededMaxLength = (text) => text.length > 50;
+        const lineCount = (t: string) => Math.floor(new Blob([t]).size / maxLineLength);
         const labels = labelValues.map(t => t[0]);
         const values = labelValues.map(t => t[1]);
         const labelStack = {
-            stack: [...Object.values(labels.map(t => [t, isPrimary ? this.primaryUnderline : this.secondaryUnderline]))],
+            stack: [...Object.values(labels.map((label, index) => [
+                lineCount(values[index]) > lineCount(label) ? this.newLine.repeat(lineCount(values[index]) - lineCount(label)) : void 0,
+                label,
+                isPrimary ? this.primaryUnderline : this.secondaryUnderline
+            ]))],
             lineHeight,
             width: isPrimary ? 247 : 207,
             bold: isPrimary
         };
         const colonStack = {
-            stack: labels.map(t => isExceededMaxLength(t) ? this.newLine.repeat(calcNewLineCount(t)) + ':' : ':'),
+            stack: labels.map((label, index) => `${this.newLine.repeat(Math.max(lineCount(label), lineCount(values[index])))}:`),
             lineHeight,
             width: 5
         };
         const valueStack = {
-            stack: values.map((t = '', index) => isExceededMaxLength(labels[index]) ? this.newLine.repeat(calcNewLineCount(labels[index])) + t : t),
+            stack: values.map((value = '', index) => lineCount(labels[index]) > lineCount(value) ? this.newLine.repeat(lineCount(labels[index]) - lineCount(value)) + value : value),
             lineHeight
         };
 
