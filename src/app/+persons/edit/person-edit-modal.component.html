@@ -26,8 +26,13 @@
             <ion-label position="floating">Baba Adı</ion-label>
             <ion-input name="fatherName" [(ngModel)]="person.fatherName" required></ion-input>
         </ion-item>
-        <!--NATIONAL ID-->
+        <!--IS FOREIGN-->
         <ion-item>
+            <ion-label position="floating">Yurtdışı Vatandaşı</ion-label>
+            <ion-toggle name="isForeigner" [(ngModel)]="person.isForeigner"></ion-toggle>
+        </ion-item>
+        <!--NATIONAL ID-->
+        <ion-item *ngIf="!person.isForeigner">
             <ion-label position="floating">T.C. Kimlik No</ion-label>
             <ion-input name="nId" [(ngModel)]="person.identificationNo" required></ion-input>
         </ion-item>

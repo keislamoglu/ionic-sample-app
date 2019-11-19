@@ -14,5 +14,5 @@ export class Person {
     birthDate: string;
     address: Address;
     mernisAddress: Address;
-    isTurk: boolean;
+    isForeigner: boolean;
 }
