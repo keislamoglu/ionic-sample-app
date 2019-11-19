@@ -1,8 +1,8 @@
 /* tslint:disable:max-line-length */
 import {BaseStyle, BaseTemplate} from './base/base-template';
 import {DateQuestion, DropdownQuestion, Question, TextareaQuestion, TextboxQuestion} from '../../dynamic-form-question/models';
-import {CaseFileType, ExtensionTime, PartyType} from '../../shared/entity';
-import {fullName, printAddress, printDate} from '../../shared/helpers';
+import {CaseFileType, ExtensionTime, Party, PartyType} from '../../shared/entity';
+import {fullName, isDomestic, printAddress, printDate} from '../../shared/helpers';
 
 export interface UzlastirmaRaporuProps {
     date: string;
@@ -103,6 +103,10 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         };
     }
 
+    get realParties(): Party[] {
+        return this.props.petition.caseFile.parties.filter(t => !t.relatedPersonId);
+    }
+
     get extensionTime(): ExtensionTime | null {
         const {extensionTimes} = this.props.petition.caseFile;
 
@@ -118,6 +122,8 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
         }[caseFile.type];
         const crimes = caseFile.parties.find(p => p.type === partyTypeHavingCrimes).crimes;
         const isPartiesConciliated = extraData.conciliationResult > 0;
+        const partySituatedAtForeign = this.realParties.filter(t => !t.person.isForeigner).find(t => !isDomestic(t.person.address) && !!t.person.mernisAddress);
+        const partyLivingAtForeign = this.realParties.find(t => t.person.isForeigner && !isDomestic(t.person.address) && !t.person.mernisAddress);
 
         return {
             content: [
@@ -164,11 +170,11 @@ export class UzlastirmaRaporu extends BaseTemplate<UzlastirmaRaporuProps> {
                             ];
                         })),
                         this.printColumns([
-                            [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, this.placeholder()],
+                            [`Taraflardan Biri Yabancı Ülkede Oturuyorsa Türkiye'de Göstereceği İkametgahı`, partySituatedAtForeign ? printAddress(partySituatedAtForeign.person.mernisAddress) : ''],
                         ]),
                         this.newLine,
                         this.printColumns([
-                            [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, this.placeholder()]
+                            [`Taraflardan Biri Yabancı ve Türkiye'de Göstereceği Bir İkametgahı Yok İse Ülkesindeki İkametgahı`, partyLivingAtForeign ? printAddress(partyLivingAtForeign.person.address) : '']
                         ]),
                         this.printColumns([
                             ['Raporun Düzenlendiği Yer ve Tarih', `${extraData.place} ${printDate(extraData.date)}`]
