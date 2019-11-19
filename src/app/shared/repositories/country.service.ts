@@ -7,6 +7,6 @@ import {RepositoriesModule} from './repositories.module';
 
 @Injectable({providedIn: RepositoriesModule})
 export class CountryService extends BaseCrud<Country> {
-    protected dataSetName = 'cities';
+    protected dataSetName = 'countries';
     protected dataSet$ = of(COUNTRIES);
 }
