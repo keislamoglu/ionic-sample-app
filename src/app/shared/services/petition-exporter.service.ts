@@ -53,7 +53,7 @@ export class PetitionExporterService {
     }
 
     async saveFile(fileName: string, blob: Blob) {
-        this._createDocsDirIfNotExists();
+        await this._createDocsDirIfNotExists();
 
         return this._file.writeFile(
             this._savePath,
