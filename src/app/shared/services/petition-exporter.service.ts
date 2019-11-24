@@ -70,7 +70,13 @@ export class PetitionExporterService {
         );
     }
 
-    private _createDocsDirIfNotExists() {
+    private async _createDocsDirIfNotExists() {
+        const isExist = await this._file.checkDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory);
+
+        if (isExist) {
+            return;
+        }
+
         return this._file.createDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory, false);
     }
 
