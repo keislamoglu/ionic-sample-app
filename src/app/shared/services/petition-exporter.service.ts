@@ -71,7 +71,14 @@ export class PetitionExporterService {
     }
 
     private async _createDocsDirIfNotExists() {
-        const isExist = await this._file.checkDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory);
+        let isExist;
+
+        try {
+            isExist = await this._file.checkDir(this._file.documentsDirectory, AppConfig.DocumentsDirectory);
+        } catch (e) {
+            isExist = false;
+        }
+
 
         if (isExist) {
             return;
