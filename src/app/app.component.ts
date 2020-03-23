@@ -29,11 +29,11 @@ export class AppComponent {
             const user: ClientUser = {
                 id: '900928a1-49e8-4cc3-b56a-296d44cad2aa',
                 identificationNo: '123123123',
-                name: 'Kadir',
-                lastName: 'Islamoglu',
-                email: 'keislamoglu@yandex.com',
-                phone: '05059111039',
-                address: 'Namik Kemal Mah. Topcu Sok. No: 4/7 Umraniye/Istanbul',
+                name: 'FirstName',
+                lastName: 'Lastname',
+                email: 'user@domain.com',
+                phone: '05001234567',
+                address: 'Istanbul',
                 registrationNo: '78903245',
                 subscriptionStatus: 1,
                 subscriptionDate: 'Thu May 16 2019 22:14:15 GMT+0300 (GMT+03:00)'
